@@ -40,13 +40,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 175.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(30.0, 175.0, 0.0, 0.0),
                     child: Text('Food',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(220.0, 175.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(213.0, 175.0, 0.0, 0.0),
                     child: Text('?',
                         style: TextStyle(
                             fontSize: 80.0,
@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'New to ILuvFood ?',
+                  'New to ILuvFood?',
                   style: TextStyle(fontFamily: 'Montserrat'),
                 ),
                 SizedBox(width: 5.0),

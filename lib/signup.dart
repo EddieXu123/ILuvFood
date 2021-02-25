@@ -25,7 +25,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(260.0, 125.0, 0.0, 0.0),
+                      padding: EdgeInsets.fromLTRB(308.0, 113.0, 0.0, 0.0),
                       child: Text(
                         '.',
                         style: TextStyle(

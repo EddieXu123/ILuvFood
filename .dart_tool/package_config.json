@@ -39,7 +39,7 @@
     },
     {
       "name": "cupertino_icons",
-      "rootUri": "file:///Users/eddiexu/Utils/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-0.1.2",
+      "rootUri": "file:///Users/eddiexu/Utils/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -134,13 +134,13 @@
       "languageVersion": "2.10"
     },
     {
-      "name": "flutter_ui_login",
+      "name": "wordpair_generator",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.0"
+      "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-02-25T20:46:13.895065Z",
+  "generated": "2021-02-25T22:26:33.310775Z",
   "generator": "pub",
   "generatorVersion": "2.10.5"
 }
