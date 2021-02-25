@@ -35,19 +35,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                    child: Text('Hello',
+                    child: Text('Love',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(16.0, 175.0, 0.0, 0.0),
-                    child: Text('There',
+                    child: Text('Food',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(220.0, 175.0, 0.0, 0.0),
-                    child: Text('.',
+                    child: Text('?',
                         style: TextStyle(
                             fontSize: 80.0,
                             fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             SizedBox(width: 10.0),
                             Center(
-                              child: Text('Log in with facebook',
+                              child: Text('Log in with Facebook',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Montserrat')),
@@ -156,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'New to Spotify ?',
+                  'New to ILuvFood ?',
                   style: TextStyle(fontFamily: 'Montserrat'),
                 ),
                 SizedBox(width: 5.0),

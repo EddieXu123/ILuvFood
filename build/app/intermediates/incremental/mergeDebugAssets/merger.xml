@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/eddiexu/Desktop/Hackathons/ILuvFood/android/app/src/main/assets"/><source path="/Users/eddiexu/Desktop/Hackathons/ILuvFood/build/app/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/eddiexu/Desktop/Hackathons/ILuvFood/android/app/src/debug/assets"/></dataSet></merger>
