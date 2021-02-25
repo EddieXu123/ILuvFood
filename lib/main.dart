@@ -22,6 +22,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
+// Building homepage
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(30.0, 175.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(
+                        30.0, 175.0, 0.0, 0.0), // Change if prefer aligned
                     child: Text('Food',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),

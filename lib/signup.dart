@@ -31,6 +31,7 @@ class _SignupPageState extends State<SignupPage> {
                         style: TextStyle(
                             fontSize: 80.0,
                             fontWeight: FontWeight.bold,
+                            // Change color if needed
                             color: Colors.green),
                       ),
                     )

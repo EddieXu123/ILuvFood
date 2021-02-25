@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/eddiexu/Desktop/wordpair_generator/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/Users/eddiexu/Desktop/Hackathons/ILuvFood/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
-                    "source": "/Users/eddiexu/Desktop/wordpair_generator/android/app/src/main/res/values/styles.xml",
+                    "source": "/Users/eddiexu/Desktop/Hackathons/ILuvFood/android/app/src/main/res/values/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
