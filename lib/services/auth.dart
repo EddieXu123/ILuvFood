@@ -16,6 +16,7 @@ class AuthService {
 
   // auth change user stream (if user signs in or out)
   Stream<AuthUser> get authuser {
+    print("hello hiii");
     // notify provider with new authuser object with auth state changes
     return _auth.onAuthStateChanged.map(_authUserFromFirebaseUser);
   }
@@ -43,6 +44,7 @@ class AuthService {
       FirebaseUser user = result.user;
       return _authUserFromFirebaseUser(user);
     } catch (e) {
+      print("hello rip");
       print(e.toString());
       return null;
     }

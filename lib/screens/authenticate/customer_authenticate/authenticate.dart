@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iluvfood/screens/authenticate/register.dart';
-import 'package:iluvfood/screens/authenticate/sign_in.dart';
+import 'package:iluvfood/screens/authenticate/customer_authenticate/register.dart';
+import 'package:iluvfood/screens/authenticate/customer_authenticate/sign_in.dart';
 
 /*
 Controller to display either sign in or register page
