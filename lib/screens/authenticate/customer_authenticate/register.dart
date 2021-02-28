@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
@@ -21,6 +22,8 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
+  String firstName = '';
+  String lastName = '';
   @override
   Widget build(BuildContext context) {
     return loading
@@ -62,6 +65,7 @@ class _RegisterState extends State<Register> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
+                              initialValue: "hello@gmail.com",
                               decoration: textInputDecoration.copyWith(
                                   labelText: "Email"),
                               validator: (val) =>
@@ -71,6 +75,7 @@ class _RegisterState extends State<Register> {
                               }),
                           SizedBox(height: 10.0),
                           TextFormField(
+                              initialValue: "111111",
                               decoration: textInputDecoration.copyWith(
                                   labelText: "Password"),
                               obscureText: true,
@@ -82,10 +87,25 @@ class _RegisterState extends State<Register> {
                               }),
                           SizedBox(height: 10.0),
                           TextFormField(
-                            decoration:
-                                textInputDecoration.copyWith(labelText: "Name"),
-                          ),
-                          SizedBox(height: 50.0),
+                              initialValue: "Alex",
+                              decoration: textInputDecoration.copyWith(
+                                  labelText: "First Name"),
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter a name' : null,
+                              onChanged: (val) {
+                                firstName = val;
+                              }),
+                          SizedBox(height: 10.0),
+                          TextFormField(
+                              initialValue: "Liu",
+                              decoration: textInputDecoration.copyWith(
+                                  labelText: "Last Name"),
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter a name' : null,
+                              onChanged: (val) {
+                                lastName = val;
+                              }),
+                          SizedBox(height: 20.0),
                           Container(
                               height: 40.0,
                               child: Material(
@@ -98,12 +118,22 @@ class _RegisterState extends State<Register> {
                                     if (_formKey.currentState.validate()) {
                                       setState(() => loading = true);
                                       dynamic result = await _auth
-                                          .registerWithEmailandPassword(
-                                              email, password);
-                                      if (result == null) {
+                                          .customerRegisterWithEmailandPassword(
+                                              email,
+                                              password,
+                                              firstName,
+                                              lastName);
+                                      if (result.runtimeType ==
+                                              PlatformException &&
+                                          result.message != null) {
                                         setState(() {
-                                          error = 'please supply a valid email';
                                           loading = false;
+                                          error = result.message;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          loading = false;
+                                          error = "Please use valid email";
                                         });
                                       }
                                     }
