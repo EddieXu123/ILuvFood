@@ -23,6 +23,11 @@ class AccountDatabaseService {
         lastName: snapshot.data['lastName']);
   }
 
+  // check if uid exists in customer db
+  bool isCustomer() {
+    return customerAccountCollection.document(uid).get() == null ? false : true;
+  }
+
   Stream<Customer> get customerData {
     return customerAccountCollection
         .document(uid)

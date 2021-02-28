@@ -109,6 +109,8 @@ class _SignInState extends State<SignIn> {
                                       error =
                                           'could not sign in with these credentials';
                                     });
+                                  } else {
+                                    Navigator.pop(context);
                                   }
                                 }
                               },

@@ -123,19 +123,25 @@ class _RegisterState extends State<Register> {
                                               password,
                                               firstName,
                                               lastName);
-                                      if (result.runtimeType ==
-                                              PlatformException &&
-                                          result.message != null) {
-                                        setState(() {
-                                          loading = false;
-                                          error = result.message;
-                                        });
+                                      if (result == null) {
+                                        loading = false;
+                                        error = "Please use valid email";
                                       } else {
-                                        setState(() {
-                                          loading = false;
-                                          error = "Please use valid email";
-                                        });
+                                        Navigator.pop(context);
                                       }
+                                      // if (result.runtimeType ==
+                                      //         PlatformException &&
+                                      //     result.message != null) {
+                                      //   setState(() {
+                                      //     loading = false;
+                                      //     error = result.message;
+                                      //   });
+                                      // } else {
+                                      //   setState(() {
+                                      //     loading = false;
+                                      //     error = "Please use valid email";
+                                      //   });
+                                      // }
                                     }
                                   },
                                   child: Center(
