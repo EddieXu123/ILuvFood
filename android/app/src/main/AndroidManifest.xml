@@ -4,7 +4,7 @@
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
          additional functionality it is fine to subclass or reimplement
-         FlutterApplication and put your custom class here. -->
+         FlutterApplication and put your custom class herbre. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="iluvfood"
@@ -43,5 +43,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCb-39j8D6j47mFXY1JMBreQE_4MPB_-1E"/>
     </application>
 </manifest>
