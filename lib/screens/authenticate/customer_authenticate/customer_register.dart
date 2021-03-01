@@ -28,7 +28,7 @@ class _CustomerRegisterState extends State<CustomerRegister> {
     return loading
         ? Loading()
         : new Scaffold(
-            resizeToAvoidBottomPadding: false,
+            resizeToAvoidBottomInset: false,
             body:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
                     Widget>[
