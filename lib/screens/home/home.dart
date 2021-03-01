@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iluvfood/shared/restaurants.dart' as restaurants;
 
 void main() => runApp(Home());
 
@@ -18,9 +19,25 @@ class _HomeState extends State<Home> {
   GoogleMapController mapController;
 
   final LatLng _center = const LatLng(41.4993, -81.6944);
+  final Map<String, Marker> _markers = {};
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    final locations = await restaurants.getLocations();
+    setState(() {
+      _markers.clear();
+      for (final restaurant in locations.restaurants) {
+        final marker = Marker(
+          markerId: MarkerId(restaurant.name),
+          position: LatLng(restaurant.lat, restaurant.lng),
+          infoWindow: InfoWindow(
+            title: restaurant.name,
+            snippet: restaurant.address,
+          ),
+        );
+        _markers[restaurant.name] = marker;
+      }
+    });
+
   }
 
 
@@ -46,8 +63,9 @@ class _HomeState extends State<Home> {
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 11.0,
+            zoom: 2,
           ),
+          markers: _markers.values.toSet(),
         ),
       ),
     );
