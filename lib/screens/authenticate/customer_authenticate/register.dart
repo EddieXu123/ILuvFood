@@ -22,8 +22,7 @@ class _RegisterState extends State<Register> {
   String email = '';
   String password = '';
   String error = '';
-  String firstName = '';
-  String lastName = '';
+  String name = '';
   @override
   Widget build(BuildContext context) {
     return loading
@@ -65,7 +64,6 @@ class _RegisterState extends State<Register> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
-                              initialValue: "hello@gmail.com",
                               decoration: textInputDecoration.copyWith(
                                   labelText: "Email"),
                               validator: (val) =>
@@ -75,7 +73,6 @@ class _RegisterState extends State<Register> {
                               }),
                           SizedBox(height: 10.0),
                           TextFormField(
-                              initialValue: "111111",
                               decoration: textInputDecoration.copyWith(
                                   labelText: "Password"),
                               obscureText: true,
@@ -87,23 +84,12 @@ class _RegisterState extends State<Register> {
                               }),
                           SizedBox(height: 10.0),
                           TextFormField(
-                              initialValue: "Alex",
                               decoration: textInputDecoration.copyWith(
-                                  labelText: "First Name"),
+                                  labelText: "Name"),
                               validator: (val) =>
                                   val.isEmpty ? 'Enter a name' : null,
                               onChanged: (val) {
-                                firstName = val;
-                              }),
-                          SizedBox(height: 10.0),
-                          TextFormField(
-                              initialValue: "Liu",
-                              decoration: textInputDecoration.copyWith(
-                                  labelText: "Last Name"),
-                              validator: (val) =>
-                                  val.isEmpty ? 'Enter a name' : null,
-                              onChanged: (val) {
-                                lastName = val;
+                                name = val;
                               }),
                           SizedBox(height: 20.0),
                           Container(
@@ -117,30 +103,40 @@ class _RegisterState extends State<Register> {
                                   onTap: () async {
                                     if (_formKey.currentState.validate()) {
                                       setState(() => loading = true);
-                                      dynamic result = await _auth
-                                          .customerRegisterWithEmailandPassword(
-                                              email,
-                                              password,
-                                              firstName,
-                                              lastName);
-                                      if (result == null) {
-                                        loading = false;
-                                        error = "Please use valid email";
-                                      } else {
-                                        Navigator.pop(context);
+                                      try {
+                                        await _auth
+                                            .customerRegisterWithEmailandPassword(
+                                                email, password, name);
+                                        print("Got registered?");
+                                      } catch (e) {
+                                        if (mounted) {
+                                          switch (e.code) {
+                                            case 'ERROR_WEAK_PASSWORD':
+                                              error =
+                                                  'Your password is too weak';
+                                              break;
+                                            case 'ERROR_INVALID_EMAIL':
+                                              error = 'Your email is invalid';
+                                              break;
+                                            case 'ERROR_EMAIL_ALREADY_IN_USE':
+                                              error =
+                                                  'Email is already in use on different account';
+                                              break;
+                                            default:
+                                              error =
+                                                  'An undefined Error happened.';
+                                          }
+                                        }
                                       }
-                                      // if (result.runtimeType ==
-                                      //         PlatformException &&
-                                      //     result.message != null) {
-                                      //   setState(() {
-                                      //     loading = false;
-                                      //     error = result.message;
-                                      //   });
+
+                                      // dynamic result = await _auth
+                                      //     .customerRegisterWithEmailandPassword(
+                                      //         email, password, name);
+                                      // if (result == null) {
+                                      //   loading = false;
+                                      //   error = "Please use valid email";
                                       // } else {
-                                      //   setState(() {
-                                      //     loading = false;
-                                      //     error = "Please use valid email";
-                                      //   });
+                                      //   Navigator.pop(context);
                                       // }
                                     }
                                   },
