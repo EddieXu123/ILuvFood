@@ -9,7 +9,7 @@ class ErrorPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Text('Something went wrong'),
+        child: Text('Is this a bug or a feature ;)'),
       ),
     );
   }

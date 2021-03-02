@@ -1,4 +1,4 @@
-enum Role { CUSTOMER, BUSINESS }
+enum Role { CUSTOMER, BUSINESS, UNDEFINED }
 
 extension ParseToString on Role {
   String toShortString() {

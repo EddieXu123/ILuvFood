@@ -107,7 +107,7 @@ class _RegisterState extends State<Register> {
                                         await _auth
                                             .customerRegisterWithEmailandPassword(
                                                 email, password, name);
-                                        print("Got registered?");
+                                        Navigator.pop(context);
                                       } catch (e) {
                                         if (mounted) {
                                           switch (e.code) {
