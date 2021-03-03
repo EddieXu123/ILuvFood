@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
-import 'package:iluvfood/screens/home/business/businessHome.dart';
-import 'package:iluvfood/screens/home/customer/customerHome.dart';
+
+import 'package:iluvfood/screens/home/business/business_home.dart';
+
+import 'package:iluvfood/screens/home/customer/customer_home.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/enum.dart';
@@ -34,7 +36,7 @@ class HomeWrapper extends StatelessWidget {
                 return ErrorPage();
             }
           } else {
-            print("WHAT");
+            print("LOADING HOME WRAPPER");
             return Loading();
           }
         });

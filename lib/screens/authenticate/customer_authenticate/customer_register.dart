@@ -4,17 +4,17 @@ import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
 /*
-Register page UI
+CustomerRegister page UI
 */
 
-class Register extends StatefulWidget {
+class CustomerRegister extends StatefulWidget {
   final Function toggleView;
-  Register({this.toggleView});
+  CustomerRegister({this.toggleView});
   @override
-  _RegisterState createState() => _RegisterState();
+  _CustomerRegisterState createState() => _CustomerRegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class _CustomerRegisterState extends State<CustomerRegister> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
   final AuthService _auth = AuthService();
@@ -38,13 +38,13 @@ class _RegisterState extends State<Register> {
                     Container(
                       padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
                       child: Text(
-                        'Register',
+                        'Customer Sign Up',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(308.0, 113.0, 0.0, 0.0),
+                      padding: EdgeInsets.fromLTRB(300.0, 205.0, 0.0, 0.0),
                       child: Text(
                         '.',
                         style: TextStyle(
@@ -110,27 +110,14 @@ class _RegisterState extends State<Register> {
                                         Navigator.pop(context);
                                       } catch (e) {
                                         if (mounted) {
-                                          switch (e.code) {
-                                            case 'ERROR_WEAK_PASSWORD':
-                                              error =
-                                                  'Your password is too weak';
-                                              break;
-                                            case 'ERROR_INVALID_EMAIL':
-                                              error = 'Your email is invalid';
-                                              break;
-                                            case 'ERROR_EMAIL_ALREADY_IN_USE':
-                                              error =
-                                                  'Email is already in use on different account';
-                                              break;
-                                            default:
-                                              error =
-                                                  'An undefined Error happened.';
-                                          }
+                                          setState(() {
+                                            error = e.message();
+                                          });
                                         }
                                       }
 
                                       // dynamic result = await _auth
-                                      //     .customerRegisterWithEmailandPassword(
+                                      //     .customerCustomerRegisterWithEmailandPassword(
                                       //         email, password, name);
                                       // if (result == null) {
                                       //   loading = false;
@@ -172,7 +159,7 @@ class _RegisterState extends State<Register> {
                                   widget.toggleView();
                                 },
                                 child: Center(
-                                  child: Text('LOG IN',
+                                  child: Text('Already have an account?',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontFamily: 'Montserrat')),

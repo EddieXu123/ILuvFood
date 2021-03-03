@@ -5,14 +5,14 @@ import 'package:iluvfood/shared/constants.dart';
 /*
 Class that takes care of Sign In related things
 */
-class SignIn extends StatefulWidget {
+class BusinessSignIn extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  BusinessSignIn({this.toggleView});
   @override
-  _SignInState createState() => _SignInState();
+  _BusinessSignInState createState() => _BusinessSignInState();
 }
 
-class _SignInState extends State<SignIn> {
+class _BusinessSignInState extends State<BusinessSignIn> {
   final _formKey = GlobalKey<FormState>();
   final AuthService _auth = AuthService();
   // text field state
@@ -31,25 +31,17 @@ class _SignInState extends State<SignIn> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                    child: Text('Love',
+                    child: Text('Biz',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(
                         30.0, 175.0, 0.0, 0.0), // Change if prefer aligned
-                    child: Text('Food',
+                    child: Text('Sign In',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(213.0, 175.0, 0.0, 0.0),
-                    child: Text('?',
-                        style: TextStyle(
-                            fontSize: 80.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.pink)),
-                  )
                 ],
               ),
             ),
@@ -106,43 +98,13 @@ class _SignInState extends State<SignIn> {
                                 if (_formKey.currentState.validate()) {
                                   try {
                                     email = email;
+                                    print(email);
                                     await _auth.signInWithEmailandPassword(
                                         email, password);
                                     Navigator.pop(context);
                                   } catch (e) {
                                     if (mounted) {
-                                      switch (e.code) {
-                                        case 'ERROR_INVALID_EMAIL':
-                                          error =
-                                              'Your email address appears to be malformed.';
-                                          break;
-                                        case 'ERROR_WRONG_PASSWORD':
-                                          error = 'Your password is wrong.';
-                                          break;
-                                        case 'ERROR_USER_NOT_FOUND':
-                                          error =
-                                              "User with this email doesn't exist.";
-                                          break;
-                                        case 'ERROR_USER_DISABLED':
-                                          error =
-                                              'User with this email has been disabled.';
-                                          break;
-                                        case 'ERROR_TOO_MANY_REQUESTS':
-                                          error =
-                                              'Too many requests. Try again later.';
-                                          break;
-                                        case 'ERROR_OPERATION_NOT_ALLOWED':
-                                          error =
-                                              'Signing in with Email and Password is not enabled.';
-                                          break;
-                                        default:
-                                          {
-                                            print('undefined error:' +
-                                                error.toString());
-                                            error =
-                                                'An undefined Error happened.';
-                                          }
-                                      }
+                                      setState(() => {error = e.message});
                                     }
                                   }
                                 }
@@ -181,7 +143,7 @@ class _SignInState extends State<SignIn> {
                               children: <Widget>[
                                 SizedBox(width: 10.0),
                                 Center(
-                                  child: Text('Todo: Other Login Method',
+                                  child: Text(':)',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontFamily: 'Montserrat')),
@@ -197,7 +159,7 @@ class _SignInState extends State<SignIn> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'New to iLuvFood?',
+                  'Create your business account:',
                   style: TextStyle(fontFamily: 'Montserrat'),
                 ),
                 SizedBox(width: 5.0),
@@ -240,14 +202,14 @@ class _SignInState extends State<SignIn> {
 // /*
 // Class that takes care of Sign In related things
 // */
-// class SignIn extends StatefulWidget {
+// class BusinessSignIn extends StatefulWidget {
 //   final Function toggleView;
-//   SignIn({this.toggleView});
+//   BusinessSignIn({this.toggleView});
 //   @override
-//   _SignInState createState() => _SignInState();
+//   _BusinessSignInState createState() => _BusinessSignInState();
 // }
 
-// class _SignInState extends State<SignIn> {
+// class _BusinessSignInState extends State<BusinessSignIn> {
 //   final _formKey = GlobalKey<FormState>();
 //   bool loading = false;
 //   final AuthService _auth = AuthService();
@@ -341,7 +303,7 @@ class _SignInState extends State<SignIn> {
 //                                     if (_formKey.currentState.validate()) {
 //                                       setState(() => loading = true);
 //                                       dynamic result = await _auth
-//                                           .customerSignInWithEmailandPassword(
+//                                           .customerBusinessSignInWithEmailandPassword(
 //                                               email, password);
 //                                       if (result == null) {
 //                                         setState(() {

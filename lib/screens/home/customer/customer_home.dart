@@ -37,7 +37,7 @@ class CustomerHome extends StatelessWidget {
                   ]),
             );
           } else {
-            print("WHAT");
+            print("LOADING CUSTOMER HOME");
             return Loading();
           }
         });
