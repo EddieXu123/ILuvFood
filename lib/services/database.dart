@@ -45,12 +45,24 @@ class DatabaseService {
   }
 
 ////////////////////////////////////////////////////////////////////////
+  List<BusinessItem> _itemsFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      final dat = doc.data();
+      return BusinessItem(
+        uid: doc.id,
+        item: dat["item"],
+        price: dat["price"],
+        quantity: dat["quantity"],
+      );
+    }).toList();
+  }
 
   // get customer data from snapshot
   Customer _customerDataFromSnapshot(DocumentSnapshot snapshot) {
     try {
+      print(snapshot.id);
       return Customer(
-          uid: uid, name: snapshot.data()['name'] ?? '<no name found>');
+          uid: snapshot.id, name: snapshot.data()['name'] ?? '<no name found>');
     } catch (e) {
       print('error returning customer data...');
       return Customer();
@@ -62,7 +74,7 @@ class DatabaseService {
     final dat = snapshot.data();
     try {
       return Business(
-        uid: uid,
+        uid: snapshot.id,
         address: dat["address"],
         image: dat["image"],
         lat: dat["lat"],
@@ -95,6 +107,22 @@ class DatabaseService {
     }
   }
 
+  // brew list from snapshot
+  List<Business> _businessListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      final dat = doc.data();
+      return Business(
+        uid: doc.id,
+        address: dat["address"],
+        image: dat["image"],
+        lat: dat["lat"],
+        lng: dat["lng"],
+        businessName: dat["name"],
+        phone: dat["phone"],
+      );
+    }).toList();
+  }
+
   // // check if uid exists in customer db
   // bool isCustomer() {
   //   return customerAccountCollection.document(uid).get() == null ? false : true;
@@ -106,10 +134,22 @@ class DatabaseService {
 
   Stream<Business> get businessData {
     return businessItems.doc(uid).snapshots().map(_businessDataFromSnapshot);
-    return businessItems.doc(uid).snapshots().map(_businessDataFromSnapshot);
   }
 
   Stream<Role> get userRole {
     return userDetails.doc(uid).snapshots().map(_userRoleDataFromSnapshot);
+  }
+
+  // get brews stream
+  Stream<List<Business>> get businesses {
+    return businessItems.snapshots().map(_businessListFromSnapshot);
+  }
+
+  Stream<List<BusinessItem>> getBusinessItem(Business business) {
+    return businessItems
+        .doc(business.uid)
+        .collection('items')
+        .snapshots()
+        .map(_itemsFromSnapshot);
   }
 }
