@@ -46,15 +46,14 @@ class _BusinessHomeState extends State<BusinessHome> {
                 appBar: AppBar(
                     title: Text(
                         '${business.businessName ?? "<no name found>"} Business Portal'),
-                    backgroundColor: Colors.pink,
                     elevation: 0.0,
                     actions: <Widget>[
                       FlatButton.icon(
-                        icon: Icon(Icons.person),
+                        icon: Icon(Icons.logout),
                         onPressed: () async {
                           await _auth.signOut();
                         },
-                        label: Text('logout'),
+                        label: Text(''),
                       )
                     ]),
                 resizeToAvoidBottomPadding: false,
@@ -128,62 +127,51 @@ class _BusinessHomeState extends State<BusinessHome> {
                                       }),
                                   SizedBox(height: 20.0),
                                   Container(
-                                      height: 40.0,
-                                      child: Material(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                        shadowColor: Colors.pinkAccent,
-                                        color: Colors.pink,
-                                        elevation: 7.0,
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            _formKey.currentState.validate();
-                                            if (_formKey.currentState
-                                                .validate()) {
-                                              setState(() => loading = true);
-                                              try {
-                                                print(item + price + quantity);
-                                                await DatabaseService(
-                                                        uid: user.uid)
-                                                    .enterBusinessItem(
-                                                        BusinessItem(
-                                                            item: item,
-                                                            price: price,
-                                                            quantity:
-                                                                quantity));
-                                                setState(() => loading = false);
-                                                _clearControllers();
-                                                _scaffoldKey.currentState
-                                                    .showSnackBar(SnackBar(
-                                                  backgroundColor: Colors.pink,
-                                                  duration:
-                                                      Duration(seconds: 2),
-                                                  content: Text(
-                                                    "Item successfully added",
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                ));
-                                              } catch (e) {
-                                                if (mounted) {
-                                                  setState(() {
-                                                    loading = false;
-                                                    error = e.message();
-                                                  });
-                                                }
-                                              }
+                                    height: 40.0,
+                                    child: RaisedButton(
+                                      color: Theme.of(context).accentColor,
+                                      onPressed: () async {
+                                        _formKey.currentState.validate();
+                                        if (_formKey.currentState.validate()) {
+                                          setState(() => loading = true);
+                                          try {
+                                            print(item + price + quantity);
+                                            await DatabaseService(uid: user.uid)
+                                                .enterBusinessItem(BusinessItem(
+                                                    item: item,
+                                                    price: price,
+                                                    quantity: quantity));
+                                            setState(() => loading = false);
+                                            _clearControllers();
+                                            _scaffoldKey.currentState
+                                                .showSnackBar(SnackBar(
+                                              backgroundColor: Colors.pink,
+                                              duration: Duration(seconds: 2),
+                                              content: Text(
+                                                "Item successfully added",
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ));
+                                          } catch (e) {
+                                            if (mounted) {
+                                              setState(() {
+                                                loading = false;
+                                                error = e.message();
+                                              });
                                             }
-                                          },
-                                          child: Center(
-                                            child: Text(
-                                              'SUBMIT',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: 'Montserrat'),
-                                            ),
-                                          ),
+                                          }
+                                        }
+                                      },
+                                      child: Center(
+                                        child: Text(
+                                          'SUBMIT',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Montserrat'),
                                         ),
-                                      )),
+                                      ),
+                                    ),
+                                  ),
                                   SizedBox(height: 12.0),
                                   Text(error,
                                       style: TextStyle(
@@ -234,7 +222,7 @@ class _BusinessHomeState extends State<BusinessHome> {
 void showSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String message) {
   final snackBar = SnackBar(
     duration: Duration(seconds: 2),
-    backgroundColor: Colors.pink,
+    backgroundColor: MyColors.myGreen,
     content: Text(message),
   );
   _scaffoldKey.currentState.showSnackBar(snackBar);

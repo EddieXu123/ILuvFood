@@ -128,11 +128,16 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                   ),
                                 ),
                               )),
-                          SizedBox(height: 12.0),
-                          Text(error,
+                          SizedBox(height: 5.0),
+                          Container(
+                            height: 30,
+                            child: Text(
+                              error,
                               style:
-                                  TextStyle(color: Colors.red, fontSize: 14.0)),
-                          SizedBox(height: 20.0),
+                                  TextStyle(color: Colors.red, fontSize: 12.0),
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
                           Container(
                             height: 40.0,
                             color: Colors.transparent,

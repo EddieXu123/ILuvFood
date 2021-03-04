@@ -93,56 +93,46 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                               }),
                           SizedBox(height: 20.0),
                           Container(
-                              height: 40.0,
-                              child: Material(
-                                borderRadius: BorderRadius.circular(20.0),
-                                shadowColor: Colors.pinkAccent,
-                                color: Colors.pink,
-                                elevation: 7.0,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    if (_formKey.currentState.validate()) {
-                                      setState(() => loading = true);
-                                      try {
-                                        await _auth
-                                            .customerRegisterWithEmailandPassword(
-                                                email, password, name);
-                                        Navigator.pop(context);
-                                      } catch (e) {
-                                        if (mounted) {
-                                          setState(() {
-                                            error = e.message();
-                                          });
-                                        }
-                                      }
-
-                                      // dynamic result = await _auth
-                                      //     .customerCustomerRegisterWithEmailandPassword(
-                                      //         email, password, name);
-                                      // if (result == null) {
-                                      //   loading = false;
-                                      //   error = "Please use valid email";
-                                      // } else {
-                                      //   Navigator.pop(context);
-                                      // }
+                            height: 40.0,
+                            child: FlatButton(
+                              color: Theme.of(context).accentColor,
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() => loading = true);
+                                  try {
+                                    await _auth
+                                        .customerRegisterWithEmailandPassword(
+                                            email, password, name);
+                                    Navigator.pop(context);
+                                  } catch (e) {
+                                    if (mounted) {
+                                      setState(() {
+                                        error = e.message();
+                                      });
                                     }
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      'SIGNUP',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat'),
-                                    ),
-                                  ),
+                                  }
+                                }
+                              },
+                              child: Center(
+                                child: Text(
+                                  'SIGNUP',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat'),
                                 ),
-                              )),
-                          SizedBox(height: 12.0),
-                          Text(error,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 5.0),
+                          Container(
+                            height: 30,
+                            child: Text(
+                              error,
                               style:
-                                  TextStyle(color: Colors.red, fontSize: 14.0)),
-                          SizedBox(height: 20.0),
+                                  TextStyle(color: Colors.red, fontSize: 12.0),
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
                           Container(
                             height: 40.0,
                             color: Colors.transparent,

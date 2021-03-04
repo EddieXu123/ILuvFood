@@ -34,11 +34,8 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                   "${widget.business.businessName ?? "<no name found>"}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat'),
+                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
                 ),
-                backgroundColor: Colors.pink,
                 elevation: 0.0,
               ),
               body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -48,6 +45,8 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                     Text(widget.business.address),
                     SizedBox(height: 10.0),
                     Text(widget.business.phone),
+                    SizedBox(height: 10.0),
+                    Text("<${widget.business.lat}, ${widget.business.lng}>"),
                     // insert scroll view
                     SizedBox(height: 25.0),
                     SizedBox(
@@ -96,19 +95,13 @@ class _MyListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var item = context.select<CatalogModel, Item>(
-    //   // Here, we are only interested in the item at [index]. We don't care
-    //   // about any other change.
-    //   (catalog) => catalog.getByPosition(index),
-    // );
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: LimitedBox(
         maxHeight: 48,
         child: Container(
           child: RaisedButton(
-            color: Colors.pink[400],
+            color: Theme.of(context).accentColor,
             onPressed: (() {}),
             child: Center(
                 child: Column(
@@ -116,23 +109,17 @@ class _MyListItem extends StatelessWidget {
                 Text(
                   "Entree: ${businessItems[index].item}",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat'),
+                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
                 ),
                 Text(
                   "Price: \$${businessItems[index].price}",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat'),
+                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
                 ),
                 Text(
                   "Qty: ${businessItems[index].quantity}",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat'),
+                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
                 ),
               ],
             )

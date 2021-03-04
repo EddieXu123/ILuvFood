@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
+
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/services/auth.dart';
+import 'package:iluvfood/shared/constants.dart';
+import 'package:iluvfood/shared/customer_drawer.dart';
 import 'package:iluvfood/shared/single_business_view.dart';
 import 'package:provider/provider.dart';
 
@@ -18,38 +22,32 @@ class _BusinessScrollViewState extends State<BusinessScrollView> {
   Widget build(BuildContext context) {
     final businesses = Provider.of<List<Business>>(context) ?? [];
     return Scaffold(
+      drawer: TestDrawer(auth: widget.auth),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-              title: Text(
-                'Hi there, ${widget.customer.name ?? "<no name found>"}!',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat'),
-              ),
-              backgroundColor: Colors.pink,
-              elevation: 0.0,
-              actions: <Widget>[
-                FlatButton.icon(
-                  icon: Icon(Icons.logout),
-                  onPressed: () async {
-                    await widget.auth.signOut();
-                  },
-                  label: Text(
-                    'logout',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat'),
-                  ),
-                )
-              ]),
+            title: Text(
+              'Hi there, ${widget.customer.name ?? "<no name found>"}!',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
+            ),
+            elevation: 0.0,
+          ),
           SliverToBoxAdapter(child: SizedBox(height: 12)),
           SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-            return _MyListItem(index, businesses);
-          }, childCount: businesses.length)),
+            final int itemIndex = index ~/ 2;
+            if (index.isEven) {
+              return Padding(
+                  child: _MyListItem(itemIndex, businesses),
+                  padding: EdgeInsets.all(16));
+            }
+            return Divider(
+              height: 10,
+              color: MyColors.myGreen,
+              thickness: 2,
+            );
+          }, childCount: math.max(0, businesses.length * 2 - 1))),
         ],
       ),
     );
@@ -75,8 +73,8 @@ class _MyListItem extends StatelessWidget {
       child: LimitedBox(
         maxHeight: 48,
         child: Container(
-          child: RaisedButton(
-            color: Colors.pink[400],
+          child: FlatButton(
+            // color: Theme.of(context).accentColor,
             onPressed: (() {
               Navigator.push(
                   context,
@@ -86,11 +84,9 @@ class _MyListItem extends StatelessWidget {
             }),
             child: Center(
               child: Text(
-                businesses[index].businessName,
+                "${businesses[index].businessName},\n ${businesses[index].address}",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat'),
+                    fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
               ),
             ),
           ),

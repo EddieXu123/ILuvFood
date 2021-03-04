@@ -5,7 +5,7 @@ const textInputDecoration = InputDecoration(
     labelStyle: TextStyle(
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.bold,
-        color: Colors.grey),
+        color: Colors.blueGrey),
     focusedBorder:
         UnderlineInputBorder(borderSide: BorderSide(color: Colors.pink)));
 const linkedPageTextStyle = TextStyle(
@@ -13,3 +13,11 @@ const linkedPageTextStyle = TextStyle(
     fontFamily: 'Montserrat',
     fontWeight: FontWeight.bold,
     decoration: TextDecoration.underline);
+
+class MyColors {
+  static const myGreen = Color(0xFFadf0b5);
+
+  static const myPurple = Color(0xFFe4b4ec);
+
+  static const myPink = Colors.pink;
+}

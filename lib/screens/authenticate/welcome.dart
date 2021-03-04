@@ -18,24 +18,24 @@ class Welcome extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                    child: Text('Eat',
+                    child: Text('Eat.',
                         style: TextStyle(
                             fontSize: 60.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(
                         30.0, 175.0, 0.0, 0.0), // Change if prefer aligned
-                    child: Text('Save',
+                    child: Text('Save.',
                         style: TextStyle(
                             fontSize: 60.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(45.0, 240.0, 80.0, 100.0),
-                    child: Text('<3_food',
+                    child: Text('<3 food',
                         style: TextStyle(
                             fontSize: 60.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.pink)),
+                            color: MyColors.myPink)),
                   )
                 ],
               ),
@@ -45,39 +45,12 @@ class Welcome extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 200.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        RaisedButton(
-                          color: Colors.pink,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.red)),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        BusinessAuthenticate()));
-                          },
-                          child: Text('Business Login',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat')),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        RaisedButton(
-                          color: Colors.pink,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.red)),
+                        FlatButton(
+                          color: Theme.of(context).accentColor,
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -85,11 +58,29 @@ class Welcome extends StatelessWidget {
                                     builder: (context) =>
                                         CustomerAuthenticate()));
                           },
-                          child: Text('Customer Login',
+                          child: Text('Sign is as customer',
                               style: TextStyle(
-                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Montserrat')),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        BusinessAuthenticate()));
+                          },
+                          child: Text(
+                            'I\'m a business owner',
+                            style: linkedPageTextStyle,
+                          ),
                         ),
                       ],
                     ),
