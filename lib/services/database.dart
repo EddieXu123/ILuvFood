@@ -44,6 +44,36 @@ class DatabaseService {
     });
   }
 
+  BusinessItem _getBusinessItemFromSnapshot(DocumentSnapshot snapshot) {
+    try {
+      final dat = snapshot.data();
+      return BusinessItem(
+        uid: snapshot.id,
+        item: dat["item"],
+        price: dat["price"],
+        quantity: dat["quantity"],
+      );
+    } catch (e) {
+      print("error parsing item: $e");
+      return BusinessItem();
+    }
+  }
+
+  Future<BusinessItem> readBusinessItem(
+      String businessId, String itemId) async {
+    try {
+      var snapshot = await businessItems
+          .doc(businessId)
+          .collection("items")
+          .doc(itemId)
+          .get();
+      return _getBusinessItemFromSnapshot(snapshot);
+    } catch (e) {
+      print("error retrieving item from db: $e");
+      return null;
+    }
+  }
+
 ////////////////////////////////////////////////////////////////////////
   List<BusinessItem> _itemsFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
