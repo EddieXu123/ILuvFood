@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/business_item.dart';
+import 'package:iluvfood/screens/home/business/business_drawer.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/shared/errorPage.dart';
+
 import 'package:iluvfood/shared/loading.dart';
 import 'package:iluvfood/shared/utils.dart';
 import 'package:provider/provider.dart';
@@ -43,9 +44,10 @@ class _BusinessHomeState extends State<BusinessHome> {
             Business business = snapshot.data;
             return new Scaffold(
                 key: _scaffoldKey,
+                drawer: BusinessDrawer(),
                 appBar: AppBar(
                     title: Text(
-                        '${business.businessName ?? "<no name found>"} Business Portal'),
+                        '${business.businessName ?? "<no name found>"} Portal'),
                     elevation: 0.0,
                     actions: <Widget>[
                       FlatButton.icon(

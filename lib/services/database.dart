@@ -36,6 +36,16 @@ class DatabaseService {
     // .catchError((error) => print("Failed to add user: $error"));
   }
 
+  Future<void> updateBusinessData(Business business) {
+    return businessItems.doc(business.uid).update({
+      "address": business.address,
+      "lat": business.lat,
+      "lng": business.lng,
+      "name": business.businessName,
+      "phone": business.phone
+    });
+  }
+
   Future<void> enterBusinessItem(BusinessItem bizitem) {
     return businessItems.doc(uid).collection("items").add({
       "item": bizitem.item,
@@ -99,7 +109,7 @@ class DatabaseService {
     }
   }
 
-  // get customer data from snapshot
+  // get business profile data from snapshot
   Business _businessDataFromSnapshot(DocumentSnapshot snapshot) {
     final dat = snapshot.data();
     try {
@@ -137,7 +147,7 @@ class DatabaseService {
     }
   }
 
-  // brew list from snapshot
+  // business list from snapshot
   List<Business> _businessListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       final dat = doc.data();
@@ -175,9 +185,9 @@ class DatabaseService {
     return businessItems.snapshots().map(_businessListFromSnapshot);
   }
 
-  Stream<List<BusinessItem>> getBusinessItem(Business business) {
+  Stream<List<BusinessItem>> getBusinessItem(String businessId) {
     return businessItems
-        .doc(business.uid)
+        .doc(businessId)
         .collection('items')
         .snapshots()
         .map(_itemsFromSnapshot);

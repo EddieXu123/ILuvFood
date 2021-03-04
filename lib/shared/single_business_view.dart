@@ -23,7 +23,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
     CartModel cart = context.watch<CartModel>();
     cart.businessUid = widget.business.uid;
     return StreamProvider<List<BusinessItem>>.value(
-      value: DatabaseService().getBusinessItem(widget.business),
+      value: DatabaseService().getBusinessItem(widget.business.uid),
       child: WillPopScope(
         onWillPop: () {
           cart.reset();

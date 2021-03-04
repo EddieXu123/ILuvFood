@@ -1,17 +1,3 @@
-// import 'package:iluvfood/shared/errorPage.dart';
-
-// import 'package:flutter/material.dart';
-
-// class Checkout extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return ErrorPage();
-//   }
-// }
-// Copyright 2019 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
 import 'package:provider/provider.dart';
@@ -82,12 +68,6 @@ class _CartTotal extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Another way to listen to a model's change is to include
-            // the Consumer widget. This widget will automatically listen
-            // to CartModel and rerun its builder on every change.
-            //
-            // The important thing is that it will not rebuild
-            // the rest of the widgets in this build method.
             Consumer<CartModel>(
                 builder: (context, cart, child) =>
                     Text('\$${cart.priceInCart}', style: hugeStyle)),

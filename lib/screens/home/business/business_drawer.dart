@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:iluvfood/screens/home/business/business_profile.dart';
 
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 
-class TestDrawer extends StatefulWidget {
-  final AuthService auth;
-  TestDrawer({this.auth});
+class BusinessDrawer extends StatefulWidget {
   @override
-  _TestDrawerState createState() => _TestDrawerState();
+  _BusinessDrawerState createState() => _BusinessDrawerState();
 }
 
-class _TestDrawerState extends State<TestDrawer> {
+class _BusinessDrawerState extends State<BusinessDrawer> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -28,20 +29,18 @@ class _TestDrawerState extends State<TestDrawer> {
           ListTile(
             title: Text('Logout'),
             onTap: () async {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
               Navigator.pop(context);
-              await widget.auth.signOut();
+              await _auth.signOut();
             },
           ),
           ListTile(
-            title: Text('Coming soon..'),
+            title: Text('Update Profile'),
             onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
               Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BusinessProfileForm()));
             },
           ),
         ],
