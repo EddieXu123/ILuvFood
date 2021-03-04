@@ -3,47 +3,106 @@
 // found in the LICENSE file.
 
 import 'package:flutter/foundation.dart';
+import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/services/database.dart';
 
 class CartModel extends ChangeNotifier {
-  final String businessUid;
+  String businessUid;
   final _databaseService = DatabaseService();
+  int _priceInCart = 0;
 
   CartModel({this.businessUid});
 
-  /// Internal, private state of the cart. Stores the itemid:qty
-  final Map<String, int> _itemMap = Map();
+  /// Internal, private state of the cart. Stores the item-name:qty
+  final Map<String, CartItem> _itemMap = Map();
 
   // get itemids map
-  Map<String, int> get itemsIds => _itemMap;
+  List<CartItem> get cartItems {
+    return _itemMap.values.toList();
+  }
+
+  void reset() {
+    print("resetting cart!");
+    _priceInCart = 0;
+    businessUid = '';
+    _itemMap.clear();
+  }
 
   /// The current total price of all items.
-  Future<int> get totalPrice async {
-    int totalPrice = 0;
-    try {
-      _itemMap.forEach((k, v) async {
-        var item = await _databaseService.readBusinessItem(businessUid, k);
-        print("calculating price for ${item.item}");
-        totalPrice += int.parse(item.price);
-      });
-      return totalPrice;
-    } catch (e) {
-      print("error calculating price: $e");
-      return null;
-    }
+  int get priceInCart {
+    return _priceInCart;
+    // try {
+    //   _itemMap.forEach((k, v) async {
+    //     var item = await _databaseService.readBusinessItem(businessUid, k);
+    //     // print("calculating price for ${item.item}");
+    //     // print("adding price of ${item.price}");
+    //     _priceInCart += int.parse(item.price);
+    //   });
+    //   return _priceInCart;
+    //   // print(_priceInCart);
+
+    // } catch (e) {
+    //   print("error calculating price: $e");
+    //   return null;
+    // }
   }
 
   /// Adds [item] to cart. This is the only way to modify the cart from outside.
-  void add(String itemId) {
-    if (_itemMap.containsKey(itemId)) {
-      _itemMap.update(itemId, (value) => value + 1);
-    } else {
-      _itemMap[itemId] = 1;
-    }
-    print("quantity of $itemId in cart: ${_itemMap[itemId]}");
+  Future<void> add(String itemId) async {
+    try {
+      var item = await _databaseService.readBusinessItem(businessUid, itemId);
+      // print("calculating price for ${item.item}");
+      // print("adding price of ${item.price}");
+      _priceInCart += int.parse(item.price);
+      if (_itemMap.containsKey(item.item)) {
+        _itemMap.update(
+            item.item,
+            (value) => CartItem(
+                item: value.item,
+                uid: value.uid,
+                quantity: value.quantity + 1));
+      } else {
+        _itemMap[item.item] =
+            CartItem(item: item.item, uid: itemId, quantity: 1);
+      }
+      print("Added, cart total now: $_priceInCart");
+      print(
+          "quantity of ${item.item} in cart: ${_itemMap[item.item].quantity}");
 
-    // todo: probably makes sense to also check if there is enough inventory?
-    notifyListeners();
+      // todo: probably makes sense to also check if there is enough inventory?
+      notifyListeners();
+    } catch (e) {
+      print("could not put in dict:  $e");
+    }
+  }
+
+  /// Removes [item] to cart. This is the only way to modify the cart from outside.
+  Future<void> remove(String itemId) async {
+    try {
+      var item = await _databaseService.readBusinessItem(businessUid, itemId);
+      // print("calculating price for ${item.item}");
+      // print("adding price of ${item.price}");
+      if (_itemMap.containsKey(item.item)) {
+        _priceInCart -= int.parse(item.price);
+        if (_itemMap[item.item].quantity == 1) {
+          _itemMap.remove(item.item);
+        } else {
+          _itemMap.update(
+              item.item,
+              (value) => CartItem(
+                  item: value.item,
+                  uid: value.uid,
+                  quantity: value.quantity - 1));
+        }
+      } else {
+        print("could not find item in map");
+      }
+      print("Removed, cart total now: $_priceInCart");
+      // todo: probably makes sense to also check if there is enough inventory?
+      notifyListeners();
+    } catch (e) {
+      print("could not put in dict:  $e");
+    }
   }
 
   // void removeNoInventory(String itemId) {

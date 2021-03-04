@@ -17,7 +17,6 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
   static List<Widget> _widgetOptions = <Widget>[
     CustomerHome(),
     ErrorPage(),
-    ErrorPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -42,10 +41,6 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_sharp),
-            label: 'Cart',
           ),
         ],
         currentIndex: _selectedIndex,

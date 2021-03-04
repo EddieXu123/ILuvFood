@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:iluvfood/models/cart.dart';
+import 'package:iluvfood/screens/home/customer/checkout.dart';
 import 'package:iluvfood/screens/wrapper.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
@@ -52,16 +54,19 @@ class MyApp extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return StreamProvider<User>.value(
-            value: AuthService().user,
-            child: MaterialApp(
-              theme: themeNotifier.getTheme(),
-              initialRoute: '/wrapper',
-              routes: {
-                '/wrapper': (context) => Wrapper(),
-              },
-            ),
-          );
+          return ChangeNotifierProvider(
+              create: (context) => CartModel(),
+              child: StreamProvider<User>.value(
+                value: AuthService().user,
+                child: MaterialApp(
+                  theme: themeNotifier.getTheme(),
+                  initialRoute: '/wrapper',
+                  routes: {
+                    '/wrapper': (context) => Wrapper(),
+                    '/cart': (context) => Checkout()
+                  },
+                ),
+              ));
         }
         // Otherwise, show something whilst waiting for initialization to complete
         return Loading();
