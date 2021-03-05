@@ -46,18 +46,19 @@ class _BusinessHomeState extends State<BusinessHome> {
                 key: _scaffoldKey,
                 drawer: BusinessDrawer(),
                 appBar: AppBar(
-                    title: Text(
-                        '${business.businessName ?? "<no name found>"} Portal'),
-                    elevation: 0.0,
-                    actions: <Widget>[
-                      FlatButton.icon(
-                        icon: Icon(Icons.logout),
-                        onPressed: () async {
-                          await _auth.signOut();
-                        },
-                        label: Text(''),
-                      )
-                    ]),
+                  title: Text(
+                      '${business.businessName ?? "<no name found>"} Portal'),
+                  elevation: 0.0,
+                  // actions: <Widget>[
+                  //   FlatButton.icon(
+                  //     icon: Icon(Icons.logout),
+                  //     onPressed: () async {
+                  //       await _auth.signOut();
+                  //     },
+                  //     label: Text(''),
+                  //   )
+                  // ]
+                ),
                 resizeToAvoidBottomPadding: false,
                 body: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

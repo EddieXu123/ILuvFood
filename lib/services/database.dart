@@ -180,7 +180,7 @@ class DatabaseService {
     return userDetails.doc(uid).snapshots().map(_userRoleDataFromSnapshot);
   }
 
-  // get brews stream
+  // get list of business stream
   Stream<List<Business>> get businesses {
     return businessItems.snapshots().map(_businessListFromSnapshot);
   }
@@ -191,5 +191,12 @@ class DatabaseService {
         .collection('items')
         .snapshots()
         .map(_itemsFromSnapshot);
+  }
+
+  Stream<Business> singleBusinessDataStream(String businessId) {
+    return businessItems
+        .doc(businessId)
+        .snapshots()
+        .map(_businessDataFromSnapshot);
   }
 }
