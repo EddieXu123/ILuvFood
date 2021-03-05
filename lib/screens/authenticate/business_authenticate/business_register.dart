@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
