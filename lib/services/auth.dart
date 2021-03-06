@@ -55,7 +55,17 @@ class AuthService {
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount googleUser =
+        await GoogleSignIn().signIn().catchError((onError) {
+      print("Error $onError");
+      return null;
+    });
+
+    // Bug: clicking out of the google login portal triggers an uncatchable
+    // exception. see: https://stackoverflow.com/a/62141551
+    // Ignoring for now..
+
+    if (googleUser == null) return null;
 
     // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth =
@@ -83,5 +93,6 @@ class AuthService {
   // sign out
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
   }
 }
