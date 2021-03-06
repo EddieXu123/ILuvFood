@@ -159,7 +159,7 @@ class _BusinessHomeState extends State<BusinessHome> {
                                             if (mounted) {
                                               setState(() {
                                                 loading = false;
-                                                error = e.message();
+                                                error = e.message;
                                               });
                                             }
                                           }

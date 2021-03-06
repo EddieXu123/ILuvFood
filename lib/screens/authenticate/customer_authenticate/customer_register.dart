@@ -103,11 +103,14 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                                     await _auth
                                         .customerRegisterWithEmailandPassword(
                                             email, password, name);
+                                    setState(() => loading = false);
                                     Navigator.pop(context);
                                   } catch (e) {
                                     if (mounted) {
                                       setState(() {
-                                        error = e.message();
+                                        error = e.message;
+                                        print(error);
+                                        loading = false;
                                       });
                                     }
                                   }

@@ -137,7 +137,7 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
                                       if (mounted) {
                                         setState(() {
                                           loading = false;
-                                          error = e.message();
+                                          error = e.message;
                                         });
                                       }
                                     }
