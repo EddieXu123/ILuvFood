@@ -1,77 +1,42 @@
 {
   "project_info": {
-    "project_number": "529325261207",
-    "project_id": "food-crew",
-    "storage_bucket": "food-crew.appspot.com"
+    "project_number": "667855480591",
+    "project_id": "iluvfood-37c54",
+    "storage_bucket": "iluvfood-37c54.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:529325261207:android:fee0e5a90916b8040884d2",
-        "android_client_info": {
-          "package_name": "com.example.food_crew"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "529325261207-409j5qa8fhb3h5umf5932n0nqj15f1ir.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD24mJrDBaYeFnhqDyI4xfeVWMU04Ne0jU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "529325261207-409j5qa8fhb3h5umf5932n0nqj15f1ir.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "529325261207-7f875fk99nghl9upr0uskm7cdhp4ubvt.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.foodCrew"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:529325261207:android:65c5b808542e1ce70884d2",
+        "mobilesdk_app_id": "1:667855480591:android:4dac1ca5d7431d258d807a",
         "android_client_info": {
           "package_name": "com.example.iluvfood"
         }
       },
       "oauth_client": [
         {
-          "client_id": "529325261207-409j5qa8fhb3h5umf5932n0nqj15f1ir.apps.googleusercontent.com",
+          "client_id": "667855480591-sgnegc4sm9v71drj9rht33c1d6lmgofh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.iluvfood",
+            "certificate_hash": "6ab33689f4718fd6057d0b44ae936bcb83b205bd"
+          }
+        },
+        {
+          "client_id": "667855480591-rd4l5slivmipfg896j1mv2hideom2ek3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD24mJrDBaYeFnhqDyI4xfeVWMU04Ne0jU"
+          "current_key": "AIzaSyDV3dQ3GdhazwZAWniBWLWCRxZ9cxnEMrI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "529325261207-409j5qa8fhb3h5umf5932n0nqj15f1ir.apps.googleusercontent.com",
+              "client_id": "667855480591-rd4l5slivmipfg896j1mv2hideom2ek3.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "529325261207-7f875fk99nghl9upr0uskm7cdhp4ubvt.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.foodCrew"
-              }
             }
           ]
         }
