@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/enum.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 /*
 This class handles the firebase auth and creating docs of customers/business
@@ -52,8 +53,46 @@ class AuthService {
     await DatabaseService(uid: uid).enterBusinessData(businessName);
   }
 
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount googleUser =
+        await GoogleSignIn().signIn().catchError((onError) {
+      print("Error $onError");
+      return null;
+    });
+
+    // Bug: clicking out of the google login portal triggers an uncatchable
+    // exception. see: https://stackoverflow.com/a/62141551
+    // Ignoring for now..
+
+    if (googleUser == null) return null;
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    // Create a new credential
+    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    // add user document with customer information
+
+    print("Google signing in...$userCredential");
+    final uid = _auth.currentUser.uid;
+    await DatabaseService(uid: uid)
+        .enterUserData(userCredential.user.displayName, Role.CUSTOMER);
+
+    return userCredential;
+  }
+
   // sign out
   Future signOut() async {
     await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
   }
 }

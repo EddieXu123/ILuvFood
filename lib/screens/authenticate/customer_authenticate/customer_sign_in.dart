@@ -88,9 +88,9 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 40.0),
+                        SizedBox(height: 20.0),
                         Container(
-                          height: 40.0,
+                          height: 30.0,
                           child: FlatButton(
                             color: Theme.of(context).accentColor,
                             onPressed: () async {
@@ -118,7 +118,6 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 5.0),
                         Container(
                           height: 30,
                           child: Text(
@@ -126,32 +125,56 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                             style: TextStyle(color: Colors.red, fontSize: 12.0),
                           ),
                         ),
-                        SizedBox(height: 10.0),
                         Container(
-                          height: 40.0,
-                          color: Colors.transparent,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.black,
-                                    style: BorderStyle.solid,
-                                    width: 1.0),
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(20.0)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(width: 10.0),
-                                Center(
-                                  child: Text('coming soon :(',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat')),
-                                ),
-                              ],
+                          height: 30.0,
+                          child: FlatButton(
+                            color: Theme.of(context).accentColor,
+                            onPressed: () async {
+                              try {
+                                await _auth.signInWithGoogle();
+                                Navigator.pop(context);
+                              } catch (e) {
+                                print(e.code);
+                                if (mounted) {
+                                  setState(() => {error = e.message});
+                                }
+                              }
+                            },
+                            child: Center(
+                              child: Text(
+                                'Sign in with Google',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat'),
+                              ),
                             ),
                           ),
-                        )
+                        ),
+                        // Container(
+                        //   height: 40.0,
+                        //   color: Colors.transparent,
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //         border: Border.all(
+                        //             color: Colors.black,
+                        //             style: BorderStyle.solid,
+                        //             width: 1.0),
+                        //         color: Colors.transparent,
+                        //         borderRadius: BorderRadius.circular(20.0)),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.center,
+                        //       children: <Widget>[
+                        //         SizedBox(width: 10.0),
+                        //         Center(
+                        //           child: Text('coming soon :(',
+                        //               style: TextStyle(
+                        //                   fontWeight: FontWeight.bold,
+                        //                   fontFamily: 'Montserrat')),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ))),
             SizedBox(height: 15.0),
