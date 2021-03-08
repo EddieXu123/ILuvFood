@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/services/auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geocoder/geocoder.dart';
+
 import 'package:iluvfood/shared/restaurants.dart' as restaurants;
+
+// TODO: my location button: https://pub.dev/documentation/google_maps_flutter/latest/google_maps_flutter/GoogleMap/myLocationButtonEnabled.html
 
 void main() => runApp(Home());
 
@@ -22,6 +25,11 @@ class _HomeState extends State<Home> {
   final Map<String, Marker> _markers = {};
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
+    final query = "1867 W 25th St, Cleveland, OH 44113";
+    var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    var first = addresses.first;
+    print("${first.featureName} : ${first.coordinates}");
+
     final locations = await restaurants.getLocations();
     setState(() {
       _markers.clear();
@@ -32,6 +40,7 @@ class _HomeState extends State<Home> {
           infoWindow: InfoWindow(
             title: restaurant.name,
             snippet: restaurant.address,
+            // TODO: onTap callback: https://pub.dev/documentation/google_maps_flutter_platform_interface/latest/google_maps_flutter_platform_interface/InfoWindow-class.html
           ),
         );
         _markers[restaurant.name] = marker;
