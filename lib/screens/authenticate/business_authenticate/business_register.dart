@@ -106,11 +106,13 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                         await _auth
                                             .businessRegisterWithEmailandPassword(
                                                 email, password, businessName);
+                                        setState(() => loading = false);
                                         Navigator.pop(context);
                                       } catch (e) {
                                         if (mounted) {
                                           setState(() {
-                                            error = e.message();
+                                            error = e.message;
+                                            loading = false;
                                           });
                                         }
                                       }

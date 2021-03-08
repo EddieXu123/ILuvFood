@@ -102,7 +102,6 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                                       email, password);
                                   Navigator.pop(context);
                                 } catch (e) {
-                                  print(e.code);
                                   if (mounted) {
                                     setState(() => {error = e.message});
                                   }
