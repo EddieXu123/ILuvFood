@@ -27,7 +27,7 @@ class _BusinessRegisterState extends State<BusinessRegister> {
     return loading
         ? Loading()
         : new Scaffold(
-            resizeToAvoidBottomPadding: false,
+            resizeToAvoidBottomInset: false,
             body:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
                     Widget>[

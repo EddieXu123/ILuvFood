@@ -37,7 +37,7 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
             _lng = businessData.lng;
             _phone = businessData.phone;
             return new Scaffold(
-                resizeToAvoidBottomPadding: false,
+                resizeToAvoidBottomInset: false,
                 key: _scaffoldKey,
                 appBar: AppBar(
                   title: Text(

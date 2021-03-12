@@ -59,7 +59,7 @@ class _BusinessHomeState extends State<BusinessHome> {
                   //   )
                   // ]
                 ),
-                resizeToAvoidBottomPadding: false,
+                resizeToAvoidBottomInset: false,
                 body: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
