@@ -33,24 +33,27 @@ class AuthService {
   }
 
   Future customerRegisterWithEmailandPassword(
-      String email, String password, String name) async {
-    // attempt to registe ruser
-    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    // add user document with customer information
-    final uid = _auth.currentUser.uid;
-    await DatabaseService(uid: uid).enterUserData(name, Role.CUSTOMER, email);
-  }
-
-  Future businessRegisterWithEmailandPassword(
-      String email, String password, String businessName) async {
+      String email, String password, String name, String phone) async {
     // attempt to registe ruser
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
     // add user document with customer information
     final uid = _auth.currentUser.uid;
     await DatabaseService(uid: uid)
-        .enterUserData(businessName, Role.BUSINESS, email);
+        .enterUserData(name, Role.CUSTOMER, email, phone);
+  }
+
+  Future businessRegisterWithEmailandPassword(
+      String email, String password, String businessName, String phone) async {
+    // attempt to registe ruser
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    // add user document with customer information
+    final uid = _auth.currentUser.uid;
+    await DatabaseService(uid: uid)
+        .enterUserData(businessName, Role.BUSINESS, email, phone);
     await DatabaseService(uid: uid).enterBusinessData(businessName);
   }
 
@@ -86,7 +89,7 @@ class AuthService {
     print("Google signing in...$userCredential");
     final uid = _auth.currentUser.uid;
     await DatabaseService(uid: uid).enterUserData(
-        userCredential.user.displayName, Role.CUSTOMER, googleUser.email);
+        userCredential.user.displayName, Role.CUSTOMER, googleUser.email, null);
 
     return userCredential;
   }

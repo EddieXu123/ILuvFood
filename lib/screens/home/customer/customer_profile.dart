@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/customer.dart';
+import 'package:iluvfood/screens/home/customer/password_reset.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
+import 'package:iluvfood/shared/functions.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -17,10 +19,13 @@ class CustomerProfile extends StatefulWidget {
 }
 
 class _CustomerProfileState extends State<CustomerProfile> {
-  final AuthService _auth = AuthService();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   String _customerName = '';
   String _customerEmail = '';
+  String _customerPhone = '';
+  bool changed = false;
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -31,7 +36,10 @@ class _CustomerProfileState extends State<CustomerProfile> {
             Customer customer = snapshot.data;
             _customerName = customer.name;
             _customerEmail = customer.email;
+            _customerPhone = customer.phone;
             return Scaffold(
+              resizeToAvoidBottomInset: false,
+              key: _scaffoldKey,
               appBar: AppBar(
                 title: Text("Profile Page"),
                 centerTitle: true,
@@ -45,60 +53,102 @@ class _CustomerProfileState extends State<CustomerProfile> {
                         TextFormField(
                           initialValue: _customerEmail,
                           readOnly: true,
-                          decoration: textInputDecoration.copyWith(
-                              labelText: "Customer Email"),
-                          validator: (val) =>
-                              val.isEmpty ? 'No email found' : null,
+                          decoration:
+                              textInputDecoration.copyWith(labelText: "Email"),
                         ),
                         SizedBox(height: 20.0),
                         TextFormField(
                             initialValue: _customerName,
-                            decoration: textInputDecoration.copyWith(
-                                labelText: "Customer Name"),
+                            decoration:
+                                textInputDecoration.copyWith(labelText: "Name"),
+                            validator: (val) =>
+                                val.isEmpty ? 'Enter a name' : null,
                             onChanged: (val) {
+                              changed = true;
                               _customerName = val;
                             }),
                         SizedBox(height: 20.0),
                         TextFormField(
-                          initialValue: "************",
-                          readOnly: true,
-                          decoration: textInputDecoration.copyWith(
-                              labelText: "Password"),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             BusinessAuthenticate()));
-                            print('Reset Password');
-                          },
-                          child: Text(
-                            'Reset Password',
-                            style: linkedPageTextStyle,
-                          ),
-                        ),
+                            initialValue: _customerPhone,
+                            decoration: textInputDecoration.copyWith(
+                                labelText: "Phone Number"),
+                            validator: (val) => validateMobile(val),
+                            onChanged: (val) {
+                              changed = true;
+                              _customerPhone = val;
+                            }),
                         SizedBox(height: 20.0),
                         Container(
                           height: 40.0,
                           child: FlatButton(
                             color: Theme.of(context).accentColor,
-                            onPressed: () {
-                              print(_customerName);
-                              try {
-                                DatabaseService(uid: user.uid)
-                                    .updateCustomerData(_customerName);
-                              } catch (e) {
-                                print(e);
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                print(_customerName);
+                                try {
+                                  if (changed) {
+                                    await DatabaseService(uid: user.uid)
+                                        .updateCustomerData(
+                                            _customerName, _customerPhone);
+                                    _scaffoldKey.currentState
+                                        .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.pink,
+                                      duration: Duration(seconds: 2),
+                                      content: Text(
+                                        "Profile successfully updated",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ));
+                                    changed = false;
+                                  } else {
+                                    _scaffoldKey.currentState
+                                        .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.pink,
+                                      duration: Duration(seconds: 2),
+                                      content: Text(
+                                        "No changes made",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ));
+                                  }
+                                } catch (e) {
+                                  print(e);
+                                }
                               }
                             },
                             child: Center(
                               child: Text(
                                 'Update Profile',
                                 style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20.0),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 40.0,
+                            child: FlatButton(
+                              color: Theme.of(context).accentColor,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PasswordReset()));
+                                print('Reset Password');
+                              },
+                              child: Center(
+                                child: Text(
+                                  'Reset Password',
+                                  style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat'),
+                                    fontFamily: 'Montserrat',
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -112,7 +162,4 @@ class _CustomerProfileState extends State<CustomerProfile> {
           }
         });
   }
-  // return Container(
-  //   Text("MY CUSTOMER PROFILE"),
-  // );
 }

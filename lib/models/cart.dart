@@ -60,10 +60,11 @@ class CartModel extends ChangeNotifier {
             (value) => CartItem(
                 item: value.item,
                 uid: value.uid,
-                quantity: value.quantity + 1));
+                quantity: value.quantity + 1,
+                price: item.price));
       } else {
-        _itemMap[item.item] =
-            CartItem(item: item.item, uid: itemId, quantity: 1);
+        _itemMap[item.item] = CartItem(
+            item: item.item, uid: itemId, quantity: 1, price: item.price);
       }
       print("Added, cart total now: $_priceInCart");
       print(

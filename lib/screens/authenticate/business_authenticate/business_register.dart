@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
+import 'package:iluvfood/shared/functions.dart';
 import 'package:iluvfood/shared/loading.dart';
 /*
 BusinessRegister page UI
@@ -22,6 +23,7 @@ class _BusinessRegisterState extends State<BusinessRegister> {
   String password = '';
   String error = '';
   String businessName = '';
+  String phone = '';
   @override
   Widget build(BuildContext context) {
     return loading
@@ -91,6 +93,14 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                 businessName = val;
                               }),
                           SizedBox(height: 20.0),
+                          TextFormField(
+                              decoration: textInputDecoration.copyWith(
+                                  labelText: "Phone Number"),
+                              validator: (val) => validateMobile(val),
+                              onChanged: (val) {
+                                phone = val;
+                              }),
+                          SizedBox(height: 20.0),
                           Container(
                               height: 40.0,
                               child: Material(
@@ -105,7 +115,10 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                       try {
                                         await _auth
                                             .businessRegisterWithEmailandPassword(
-                                                email, password, businessName);
+                                                email,
+                                                password,
+                                                businessName,
+                                                phone);
                                         setState(() => loading = false);
                                         Navigator.pop(context);
                                       } catch (e) {
