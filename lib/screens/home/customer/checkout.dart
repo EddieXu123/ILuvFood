@@ -36,21 +36,47 @@ class _CartList extends StatelessWidget {
     // when it changes).
     // var cart = context.watch<CartModel>();
     CartModel cart = context.watch<CartModel>();
-    return ListView.builder(
-      itemCount: cart.cartItems.length,
-      itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.done),
-        trailing: IconButton(
-          icon: Icon(Icons.remove_circle_outline),
-          onPressed: () {
-            cart.remove(cart.cartItems[index].uid);
-          },
-        ),
-        title: Text(
-          "${cart.cartItems[index].item} (${cart.cartItems[index].quantity})",
-          style: itemNameStyle,
+    return new Scaffold(
+      body: ListView.builder(
+        itemCount: cart.cartItems.length,
+        itemBuilder: (context, index) => ListTile(
+          leading: Icon(Icons.done),
+          trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.remove_circle_outline),
+              onPressed: () {
+                cart.remove(cart.cartItems[index].uid);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.add_circle_outline),
+              onPressed: () {
+                cart.add(cart.cartItems[index].uid);
+              },
+            ),
+          ]),
+          title: Text(
+            "${cart.cartItems[index].item} (${cart.cartItems[index].quantity})",
+            style: itemNameStyle,
+          ),
         ),
       ),
+      // child: ListView.builder(
+      //   itemCount: cart.cartItems.length,
+      //   itemBuilder: (context, index) => ListTile(
+      //     leading: Icon(Icons.done),
+      //     trailing: IconButton(
+      //       icon: Icon(Icons.remove_circle_outline),
+      //       onPressed: () {
+      //         cart.remove(cart.cartItems[index].uid);
+      //       },
+      //     ),
+      //     title: Text(
+      //       "${cart.cartItems[index].item} (${cart.cartItems[index].quantity})",
+      //       style: itemNameStyle,
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
