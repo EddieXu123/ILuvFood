@@ -58,7 +58,7 @@ class Welcome extends StatelessWidget {
                                     builder: (context) =>
                                         CustomerAuthenticate()));
                           },
-                          child: Text('Sign is as customer',
+                          child: Text('Sign in as customer',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Montserrat')),

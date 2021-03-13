@@ -3,6 +3,7 @@ import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/errorPage.dart';
+import 'package:iluvfood/shared/functions.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
   String _lat = '';
   String _lng = '';
   String _phone = '';
+  bool changed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +61,9 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
                                 decoration: textInputDecoration.copyWith(
                                     labelText: "Business Name"),
                                 validator: (val) =>
-                                    val.isEmpty ? 'Enter an name' : null,
+                                    val.isEmpty ? 'Enter a name' : null,
                                 onChanged: (val) {
+                                  changed = true;
                                   _businessName = val;
                                 }),
                             SizedBox(height: 10.0),
@@ -72,6 +75,7 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
                                 validator: (val) =>
                                     val.isEmpty ? 'Enter an address' : null,
                                 onChanged: (val) {
+                                  changed = true;
                                   _address = val;
                                 }),
                             SizedBox(height: 20.0),
@@ -79,10 +83,9 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
                                 initialValue: businessData.phone,
                                 decoration: textInputDecoration.copyWith(
                                     labelText: "Phone"),
-                                validator: (val) => val.isEmpty
-                                    ? 'Enter a a phone number'
-                                    : null,
+                                validator: (val) => validateMobile(val),
                                 onChanged: (val) {
+                                  changed = true;
                                   _phone = val;
                                 }),
                             SizedBox(height: 10.0),
@@ -93,6 +96,7 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
                                 validator: (val) =>
                                     val.isEmpty ? 'Enter a longitude' : null,
                                 onChanged: (val) {
+                                  changed = true;
                                   _lng = val;
                                 }),
                             SizedBox(height: 10.0),
@@ -103,6 +107,7 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
                                 validator: (val) =>
                                     val.isEmpty ? 'Enter a latitude' : null,
                                 onChanged: (val) {
+                                  changed = true;
                                   _lat = val;
                                 }),
                             SizedBox(height: 20.0),
@@ -114,25 +119,37 @@ class _BusinessProfileFormState extends State<BusinessProfileForm> {
                                   if (_formKey.currentState.validate()) {
                                     setState(() => loading = true);
                                     try {
-                                      print(_lng);
-                                      await DatabaseService(uid: user.uid)
-                                          .updateBusinessData(Business(
-                                              uid: user.uid,
-                                              address: _address,
-                                              lat: _lat,
-                                              lng: _lng,
-                                              businessName: _businessName,
-                                              phone: _phone));
-                                      setState(() => loading = false);
-                                      _scaffoldKey.currentState
-                                          .showSnackBar(SnackBar(
-                                        backgroundColor: Colors.pink,
-                                        duration: Duration(seconds: 2),
-                                        content: Text(
-                                          "Profile successfully updated",
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ));
+                                      if (changed) {
+                                        await DatabaseService(uid: user.uid)
+                                            .updateBusinessData(Business(
+                                                uid: user.uid,
+                                                address: _address,
+                                                lat: _lat,
+                                                lng: _lng,
+                                                businessName: _businessName,
+                                                phone: _phone));
+                                        setState(() => loading = false);
+                                        _scaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
+                                          backgroundColor: Colors.pink,
+                                          duration: Duration(seconds: 2),
+                                          content: Text(
+                                            "Profile successfully updated",
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ));
+                                        changed = false;
+                                      } else {
+                                        _scaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
+                                          backgroundColor: Colors.pink,
+                                          duration: Duration(seconds: 2),
+                                          content: Text(
+                                            "No changes made",
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ));
+                                      }
                                     } catch (e) {
                                       if (mounted) {
                                         setState(() {

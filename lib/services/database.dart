@@ -14,10 +14,16 @@ class DatabaseService {
   final CollectionReference businessItems =
       FirebaseFirestore.instance.collection('businessitems');
 
-  Future<void> enterUserData(String name, Role role) {
+  Future<void> enterUserData(
+      String name, Role role, String email, String phone) {
     return userDetails
         .doc(uid)
-        .set({'name': name, 'role': role.toShortString()})
+        .set({
+          'name': name,
+          'role': role.toShortString(),
+          'email': email,
+          'phone': phone
+        })
         .then((value) => print("yay user added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
@@ -43,6 +49,13 @@ class DatabaseService {
       "lng": business.lng,
       "name": business.businessName,
       "phone": business.phone
+    });
+  }
+
+  Future<void> updateCustomerData(String name, String phone) {
+    return userDetails.doc(uid).update({
+      "name": name,
+      "phone": phone,
     });
   }
 
@@ -102,7 +115,10 @@ class DatabaseService {
     try {
       print(snapshot.id);
       return Customer(
-          uid: snapshot.id, name: snapshot.data()['name'] ?? '<no name found>');
+          uid: snapshot.id,
+          name: snapshot.data()['name'] ?? '<no name found>',
+          email: snapshot.data()['email'] ?? '<no email found>',
+          phone: snapshot.data()['phone'] ?? '<no phone found');
     } catch (e) {
       print('error returning customer data...');
       return Customer();

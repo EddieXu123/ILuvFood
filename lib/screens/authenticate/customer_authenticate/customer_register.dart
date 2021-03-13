@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
+import 'package:iluvfood/shared/functions.dart';
+
 /*
 CustomerRegister page UI
 */
@@ -23,6 +25,8 @@ class _CustomerRegisterState extends State<CustomerRegister> {
   String password = '';
   String error = '';
   String name = '';
+  String phone = '';
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -92,6 +96,14 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                                 name = val;
                               }),
                           SizedBox(height: 20.0),
+                          TextFormField(
+                              decoration: textInputDecoration.copyWith(
+                                  labelText: "Phone Number"),
+                              validator: (val) => validateMobile(val),
+                              onChanged: (val) {
+                                phone = val;
+                              }),
+                          SizedBox(height: 20.0),
                           Container(
                             height: 40.0,
                             child: FlatButton(
@@ -102,7 +114,7 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                                   try {
                                     await _auth
                                         .customerRegisterWithEmailandPassword(
-                                            email, password, name);
+                                            email, password, name, phone);
                                     setState(() => loading = false);
                                     Navigator.pop(context);
                                   } catch (e) {
