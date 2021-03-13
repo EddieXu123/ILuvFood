@@ -35,8 +35,16 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                   cart.reset();
                   return Future.value(true);
                 },
-                child: Scaffold(
+                child: DefaultTabController(
+                  length: 2,
+                  child: Scaffold(
                     appBar: AppBar(
+                      bottom: TabBar(
+                        tabs: [
+                          Tab(icon: Icon(Icons.store)),
+                          Tab(icon: Icon(Icons.tapas)),
+                        ],
+                      ),
                       title: Text(
                         "${businessData.businessName ?? "<no name found>"}",
                         textAlign: TextAlign.center,
@@ -46,71 +54,117 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                       ),
                       elevation: 0.0,
                     ),
-                    body: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(height: 20.0),
-                              Text(businessData.address),
-                              SizedBox(height: 10.0),
-                              Text(businessData.phone),
-                              SizedBox(height: 10.0),
-                              Text(
-                                  "<${businessData.lat}, ${businessData.lng}>"),
-                              // insert scroll view
-                              SizedBox(height: 25.0),
-                              SizedBox(
-                                width: 300.0,
-                                height: 300.0,
-                                child: ItemScrollView(
-                                    businessId: widget.business.uid),
-                                // child: snapshot.hasData
-                                //     ? ItemScrollView(
-                                //         businessItems: snapshot.data,
-                                //         businessId: widget.business.uid)
-                                //     : Loading(),
-                              ),
-                              // FutureBuilder<int>(
-                              //     future: cart.priceInCart,
-                              //     builder: (BuildContext context,
-                              //         AsyncSnapshot<int> snapshot) {
-                              //       return snapshot.hasData
-                              //           ? Text("Cart Price: \$${snapshot.data}")
-                              //           : Loading();
-                              //     }),
-                              SizedBox(
-                                child:
-                                    Text("Cart Price: \$${cart.priceInCart}"),
-                              ),
-                              SizedBox(height: 10.0),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Checkout()));
-                                  // Navigator.of(context).push(
-                                  //   MaterialPageRoute(builder: (BuildContext context) {
-                                  //     var test = context.watch<CartModel>();
-                                  //     return ChangeNotifierProvider(
-                                  //         create: (context) => test, child: Checkout());
-                                  //   }),
-                                  // );
-                                },
-                                child: Text(
-                                  'Checkout',
-                                  style: linkedPageTextStyle,
-                                ),
-                              )
-                            ],
-                          )
-                        ])),
+                    body: TabBarView(children: [
+                      InfoTab(
+                        business: businessData,
+                      ),
+                      MenuTab(
+                        business: businessData,
+                        cart: cart,
+                      ),
+                    ]),
+                  ),
+                ),
               );
             } else {
               return Loading();
             }
           }),
+    );
+  }
+}
+
+class InfoTab extends StatefulWidget {
+  // todo: refactor so business is in a streamprovider
+  final Business business;
+  InfoTab({this.business});
+  @override
+  _InfoTabState createState() => _InfoTabState();
+}
+
+class _InfoTabState extends State<InfoTab> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Column(children: [
+          SizedBox(height: 20.0),
+          Image.network(
+            widget.business.image,
+            fit: BoxFit.fill,
+          ),
+          SizedBox(height: 20.0),
+          Text(widget.business.address),
+          SizedBox(height: 10.0),
+          Text(widget.business.phone),
+          SizedBox(height: 10.0),
+          Text("<${widget.business.lat}, ${widget.business.lng}>"),
+        ]),
+      ]),
+    );
+  }
+}
+
+class MenuTab extends StatefulWidget {
+  // todo: refactor so business is in a streamprovider
+  final Business business;
+  final CartModel cart;
+  MenuTab({this.business, this.cart});
+  @override
+  _MenuTabState createState() => _MenuTabState();
+}
+
+class _MenuTabState extends State<MenuTab> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Column(
+          children: [
+            // insert scroll view
+            SizedBox(height: 25.0),
+            SizedBox(
+              width: 300.0,
+              height: 300.0,
+              child: ItemScrollView(businessId: widget.business.uid),
+              // child: snapshot.hasData
+              //     ? ItemScrollView(
+              //         businessItems: snapshot.data,
+              //         businessId: widget.business.uid)
+              //     : Loading(),
+            ),
+            // FutureBuilder<int>(
+            //     future: cart.priceInCart,
+            //     builder: (BuildContext context,
+            //         AsyncSnapshot<int> snapshot) {
+            //       return snapshot.hasData
+            //           ? Text("Cart Price: \$${snapshot.data}")
+            //           : Loading();
+            //     }),
+            SizedBox(
+              child: Text("Cart Price: \$${widget.cart.priceInCart}"),
+            ),
+            SizedBox(height: 10.0),
+            InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Checkout()));
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(builder: (BuildContext context) {
+                //     var test = context.watch<CartModel>();
+                //     return ChangeNotifierProvider(
+                //         create: (context) => test, child: Checkout());
+                //   }),
+                // );
+              },
+              child: Text(
+                'Checkout',
+                style: linkedPageTextStyle,
+              ),
+            ),
+          ],
+        ),
+      ]),
     );
   }
 }
