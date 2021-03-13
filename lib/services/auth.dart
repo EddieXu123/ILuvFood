@@ -39,7 +39,7 @@ class AuthService {
         email: email, password: password);
     // add user document with customer information
     final uid = _auth.currentUser.uid;
-    await DatabaseService(uid: uid).enterUserData(name, Role.CUSTOMER);
+    await DatabaseService(uid: uid).enterUserData(name, Role.CUSTOMER, email);
   }
 
   Future businessRegisterWithEmailandPassword(
@@ -49,7 +49,8 @@ class AuthService {
         email: email, password: password);
     // add user document with customer information
     final uid = _auth.currentUser.uid;
-    await DatabaseService(uid: uid).enterUserData(businessName, Role.BUSINESS);
+    await DatabaseService(uid: uid)
+        .enterUserData(businessName, Role.BUSINESS, email);
     await DatabaseService(uid: uid).enterBusinessData(businessName);
   }
 
@@ -84,8 +85,8 @@ class AuthService {
 
     print("Google signing in...$userCredential");
     final uid = _auth.currentUser.uid;
-    await DatabaseService(uid: uid)
-        .enterUserData(userCredential.user.displayName, Role.CUSTOMER);
+    await DatabaseService(uid: uid).enterUserData(
+        userCredential.user.displayName, Role.CUSTOMER, googleUser.email);
 
     return userCredential;
   }

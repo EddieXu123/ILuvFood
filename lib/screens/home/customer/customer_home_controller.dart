@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/screens/home/customer/customer_home.dart';
+import 'package:iluvfood/screens/home/customer/customer_profile.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/errorPage.dart';
 
@@ -15,7 +16,13 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
+    // maps page
     CustomerHome(),
+
+    // account page
+    CustomerProfile(),
+
+    // favorites page
     ErrorPage(),
   ];
 
@@ -37,6 +44,10 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
