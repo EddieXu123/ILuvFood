@@ -157,12 +157,16 @@ class _PurchaseNow extends StatelessWidget {
             TextButton(
               onPressed: () {
                 print("processing order!");
-                DatabaseService().initializePastOrder(Order(
-                    orderId: "orderId",
-                    dateTime: DateTime.now(),
-                    businessUid: cart.businessUid,
-                    customerUid: user.uid,
-                    items: cart.cartItems));
+                try {
+                  DatabaseService().initializePastOrder(Order(
+                      orderId: "orderId",
+                      dateTime: DateTime.now(),
+                      businessUid: cart.businessUid,
+                      customerUid: user.uid,
+                      items: cart.cartItems));
+                } catch (e) {
+                  print("Error adding to order history: $e");
+                }
                 // TODO - look into how to do this with the alert dialog
                 // showAlertDialog(context);
               },
