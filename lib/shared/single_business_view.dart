@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
+import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/models/business_item.dart';
 import 'package:iluvfood/models/cart.dart';
 import 'package:iluvfood/screens/home/customer/checkout.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/errorPage.dart';
+import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:favorite_button/favorite_button.dart';
 
 class SingleBusinessView extends StatefulWidget {
   final Business business;
-  SingleBusinessView({this.business});
+  final Customer customer;
+  SingleBusinessView({this.business, this.customer});
 
   @override
   _SingleBusinessViewState createState() => _SingleBusinessViewState();
@@ -57,6 +61,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                     body: TabBarView(children: [
                       InfoTab(
                         business: businessData,
+                        customer: widget.customer,
                       ),
                       MenuTab(
                         business: businessData,
@@ -77,28 +82,87 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
 class InfoTab extends StatefulWidget {
   // todo: refactor so business is in a streamprovider
   final Business business;
-  InfoTab({this.business});
+  final Customer customer;
+  InfoTab({this.business, this.customer});
   @override
   _InfoTabState createState() => _InfoTabState();
 }
 
 class _InfoTabState extends State<InfoTab> {
+  final _databaseService = DatabaseService();
+
+/*
+  Future<List> _getFavorites() async {
+    return Future.value(
+        _databaseService.readCustomerFavorites(widget.customer.uid));
+  }
+
+  Widget _favoritesButton(List favorites) {
+    if (favorites != null) {
+      if (!favorites.contains(widget.business.uid)) {
+        return IconButton(
+          icon: const Icon(Icons.favorite),
+          tooltip: 'Remove from favorites',
+          onPressed: () {
+            print("Remove from favorites");
+            favorites.remove(widget.business.uid);
+            _databaseService.customerUpdateFavorites(
+                widget.customer.uid, favorites);
+          },
+        );
+      }
+    }
+    return IconButton(
+      icon: const Icon(Icons.favorite_border),
+      tooltip: 'Add to favorites',
+      onPressed: () {
+        print("Add to favorites");
+        favorites.add(widget.business.uid);
+        _databaseService.customerUpdateFavorites(
+            widget.customer.uid, favorites);
+      },
+    );
+  }
+  */
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(children: [
           SizedBox(height: 20.0),
-          Image.network(
-            widget.business.image,
-            fit: BoxFit.fill,
+          SizedBox(
+            width: 350.0,
+            height: 300.0,
+            child: Image.network(
+              widget.business.image,
+              fit: BoxFit.fill,
+            ),
           ),
           SizedBox(height: 20.0),
           Text(widget.business.address),
           SizedBox(height: 10.0),
           Text(widget.business.phone),
-          SizedBox(height: 10.0),
-          Text("<${widget.business.lat}, ${widget.business.lng}>"),
+          SizedBox(height: 150.0),
+          FavoriteButton(
+            isFavorite: widget.customer.favorites.contains(widget.business.uid),
+            valueChanged: (_isFavorite) {
+              print('Is Favorite : $_isFavorite');
+              _databaseService.customerUpdateFavorites(
+                  widget.customer, widget.business.uid, _isFavorite);
+            },
+          ),
+          /*
+          FutureBuilder(
+              future: _getFavorites(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<dynamic>> snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else {
+                  return _favoritesButton(snapshot.data);
+                }
+              }),*/
         ]),
       ]),
     );
@@ -125,7 +189,7 @@ class _MenuTabState extends State<MenuTab> {
             SizedBox(height: 25.0),
             SizedBox(
               width: 300.0,
-              height: 300.0,
+              height: 500.0,
               child: ItemScrollView(businessId: widget.business.uid),
               // child: snapshot.hasData
               //     ? ItemScrollView(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/business_item.dart';
 import 'package:iluvfood/models/customer.dart';
@@ -102,12 +103,65 @@ class DatabaseService {
     try {
       print(snapshot.id);
       return Customer(
-          uid: snapshot.id, name: snapshot.data()['name'] ?? '<no name found>');
+        uid: snapshot.id,
+        name: snapshot.data()['name'] ?? '<no name found>',
+        favorites: snapshot.data()['favorites'] ?? [],
+      );
     } catch (e) {
       print('error returning customer data...');
       return Customer();
     }
   }
+
+/*
+  Future<List> readCustomerFavorites(String customerUid) async {
+    try {
+      DocumentSnapshot snapshot = await userDetails.doc(customerUid).get();
+      List favorites = snapshot.get('favorites');
+
+      return favorites;
+    } catch (e) {
+      print("error retrieving item from db: $e");
+      return null;
+    }
+  }
+  */
+
+  void customerUpdateFavorites(
+      Customer customer, String businessUid, bool toAdd) async {
+    try {
+      //List favorites = customer.favorites;
+      Map<String, dynamic> data;
+      if (toAdd) {
+        //favorites.add(businessUid);
+        data = {
+          'favorites': FieldValue.arrayUnion([businessUid])
+        };
+      } else {
+        //favorites.remove(businessUid);
+        data = {
+          'favorites': FieldValue.arrayRemove([businessUid])
+        };
+      }
+      await userDetails.doc(customer.uid).update(data);
+    } catch (e) {
+      print("error retrieving item from db: $e");
+      return null;
+    }
+  }
+
+/*
+  void customerUpdateFavorites(
+      String customerUid, List<String> favorites) async {
+    try {
+      Map<String, List<String>> data = {'favorites': favorites};
+      await userDetails.doc(customerUid).update(data);
+    } catch (e) {
+      print("error retrieving item from db: $e");
+      return null;
+    }
+  }
+*/
 
   // get business profile data from snapshot
   Business _businessDataFromSnapshot(DocumentSnapshot snapshot) {

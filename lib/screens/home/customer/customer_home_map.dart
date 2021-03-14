@@ -79,7 +79,10 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        SingleBusinessView(business: business)));
+                        SingleBusinessView(
+                          business: business,
+                          customer: widget.customer,
+                        )));
           },
           // TODO: onTap callback: https://pub.dev/documentation/google_maps_flutter_platform_interface/latest/google_maps_flutter_platform_interface/InfoWindow-class.html
         ),
@@ -111,7 +114,7 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
             backgroundColor: Colors.pink,
             elevation: 0.0,
             actions: <Widget>[
-              FlatButton.icon(
+              TextButton.icon(
                 icon: Icon(Icons.person),
                 onPressed: () async {
                   await _auth.signOut();

@@ -1,5 +1,6 @@
 class Customer {
   final String uid;
   final String name;
-  Customer({this.uid, this.name});
+  final List favorites;
+  Customer({this.uid, this.name, this.favorites});
 }
