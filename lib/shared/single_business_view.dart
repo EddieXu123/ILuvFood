@@ -6,12 +6,12 @@ import 'package:iluvfood/models/cart.dart';
 import 'package:iluvfood/screens/home/customer/checkout.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/shared/errorPage.dart';
-import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:favorite_button/favorite_button.dart';
 
+///
+/// Displays a specific business's information and all items they have currently listed
 class SingleBusinessView extends StatefulWidget {
   final Business business;
   final Customer customer;
@@ -91,40 +91,6 @@ class InfoTab extends StatefulWidget {
 class _InfoTabState extends State<InfoTab> {
   final _databaseService = DatabaseService();
 
-/*
-  Future<List> _getFavorites() async {
-    return Future.value(
-        _databaseService.readCustomerFavorites(widget.customer.uid));
-  }
-
-  Widget _favoritesButton(List favorites) {
-    if (favorites != null) {
-      if (!favorites.contains(widget.business.uid)) {
-        return IconButton(
-          icon: const Icon(Icons.favorite),
-          tooltip: 'Remove from favorites',
-          onPressed: () {
-            print("Remove from favorites");
-            favorites.remove(widget.business.uid);
-            _databaseService.customerUpdateFavorites(
-                widget.customer.uid, favorites);
-          },
-        );
-      }
-    }
-    return IconButton(
-      icon: const Icon(Icons.favorite_border),
-      tooltip: 'Add to favorites',
-      onPressed: () {
-        print("Add to favorites");
-        favorites.add(widget.business.uid);
-        _databaseService.customerUpdateFavorites(
-            widget.customer.uid, favorites);
-      },
-    );
-  }
-  */
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,20 +115,9 @@ class _InfoTabState extends State<InfoTab> {
             valueChanged: (_isFavorite) {
               print('Is Favorite : $_isFavorite');
               _databaseService.customerUpdateFavorites(
-                  widget.customer, widget.business.uid, _isFavorite);
+                  widget.customer.uid, widget.business.uid, _isFavorite);
             },
           ),
-          /*
-          FutureBuilder(
-              future: _getFavorites(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<dynamic>> snapshot) {
-                if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else {
-                  return _favoritesButton(snapshot.data);
-                }
-              }),*/
         ]),
       ]),
     );
