@@ -119,8 +119,12 @@ class DatabaseService {
           uid: snapshot.id,
           name: snapshot.data()['name'] ?? '<no name found>',
           email: snapshot.data()['email'] ?? '<no email found>',
+<<<<<<< HEAD
+          phone: snapshot.data()['phone'] ?? '<no phone found');
+=======
           phone: snapshot.data()['phone'] ?? '<no phone found',
           favorites: snapshot.data()['favorites'] ?? []);
+>>>>>>> 59aaef2942a75fd3df8b6af274c23d26d2a83e79
     } catch (e) {
       print('error returning customer data...');
       return Customer();

@@ -112,12 +112,3 @@ class _PasswordResetState extends State<PasswordReset> {
     _controller1.clear();
   }
 }
-
-// void showSnackBar(GlobalKey<ScaffoldState> _scaffoldKey, String message) {
-//   final snackBar = SnackBar(
-//     duration: Duration(seconds: 2),
-//     backgroundColor: MyColors.myGreen,
-//     content: Text(message),
-//   );
-//   _scaffoldKey.currentState.showSnackBar(snackBar);
-// }
