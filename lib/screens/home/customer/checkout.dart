@@ -1,11 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
+import 'package:iluvfood/models/order.dart';
+import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:iluvfood/models/business.dart';
 
 // TODO: Add Restaurant information under the Cart
 
 showAlertDialog(BuildContext context) {
+  // CartModel cart = context.watch<CartModel>();
+
   // set up the buttons
   Widget cancelButton = FlatButton(
     child: Text("Cancel"),
@@ -15,7 +20,15 @@ showAlertDialog(BuildContext context) {
   );
   Widget continueButton = FlatButton(
     child: Text("Confirm"),
-    onPressed: () {},
+    onPressed: () {
+      print("processing order!");
+      DatabaseService().initializePastOrder(Order(
+          orderId: "orderId",
+          dateTime: DateTime.now(),
+          businessUid: "businessUid", // cart.businessUid,
+          customerUid: "IhsM0Ip5stVheqVq2qOusJ0qZRn1",
+          items: null));
+    },
   );
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
@@ -133,6 +146,8 @@ class _CartTotal extends StatelessWidget {
 class _PurchaseNow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    CartModel cart = Provider.of<CartModel>(context, listen: false);
+    var user = Provider.of<User>(context, listen: false);
     return SizedBox(
       height: 50,
       child: Center(
@@ -141,7 +156,15 @@ class _PurchaseNow extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
-                showAlertDialog(context);
+                print("processing order!");
+                DatabaseService().initializePastOrder(Order(
+                    orderId: "orderId",
+                    dateTime: DateTime.now(),
+                    businessUid: cart.businessUid,
+                    customerUid: user.uid,
+                    items: null));
+                // TODO - look into how to do this with the alert dialog
+                // showAlertDialog(context);
               },
               child: Text(
                 'Place Order',
@@ -154,7 +177,3 @@ class _PurchaseNow extends StatelessWidget {
     );
   }
 }
-
-/*
-
-*/

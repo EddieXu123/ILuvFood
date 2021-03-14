@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/business_item.dart';
 import 'package:iluvfood/models/customer.dart';
+import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/shared/enum.dart';
 
 class DatabaseService {
@@ -14,6 +15,9 @@ class DatabaseService {
 
   final CollectionReference businessItems =
       FirebaseFirestore.instance.collection('businessitems');
+
+  final CollectionReference pastOrders =
+      FirebaseFirestore.instance.collection('pastOrders');
 
   Future<void> enterUserData(
       String name, Role role, String email, String phone) {
@@ -27,6 +31,37 @@ class DatabaseService {
         })
         .then((value) => print("yay user added"))
         .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<void> initializePastOrder(Order order) async {
+    // create new collection (order1)
+    var res = await pastOrders.add({
+      'orderId': order.orderId,
+      'dateTime': order.dateTime,
+      'businessUid': order.businessUid,
+      'customerUid': order.customerUid
+      // Could add business and customer names if needed
+      // Cart items?
+    });
+    print("added?");
+    print(res.id);
+
+    // create a cartitems subcollection within the order document (look at business items as example)
+
+
+    // iterate through the cart items create a document for each item inside 
+    // cartItems subcollection
+
+
+    // add orderuid to array customer
+    Map<String, dynamic> data;
+    data = {
+      'orderIds': FieldValue.arrayUnion([res.id])
+    };
+    await userDetails.doc(order.customerUid).update(data);
+    print("order id linked to customer");
+
+    // link orderuid to business
   }
 
   Future<void> enterBusinessData(String name) {
@@ -119,12 +154,9 @@ class DatabaseService {
           uid: snapshot.id,
           name: snapshot.data()['name'] ?? '<no name found>',
           email: snapshot.data()['email'] ?? '<no email found>',
-<<<<<<< HEAD
-          phone: snapshot.data()['phone'] ?? '<no phone found');
-=======
           phone: snapshot.data()['phone'] ?? '<no phone found',
-          favorites: snapshot.data()['favorites'] ?? []);
->>>>>>> 59aaef2942a75fd3df8b6af274c23d26d2a83e79
+          favorites: snapshot.data()['favorites'] ?? [],
+          orderIds: snapshot.data()['orderIds'] ?? []);
     } catch (e) {
       print('error returning customer data...');
       return Customer();

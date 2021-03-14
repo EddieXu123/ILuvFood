@@ -4,5 +4,12 @@ class Customer {
   final String email;
   final String phone;
   final List favorites;
-  Customer({this.uid, this.name, this.email, this.phone, this.favorites});
+  final List orderIds;
+  Customer(
+      {this.uid,
+      this.name,
+      this.email,
+      this.phone,
+      this.favorites,
+      this.orderIds});
 }
