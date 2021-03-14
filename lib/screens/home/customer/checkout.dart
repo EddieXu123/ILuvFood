@@ -162,7 +162,7 @@ class _PurchaseNow extends StatelessWidget {
                     dateTime: DateTime.now(),
                     businessUid: cart.businessUid,
                     customerUid: user.uid,
-                    items: null));
+                    items: cart.cartItems));
                 // TODO - look into how to do this with the alert dialog
                 // showAlertDialog(context);
               },

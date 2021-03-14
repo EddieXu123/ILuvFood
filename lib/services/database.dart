@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/business_item.dart';
+import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/shared/enum.dart';
@@ -41,19 +42,21 @@ class DatabaseService {
       'businessUid': order.businessUid,
       'customerUid': order.customerUid
       // Could add business and customer names if needed
-      // Cart items?
     });
-    print("added?");
-    print(res.id);
+    String orderUid = res.id;
+    print("added");
 
-    // create a cartitems subcollection within the order document (look at business items as example)
-
-
+    // create a cartitems subcollection within the order document
     // iterate through the cart items create a document for each item inside 
-    // cartItems subcollection
+    for (CartItem cartItem in order.items) {
+      await pastOrders.doc(orderUid).collection("cartItems").add({
+      "item": cartItem.item,
+      "price": cartItem.price,
+      "quantity": cartItem.quantity,
+    });
+    }
 
-
-    // add orderuid to array customer
+    // link orderuid to customer
     Map<String, dynamic> data;
     data = {
       'orderIds': FieldValue.arrayUnion([res.id])
@@ -62,6 +65,8 @@ class DatabaseService {
     print("order id linked to customer");
 
     // link orderuid to business
+    await businessItems.doc(order.businessUid).update(data);
+    print("order id linked to business");
   }
 
   Future<void> enterBusinessData(String name) {
