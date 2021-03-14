@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 // TODO: How do we track the most recent order
-// to display? Need to store the uid?
+// to display? should pass in the order id into
+// this widget
 class OrderSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
