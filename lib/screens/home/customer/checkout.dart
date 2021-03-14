@@ -1,6 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
 import 'package:provider/provider.dart';
+import 'package:iluvfood/models/business.dart';
+
+// TODO: Add Restaurant information under the Cart
+
+showAlertDialog(BuildContext context) {
+  // set up the buttons
+  Widget cancelButton = FlatButton(
+    child: Text("Cancel"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = FlatButton(
+    child: Text("Confirm"),
+    onPressed: () {},
+  );
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Confirmation"),
+    content: Text("Ready to place your order?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
 class Checkout extends StatelessWidget {
   @override
@@ -19,7 +52,8 @@ class Checkout extends StatelessWidget {
               ),
             ),
             Divider(height: 4, color: Colors.black),
-            _CartTotal()
+            _CartTotal(),
+            _PurchaseNow()
           ],
         ),
       ),
@@ -36,19 +70,36 @@ class _CartList extends StatelessWidget {
     // when it changes).
     // var cart = context.watch<CartModel>();
     CartModel cart = context.watch<CartModel>();
-    return ListView.builder(
-      itemCount: cart.cartItems.length,
-      itemBuilder: (context, index) => ListTile(
-        leading: Icon(Icons.done),
-        trailing: IconButton(
-          icon: Icon(Icons.remove_circle_outline),
-          onPressed: () {
-            cart.remove(cart.cartItems[index].uid);
-          },
-        ),
-        title: Text(
-          "${cart.cartItems[index].item} (${cart.cartItems[index].quantity})",
-          style: itemNameStyle,
+    return new Scaffold(
+      body: ListView.builder(
+        itemCount: cart.cartItems.length,
+        itemBuilder: (context, index) => ListTile(
+          leading: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                cart.delete(cart.cartItems[index].uid);
+              },
+            ),
+          ]),
+          trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.remove_circle_outline),
+              onPressed: () {
+                cart.remove(cart.cartItems[index].uid);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.add_circle_outline),
+              onPressed: () {
+                cart.add(cart.cartItems[index].uid);
+              },
+            ),
+          ]),
+          title: Text(
+            "${cart.cartItems[index].item} (${cart.cartItems[index].quantity})",
+            style: itemNameStyle,
+          ),
         ),
       ),
     );
@@ -63,7 +114,7 @@ class _CartTotal extends StatelessWidget {
         Theme.of(context).textTheme.headline1.copyWith(fontSize: 48);
 
     return SizedBox(
-      height: 200,
+      height: 50,
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -72,13 +123,29 @@ class _CartTotal extends StatelessWidget {
                 builder: (context, cart, child) =>
                     Text('\$${cart.priceInCart}', style: hugeStyle)),
             SizedBox(width: 24),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PurchaseNow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             TextButton(
               onPressed: () {
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text('Buying not supported yet.')));
+                showAlertDialog(context);
               },
               child: Text(
-                'BUY',
+                'Place Order',
+                style: TextStyle(fontSize: 25),
               ),
             ),
           ],
@@ -87,3 +154,7 @@ class _CartTotal extends StatelessWidget {
     );
   }
 }
+
+/*
+
+*/

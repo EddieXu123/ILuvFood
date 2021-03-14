@@ -8,6 +8,7 @@ import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/business_scroll_view.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 class CustomerHome extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -21,12 +22,13 @@ class CustomerHome extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               Customer customer = snapshot.data;
-              /*
+/*
               return BusinessScrollView(
                 auth: _auth,
                 customer: customer,
               );
-              */
+*/
+
               return CustomerHomeMap(
                 auth: _auth,
                 customer: customer,

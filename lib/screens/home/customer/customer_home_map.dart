@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/customer.dart';
+import 'package:iluvfood/shared/single_business_view.dart';
 import 'dart:ui' as ui;
 
 // TODO: my location button: https://pub.dev/documentation/google_maps_flutter/latest/google_maps_flutter/GoogleMap/myLocationButtonEnabled.html
@@ -73,7 +74,16 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
         infoWindow: InfoWindow(
           title: business.businessName,
           snippet: business.address,
-          //onTap: () {}
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SingleBusinessView(
+                          business: business,
+                          customer: widget.customer,
+                        )));
+          },
           // TODO: onTap callback: https://pub.dev/documentation/google_maps_flutter_platform_interface/latest/google_maps_flutter_platform_interface/InfoWindow-class.html
         ),
       );
@@ -104,7 +114,7 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
             backgroundColor: Colors.pink,
             elevation: 0.0,
             actions: <Widget>[
-              FlatButton.icon(
+              TextButton.icon(
                 icon: Icon(Icons.person),
                 onPressed: () async {
                   await _auth.signOut();

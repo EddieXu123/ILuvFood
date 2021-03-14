@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/customer.dart';
+import 'package:iluvfood/screens/home/customer/order_history.dart';
 import 'package:iluvfood/screens/home/customer/password_reset.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
@@ -127,27 +128,47 @@ class _CustomerProfileState extends State<CustomerProfile> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20.0),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            height: 40.0,
-                            child: FlatButton(
-                              color: Theme.of(context).accentColor,
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => PasswordReset()));
-                                print('Reset Password');
-                              },
-                              child: Center(
-                                child: Text(
-                                  'Reset Password',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                  ),
+                        SizedBox(height: 140.0),
+                        Container(
+                          height: 40.0,
+                          child: FlatButton(
+                            color: Theme.of(context).accentColor,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => OrderHistory()));
+                              print('Order History');
+                            },
+                            child: Center(
+                              child: Text(
+                                'Order History',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10.0),
+                        Container(
+                          height: 40.0,
+                          child: FlatButton(
+                            color: Theme.of(context).accentColor,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PasswordReset()));
+                              print('Reset Password');
+                            },
+                            child: Center(
+                              child: Text(
+                                'Reset Password',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
                                 ),
                               ),
                             ),

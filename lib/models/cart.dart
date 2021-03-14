@@ -106,6 +106,38 @@ class CartModel extends ChangeNotifier {
     }
   }
 
+  Future<void> delete(String itemId) async {
+    try {
+      var item = await _databaseService.readBusinessItem(businessUid, itemId);
+      // print("calculating price for ${item.item}");
+      // print("adding price of ${item.price}");
+      if (_itemMap.containsKey(item.item)) {
+        var totalQuantity = _itemMap[item.item].quantity;
+        print("Total Quantity: $totalQuantity");
+        var cost = int.parse(item.price);
+        print("Cost Of Item: $cost");
+        var totalRemovedCost = totalQuantity * cost;
+
+        _priceInCart -= totalRemovedCost;
+
+        //if (_itemMap[item.item].quantity == 1) {
+        _itemMap.update(item.item,
+            (value) => CartItem(item: value.item, uid: value.uid, quantity: 0));
+        _itemMap.remove(item.item);
+        //} else {
+        // _itemMap.update(item.item,
+        //     (value) => CartItem(item: value.item, uid: value.uid, quantity: 0));
+        //}
+      } else {
+        print("could not find item in map");
+      }
+      print("Removed, cart total now: $_priceInCart");
+      // todo: probably makes sense to also check if there is enough inventory?
+      notifyListeners();
+    } catch (e) {
+      print("could not put in dict:  $e");
+    }
+  }
   // void removeNoInventory(String itemId) {
   //   print("Removing from cart, items sold out");
   //   remove(itemId);
