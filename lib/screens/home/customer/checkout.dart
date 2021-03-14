@@ -32,8 +32,10 @@ showAlertDialog(BuildContext context) {
             customerUid: user.uid,
             items: cart.cartItems));
         // on add, take them to a summary page
-        Navigator.pop(context);
-        Navigator.pushReplacement(
+        // Navigator.pop(context);
+        Navigator.of(context).popUntil((route) => route.isFirst);
+
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => OrderSummary()));
       } catch (e) {
         print("Error adding to order history: $e");
