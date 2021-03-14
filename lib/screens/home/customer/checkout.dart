@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
 import 'package:iluvfood/models/order.dart';
+import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:iluvfood/models/business.dart';
@@ -10,7 +11,8 @@ import 'package:iluvfood/models/business.dart';
 
 showAlertDialog(BuildContext context) {
   // CartModel cart = context.watch<CartModel>();
-
+  CartModel cart = Provider.of<CartModel>(context, listen: false);
+  var user = Provider.of<User>(context, listen: false);
   // set up the buttons
   Widget cancelButton = FlatButton(
     child: Text("Cancel"),
@@ -20,14 +22,22 @@ showAlertDialog(BuildContext context) {
   );
   Widget continueButton = FlatButton(
     child: Text("Confirm"),
-    onPressed: () {
+    onPressed: () async {
       print("processing order!");
-      DatabaseService().initializePastOrder(Order(
-          orderId: "orderId",
-          dateTime: DateTime.now(),
-          businessUid: "businessUid", // cart.businessUid,
-          customerUid: "IhsM0Ip5stVheqVq2qOusJ0qZRn1",
-          items: null));
+      try {
+        await DatabaseService().initializePastOrder(Order(
+            orderId: "orderId",
+            dateTime: DateTime.now(),
+            businessUid: cart.businessUid,
+            customerUid: user.uid,
+            items: cart.cartItems));
+        // on add, take them to a summary page
+        Navigator.pop(context);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => OrderSummary()));
+      } catch (e) {
+        print("Error adding to order history: $e");
+      }
     },
   );
   // set up the AlertDialog
@@ -157,18 +167,7 @@ class _PurchaseNow extends StatelessWidget {
             TextButton(
               onPressed: () {
                 print("processing order!");
-                try {
-                  DatabaseService().initializePastOrder(Order(
-                      orderId: "orderId",
-                      dateTime: DateTime.now(),
-                      businessUid: cart.businessUid,
-                      customerUid: user.uid,
-                      items: cart.cartItems));
-                } catch (e) {
-                  print("Error adding to order history: $e");
-                }
-                // TODO - look into how to do this with the alert dialog
-                // showAlertDialog(context);
+                showAlertDialog(context);
               },
               child: Text(
                 'Place Order',
