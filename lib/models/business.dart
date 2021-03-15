@@ -6,6 +6,7 @@ class Business {
   final String lng;
   final String phone;
   final String image;
+  final List orderIds;
   Business({
     this.uid,
     this.businessName,
@@ -14,5 +15,6 @@ class Business {
     this.lat,
     this.lng,
     this.phone,
+    this.orderIds
   });
 }

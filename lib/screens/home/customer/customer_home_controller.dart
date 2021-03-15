@@ -23,18 +23,6 @@ class CustomerHomeController extends StatefulWidget {
 /// This is the private State class that goes with CustomerHomeControllert.
 class _CustomerHomeControllerState extends State<CustomerHomeController> {
   int _currentIndex = 0;
-<<<<<<< HEAD
-  // static const TextStyle optionStyle =
-  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  // static
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _currentIndex = index;
-  //   });
-  // }
-=======
->>>>>>> 59aaef2942a75fd3df8b6af274c23d26d2a83e79
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +67,6 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
     //     onTap: _onItemTapped,
     //   ),
     // );
-  }
-
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 
   void onTabTapped(int index) {
