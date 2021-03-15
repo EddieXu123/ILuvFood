@@ -47,13 +47,13 @@ class DatabaseService {
     print("added");
 
     // create a cartitems subcollection within the order document
-    // iterate through the cart items create a document for each item inside 
+    // iterate through the cart items create a document for each item inside
     for (CartItem cartItem in order.items) {
       await pastOrders.doc(orderUid).collection("cartItems").add({
-      "item": cartItem.item,
-      "price": cartItem.price,
-      "quantity": cartItem.quantity,
-    });
+        "item": cartItem.item,
+        "price": cartItem.price,
+        "quantity": cartItem.quantity,
+      });
     }
 
     // link orderuid to customer
@@ -77,7 +77,8 @@ class DatabaseService {
       "lat": "41.50869",
       "lng": "-81.59784",
       "name": name,
-      "phone": "+1 216-795-2355"
+      "phone": "+1 216-795-2355",
+      "isOpen": false,
     });
     // .then((value) => print("yay user added"))
     // .catchError((error) => print("Failed to add user: $error"));
@@ -100,7 +101,11 @@ class DatabaseService {
     });
   }
 
-  Future<void> enterBusinessItem(BusinessItem bizitem) {
+  Future<void> enterBusinessItem(BusinessItem bizitem) async {
+    // TODO: update flag if necessary
+    await businessItems.doc(uid).update({
+      "isOpen": true,
+    });
     return businessItems.doc(uid).collection("items").add({
       "item": bizitem.item,
       "price": bizitem.price,
@@ -113,9 +118,9 @@ class DatabaseService {
       final dat = snapshot.data();
       return BusinessItem(
         uid: snapshot.id,
-        item: dat["item"],
-        price: dat["price"],
-        quantity: dat["quantity"],
+        item: dat["item"] ?? "<no item>",
+        price: dat["price"] ?? "<no price>",
+        quantity: dat["quantity"] ?? "<no qty>",
       );
     } catch (e) {
       print("error parsing item: $e");
@@ -135,6 +140,24 @@ class DatabaseService {
     } catch (e) {
       print("error retrieving item from db: $e");
       return null;
+    }
+  }
+
+  Future<bool> isBusinessOpen(String businessId) async {
+    try {
+      final int len = await businessItems
+          .doc(businessId)
+          .collection("items")
+          .snapshots()
+          .length;
+      if (len > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("could not verify business open/closed status: $e");
+      return false;
     }
   }
 
@@ -201,6 +224,7 @@ class DatabaseService {
         lng: dat["lng"],
         businessName: dat["name"],
         phone: dat["phone"],
+        isOpen: dat["isOpen"] ?? false,
       );
     } catch (e) {
       // lmao be careful pls
@@ -239,6 +263,7 @@ class DatabaseService {
         lng: dat["lng"],
         businessName: dat["name"],
         phone: dat["phone"],
+        isOpen: dat["isOpen"] ?? false,
       );
     }).toList();
   }

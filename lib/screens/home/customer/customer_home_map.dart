@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/customer.dart';
@@ -66,11 +67,13 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
     _markers.clear();
 
     for (final business in businesses) {
+      // get number of business items that are available for marker coloring
+      // final bool isOpen = await DatabaseService().isBusinessOpen(business.uid);
       final marker = Marker(
         markerId: MarkerId(business.businessName),
         position:
             LatLng(double.parse(business.lat), double.parse(business.lng)),
-        icon: mapMarkerOpen,
+        icon: business.isOpen ? mapMarkerOpen : mapMarkerClosed,
         infoWindow: InfoWindow(
           title: business.businessName,
           snippet: business.address,
@@ -78,8 +81,7 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        SingleBusinessView(
+                    builder: (context) => SingleBusinessView(
                           business: business,
                           customer: widget.customer,
                         )));

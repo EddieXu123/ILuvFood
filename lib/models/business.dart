@@ -7,14 +7,15 @@ class Business {
   final String phone;
   final String image;
   final List orderIds;
-  Business({
-    this.uid,
-    this.businessName,
-    this.address,
-    this.image,
-    this.lat,
-    this.lng,
-    this.phone,
-    this.orderIds
-  });
+  final bool isOpen;
+  Business(
+      {this.uid,
+      this.businessName,
+      this.address,
+      this.image,
+      this.lat,
+      this.lng,
+      this.phone,
+      this.orderIds,
+      this.isOpen});
 }
