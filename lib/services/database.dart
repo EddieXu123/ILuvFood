@@ -151,6 +151,23 @@ class DatabaseService {
     }).toList();
   }
 
+  Order _orderFromSnapshot(DocumentSnapshot snapshot) {
+    try {
+      print(snapshot.id);
+      return Order(
+          uid: snapshot.id,
+          orderId: snapshot.data()['orderId'] ?? '<no orderId found>',
+          dateTime: snapshot.data()['dateTime'].toDate() ?? '<no dateTime found>',
+          businessUid: snapshot.data()['businessUid'] ?? '<no businessUid found',
+          customerUid: snapshot.data()['customerUid'] ?? '<no customerUid found',
+          items: snapshot.data()['items'] ?? []);
+    } catch (e) {
+      print(e);
+      print('error returning order...');
+      return Order();
+    }
+  }
+
   // get customer data from snapshot
   Customer _customerDataFromSnapshot(DocumentSnapshot snapshot) {
     try {
@@ -165,6 +182,17 @@ class DatabaseService {
     } catch (e) {
       print('error returning customer data...');
       return Customer();
+    }
+  }
+
+  // get customer orders from snapshot
+  List _customerOrdersUidsFromSnapshot(DocumentSnapshot snapshot) {
+    try {
+      Customer customer = _customerDataFromSnapshot(snapshot);
+      return customer.orderIds;
+    } catch (e) {
+      print('error returning customer data...');
+      return [];
     }
   }
 
@@ -258,6 +286,14 @@ class DatabaseService {
 
   Stream<Role> get userRole {
     return userDetails.doc(uid).snapshots().map(_userRoleDataFromSnapshot);
+  }
+
+  Stream<List> get customerOrderUids {
+    return userDetails.doc(uid).snapshots().map(_customerOrdersUidsFromSnapshot);
+  }
+
+  Stream<Order> get customerOrder {
+    return pastOrders.doc(uid).snapshots().map(_orderFromSnapshot);
   }
 
   // get list of business stream
