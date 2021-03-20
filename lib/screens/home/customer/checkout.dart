@@ -67,8 +67,8 @@ showAlertDialog(BuildContext context) {
 }
 
 sendMail() async {
-  String username = 'xutopiajohnson@gmail.com';
-  String password = 'eddieisawesome';
+  String username = 'email'; // EMAIL HERE
+  String password = 'test'; // PASSWORD HERE
 
   final smtpServer = gmail(username, password);
   // Use the SmtpServer class to configure an SMTP server:
@@ -79,7 +79,7 @@ sendMail() async {
   // Create our message.
   final message = Message()
     ..from = Address(username, 'Your name')
-    ..recipients.add('xutopiajohnson@gmail.com')
+    ..recipients.add('xutopiajohnson@gmail.com') // Customer email here
     // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
     // ..bccRecipients.add(Address('bccAddress@example.com'))
     ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
