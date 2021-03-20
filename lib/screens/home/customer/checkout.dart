@@ -6,6 +6,9 @@ import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:iluvfood/models/business.dart';
+import 'package:toast/toast.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 
 // TODO: Add Restaurant information under the Cart
 
@@ -37,6 +40,9 @@ showAlertDialog(BuildContext context) {
 
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => OrderSummary()));
+        sendMail();
+        Toast.show("Order Placed! Check your inbox for your receipt!", context,
+            duration: 3, gravity: Toast.CENTER);
       } catch (e) {
         print("Error adding to order history: $e");
       }
@@ -58,6 +64,38 @@ showAlertDialog(BuildContext context) {
       return alert;
     },
   );
+}
+
+sendMail() async {
+  String username = 'xutopiajohnson@gmail.com';
+  String password = 'eddieisawesome';
+
+  final smtpServer = gmail(username, password);
+  // Use the SmtpServer class to configure an SMTP server:
+  // final smtpServer = SmtpServer('smtp.domain.com');
+  // See the named arguments of SmtpServer for further configuration
+  // options.
+
+  // Create our message.
+  final message = Message()
+    ..from = Address(username, 'Your name')
+    ..recipients.add('xutopiajohnson@gmail.com')
+    // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
+    // ..bccRecipients.add(Address('bccAddress@example.com'))
+    ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
+    ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+    ..html =
+        "<h1>Your order has been placed</h1>\n<p>Hey! Here's some HTML content</p>";
+
+  try {
+    final sendReport = await send(message, smtpServer);
+    print('Message sent: ' + sendReport.toString());
+  } on MailerException catch (e) {
+    print('Message not sent.');
+    for (var p in e.problems) {
+      print('Problem: ${p.code}: ${p.msg}');
+    }
+  }
 }
 
 class Checkout extends StatelessWidget {
