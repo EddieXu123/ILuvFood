@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/screens/home/customer/customer_home_map.dart';
+import 'package:iluvfood/screens/home/customer/customer_favorites_list.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/business_scroll_view.dart';
@@ -12,6 +13,11 @@ import 'package:flutter/material.dart';
 
 class CustomerHome extends StatelessWidget {
   final AuthService _auth = AuthService();
+  int index;
+
+  CustomerHome(int i) {
+    index = i;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +29,18 @@ class CustomerHome extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               Customer customer = snapshot.data;
-/*
-              return BusinessScrollView(
-                auth: _auth,
-                customer: customer,
-              );
-*/
 
-              return CustomerHomeMap(
-                auth: _auth,
-                customer: customer,
-              );
+              if (index == 0) {
+                return CustomerHomeMap(
+                  auth: _auth,
+                  customer: customer,
+                );
+              } else {
+                return CustomerFavoritesList(
+                  auth: _auth,
+                  customer: customer,
+                );
+              }
             } else {
               print("LOADING CUSTOMER HOME");
               return Loading();

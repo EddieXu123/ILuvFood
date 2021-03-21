@@ -130,6 +130,16 @@ class DatabaseService {
     }
   }
 
+  Future<Business> readBusiness(String businessId) async {
+    try {
+      var snapshot = await businessItems.doc(businessId).get();
+      return _businessDataFromSnapshot(snapshot);
+    } catch (e) {
+      print("error retrieving item from db: $e");
+      return null;
+    }
+  }
+
   Future<BusinessItem> readBusinessItem(
       String businessId, String itemId) async {
     try {

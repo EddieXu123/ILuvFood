@@ -140,6 +140,19 @@ class CartModel extends ChangeNotifier {
       print("could not put in dict:  $e");
     }
   }
+
+  /// Get quantity of  [item] in cart.
+  Future<int> getQuantity(String itemId) async {
+    try {
+      var item = await _databaseService.readBusinessItem(businessUid, itemId);
+      return (_itemMap.containsKey(item.item))
+          ? _itemMap[item.item].quantity
+          : 0;
+    } catch (e) {
+      print("could not get quantity:  $e");
+    }
+  }
+
   // void removeNoInventory(String itemId) {
   //   print("Removing from cart, items sold out");
   //   remove(itemId);
