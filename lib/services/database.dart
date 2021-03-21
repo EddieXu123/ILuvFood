@@ -40,7 +40,9 @@ class DatabaseService {
       'orderId': order.orderId,
       'dateTime': order.dateTime,
       'businessUid': order.businessUid,
-      'customerUid': order.customerUid
+      'customerUid': order.customerUid,
+      'businessName': order.businessName,
+      'customeName': order.customerName
       // Could add business and customer names if needed
     });
     String orderUid = res.id;
@@ -151,6 +153,18 @@ class DatabaseService {
     }).toList();
   }
 
+  List<CartItem> _cartItemsFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      final dat = doc.data();
+      return CartItem(
+        uid: doc.id,
+        item: dat["item"],
+        quantity: dat["quantity"],
+        price: dat["price"] 
+      );
+    }).toList();
+  }
+
   Order _orderFromSnapshot(DocumentSnapshot snapshot) {
     try {
       print(snapshot.id);
@@ -158,9 +172,10 @@ class DatabaseService {
           uid: snapshot.id,
           orderId: snapshot.data()['orderId'] ?? '<no orderId found>',
           dateTime: snapshot.data()['dateTime'].toDate() ?? '<no dateTime found>',
-          businessUid: snapshot.data()['businessUid'] ?? '<no businessUid found',
-          customerUid: snapshot.data()['customerUid'] ?? '<no customerUid found',
-          items: snapshot.data()['items'] ?? []);
+          businessUid: snapshot.data()['businessUid'] ?? '<no businessUid found>',
+          customerUid: snapshot.data()['customerUid'] ?? '<no customerUid found>',
+          businessName: snapshot.data()['businessName'] ?? '<no businessName found>',
+          customerName: snapshot.data()['customerName'] ?? '<no customerName found>');
     } catch (e) {
       print(e);
       print('error returning order...');
@@ -294,6 +309,10 @@ class DatabaseService {
 
   Stream<Order> get customerOrder {
     return pastOrders.doc(uid).snapshots().map(_orderFromSnapshot);
+  }
+
+  Stream<List<CartItem>> getCartItems(String orderUid) {
+    return pastOrders.doc(orderUid).collection('cartItems').snapshots().map(_cartItemsFromSnapshot);
   }
 
   // get list of business stream

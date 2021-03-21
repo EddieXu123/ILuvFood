@@ -6,8 +6,8 @@ class Order {
   final DateTime dateTime;
   final String businessUid;
   final String customerUid;
-  // String businessName;
-  // String customerName;
+  final String businessName;
+  final String customerName;
   final List<CartItem> items;
   Order(
       {this.uid, 
@@ -15,5 +15,7 @@ class Order {
       this.dateTime,
       this.businessUid,
       this.customerUid,
+      this.businessName,
+      this.customerName,
       this.items});
 }

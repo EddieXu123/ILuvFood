@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 
 class CustomerHome extends StatelessWidget {
   final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Business>>.value(
