@@ -7,6 +7,7 @@ import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/customer_drawer.dart';
+import 'package:iluvfood/shared/loading.dart';
 import 'package:iluvfood/shared/single_business_view.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,9 @@ class _CustomerFavoritesListState extends State<CustomerFavoritesList> {
     for (var i = 0; i < businessesIDs.length; i++) {
       Business newBusiness =
           await _databaseService.readBusiness(businessesIDs[i]);
-      businesses.add(newBusiness);
+      if (newBusiness != null) {
+        businesses.add(newBusiness);
+      }
     }
     return businesses;
   }
@@ -79,7 +82,7 @@ class _CustomerFavoritesListState extends State<CustomerFavoritesList> {
                             widget.customer, itemIndex, snapshot.data),
                         padding: EdgeInsets.all(16));
                   } else {
-                    return Text('You have no favorite restaurants.');
+                    return Loading();
                   }
                 },
               );
@@ -113,6 +116,8 @@ class _MyListItem extends StatelessWidget {
     // );
 
     return Padding(
+      // TODO: perhaps check for if businesses list is empty and display
+      // an alternate UI in that case
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: LimitedBox(
         maxHeight: 48,
