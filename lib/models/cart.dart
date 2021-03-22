@@ -8,12 +8,13 @@ import 'package:iluvfood/services/database.dart';
 
 class CartModel extends ChangeNotifier {
   String businessUid;
+  String businessName;
   final _databaseService = DatabaseService();
   int _priceInCart = 0;
 
-  CartModel({this.businessUid});
+  CartModel({this.businessUid, this.businessName});
 
-  /// Internal, private state of the cart. Stores the item-name:qty
+  /// Internal, private state of the cart. Stores the item-name:cart_item
   final Map<String, CartItem> _itemMap = Map();
 
   // get itemids map
@@ -25,6 +26,7 @@ class CartModel extends ChangeNotifier {
     print("resetting cart!");
     _priceInCart = 0;
     businessUid = '';
+    businessName = '';
     _itemMap.clear();
   }
 

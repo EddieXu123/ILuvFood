@@ -27,6 +27,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
   Widget build(BuildContext context) {
     CartModel cart = context.watch<CartModel>();
     cart.businessUid = widget.business.uid;
+    cart.businessName = widget.business.businessName;
     return StreamProvider<List<BusinessItem>>.value(
       value: DatabaseService().getBusinessItem(widget.business.uid),
       child: StreamBuilder<Business>(

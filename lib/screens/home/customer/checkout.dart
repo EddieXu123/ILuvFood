@@ -10,7 +10,6 @@ import 'package:iluvfood/models/business.dart';
 // TODO: Add Restaurant information under the Cart
 
 showAlertDialog(BuildContext context) {
-  // CartModel cart = context.watch<CartModel>();
   CartModel cart = Provider.of<CartModel>(context, listen: false);
   var user = Provider.of<User>(context, listen: false);
   // set up the buttons
@@ -26,10 +25,12 @@ showAlertDialog(BuildContext context) {
       print("processing order!");
       try {
         await DatabaseService().initializePastOrder(Order(
-            orderId: "orderId",
+            orderId: "orderId", // TODO - determine how to generate an orderId
             dateTime: DateTime.now(),
             businessUid: cart.businessUid,
             customerUid: user.uid,
+            businessName: cart.businessName,
+            customerName: "customerName",
             items: cart.cartItems));
         // on add, take them to a summary page
         // Navigator.pop(context);
