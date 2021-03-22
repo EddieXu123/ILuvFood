@@ -235,6 +235,7 @@ class _MyListItem extends StatelessWidget {
         height: 30.0,
         child: FittedBox(
             child: FloatingActionButton(
+                heroTag: null,
                 child: Icon(Icons.remove, color: Colors.black87),
                 backgroundColor: Colors.white,
                 onPressed: () async {
@@ -257,6 +258,7 @@ class _MyListItem extends StatelessWidget {
         height: 30.0,
         child: FittedBox(
             child: FloatingActionButton(
+                heroTag: null,
                 child: Icon(Icons.add, color: Colors.black87),
                 backgroundColor: Colors.white,
                 onPressed: () async {
