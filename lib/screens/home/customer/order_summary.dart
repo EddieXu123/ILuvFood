@@ -63,7 +63,7 @@ class OrderSummary extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Text(
                     "<OrderIDHere>",
-                    style: headingStyle.copyWith(color: Colors.white),
+                    //style: headingStyle.copyWith(color: Colors.white),
                   ),
                 )
               ],
@@ -110,7 +110,7 @@ class OrderSummary extends StatelessWidget {
                   style: headingStyle,
                 ),
                 Text(
-                  "He",
+                  "<DropDown>",
                   style: headingStyle.copyWith(color: Colors.grey),
                 ),
               ],
@@ -124,9 +124,10 @@ class OrderSummary extends StatelessWidget {
                   style: headingStyle,
                 ),
                 Text(
-                  "Wednesday, 07 Aug, 2020. Between 10:00 AM & 12:00 PM",
-                  style:
-                      contentStyle.copyWith(color: Colors.grey, fontSize: 16),
+                  "Wednesday, 24 March, 2021. Between 10:00 AM & 12:00 PM",
+                  textAlign: TextAlign.center,
+                  style: contentStyle.copyWith(
+                      color: Colors.black54, fontSize: 16),
                 ),
               ],
             ),

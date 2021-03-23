@@ -161,12 +161,14 @@ class _CartList extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    dateWidget("Wed", "07 Aug", true),
-                    dateWidget("Thu", "08 Aug", false),
-                    dateWidget("Fri", "09 Aug", false),
-                    dateWidget("Sat", "10 Aug", false),
-                    dateWidget("Mon", "12 Aug", false),
-                    dateWidget("Tue", "13 Aug", false)
+                    // TODO: Make them into buttons and use This.Date + 3 days
+                    // Need to talk with team to decide how long actually
+                    dateWidget("Wed", "24 March", true), // ThisDate + 3
+                    dateWidget("Thu", "25 March", false), // ThisDate + 4
+                    dateWidget("Fri", "26 March", false), // etc
+                    dateWidget("Sat", "27 March", false),
+                    dateWidget("Mon", "28 March", false),
+                    dateWidget("Tue", "29 March", false)
                   ],
                 ),
               ),
@@ -191,6 +193,7 @@ class _CartList extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
+                    // DITTO THE ABOVE
                     TextButton(
                       onPressed: () {
                         selected_time = true;

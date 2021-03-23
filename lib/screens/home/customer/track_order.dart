@@ -17,42 +17,34 @@ class TrackOrderPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Order Number 1001",
-              style: headingStyle,
-            ),
-            Text(
-              "Order confirmed. Ready to pick",
-              style: contentStyle.copyWith(color: Colors.grey, fontSize: 16),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 15),
-              height: 1,
-              color: Colors.grey,
-            ),
             Stack(
               children: [
                 Container(
                   margin: EdgeInsets.only(left: 13, top: 50),
                   width: 4,
-                  height: 400,
+                  height: 300,
                   color: Colors.grey,
                 ),
                 Column(
                   children: [
                     statusWidget('confirmed', "Confirmed", true),
-                    statusWidget('onBoard2', "Picked Up", false),
-                    statusWidget('servicesImg', "In Pricess", false),
-                    statusWidget('shipped', "Shipped", false),
+                    statusWidget('servicesImg', "  Packing", false),
+                    statusWidget('shipped', "  Ready", false),
                     statusWidget('Delivery', "Delivered", false),
                   ],
                 )
               ],
             ),
             Container(
+              height: 20,
+            ),
+            Container(
               margin: EdgeInsets.symmetric(vertical: 15),
               height: 1,
               color: Colors.grey,
+            ),
+            Container(
+              height: 50,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,11 +54,11 @@ class TrackOrderPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       border: Border.all(
-                        color: Colors.orange,
+                        color: Colors.white,
                       )),
                   child: Text(
                     "Cancel Order",
-                    style: contentStyle.copyWith(color: Colors.orange),
+                    style: contentStyle.copyWith(color: Colors.white),
                   ),
                 ),
                 Container(
@@ -129,7 +121,7 @@ class TrackOrderPage extends StatelessWidget {
             children: [
               Container(
                 height: 40,
-                width: 40,
+                width: 70,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("assets/images/$img.png"),
@@ -138,7 +130,7 @@ class TrackOrderPage extends StatelessWidget {
               Text(
                 status,
                 style: contentStyle.copyWith(
-                    color: (isActive) ? Colors.orange : Colors.black),
+                    color: (isActive) ? Colors.white : Colors.black),
               )
             ],
           )
