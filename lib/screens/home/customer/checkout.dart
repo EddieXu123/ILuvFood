@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:iluvfood/models/business.dart';
 import 'pickup.dart';
 import 'customer_page_style.dart';
+import 'package:toast/toast.dart';
 
 // TODO: Add Restaurant information under the Cart
 
@@ -26,20 +27,27 @@ showAlertDialog(BuildContext context) {
     onPressed: () async {
       print("processing order!");
       try {
-        await DatabaseService().initializePastOrder(Order(
-            orderId: "orderId", // TODO - determine how to generate an orderId
-            dateTime: DateTime.now(),
-            businessUid: cart.businessUid,
-            customerUid: user.uid,
-            businessName: cart.businessName,
-            customerName: "customerName",
-            items: cart.cartItems));
-        // on add, take them to a summary page
-        // Navigator.pop(context);
-        Navigator.of(context).popUntil((route) => route.isFirst);
+        if (cart.priceInCart == 0) {
+          Toast.show("Your Cart is Empty!", context,
+              duration: 2, gravity: Toast.CENTER);
+        } else {
+          await DatabaseService().initializePastOrder(Order(
+              orderId: "orderId", // TODO - determine how to generate an orderId
+              dateTime: DateTime.now(),
+              businessUid: cart.businessUid,
+              customerUid: user.uid,
+              businessName: cart.businessName,
+              customerName: "customerName",
+              items: cart.cartItems));
+          // on add, take them to a summary page
+          // Navigator.pop(context);
+          Navigator.of(context).popUntil((route) => route.isFirst);
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => OrderSummary()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => OrderSummary()));
+          print("Resetting After Purchase");
+          cart.reset();
+        }
       } catch (e) {
         print("Error adding to order history: $e");
       }
@@ -100,6 +108,7 @@ class _CartList extends StatelessWidget {
     // when it changes).
     // var cart = context.watch<CartModel>();
     CartModel cart = context.watch<CartModel>();
+    // var itemPrice = "-1";
     return new Scaffold(
         body: Column(children: <Widget>[
       Container(
@@ -111,29 +120,46 @@ class _CartList extends StatelessWidget {
             itemBuilder: (context, index) => ListTile(
               leading:
                   Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    cart.delete(cart.cartItems[index].uid);
-                  },
+                Container(
+                  width: 15,
+                  child: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      cart.delete(cart.cartItems[index].uid);
+                    },
+                  ),
                 ),
               ]),
               trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.remove_circle_outline),
                   onPressed: () {
+                    // itemPrice = "${cart.cartItems[index].price}";
                     cart.remove(cart.cartItems[index].uid);
+                    // print(itemPrice);
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.add_circle_outline),
-                  onPressed: () {
-                    cart.add(cart.cartItems[index].uid);
-                  },
+                Container(
+                  width: 30.0,
+                  child: Text(
+                    "(${cart.cartItems[index].quantity})",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Container(
+                  width: 20,
+                  child: IconButton(
+                    icon: Icon(Icons.add_circle_outline),
+                    onPressed: () {
+                      cart.add(cart.cartItems[index].uid);
+                    },
+                  ),
                 ),
               ]),
               title: Text(
-                "${cart.cartItems[index].item} (${cart.cartItems[index].quantity})",
+                // itemPrice == "-1"
+                "${cart.cartItems[index].item}", // LATER: (\$${cart.cartItems[index].price})",
+                // : "${cart.cartItems[index].item} ($itemPrice)", //(${cart.cartItems[index].quantity})",
                 style: itemNameStyle,
               ),
             ),
@@ -155,7 +181,7 @@ class _CartList extends StatelessWidget {
                 style: headingStyle,
               ),
               SizedBox(
-                height: 10,
+                height: 15,
               ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -173,14 +199,14 @@ class _CartList extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 15,
+                height: 20,
               ),
               Container(
                 height: 1,
                 color: Colors.grey,
               ),
               SizedBox(
-                height: 15,
+                height: 20,
               ),
               Text(
                 "Pick up Time",
@@ -209,9 +235,9 @@ class _CartList extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
+              // SizedBox(
+              //   height: 20,
+              // ),
             ],
           ),
         ),
@@ -257,8 +283,13 @@ class _PurchaseNow extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
-                print("processing order!");
-                showAlertDialog(context);
+                if (cart.priceInCart == 0) {
+                  Toast.show("Your Cart is Empty!", context,
+                      duration: 2, gravity: Toast.CENTER);
+                } else {
+                  print("processing order!");
+                  showAlertDialog(context);
+                }
               },
               child: Text(
                 'Place Order',
@@ -285,7 +316,7 @@ Container dateWidget(String day, String date, bool isActive) {
         Text(
           day,
           style: contentStyle.copyWith(
-              color: (isActive) ? Colors.white : Colors.black, fontSize: 15),
+              color: (isActive) ? Colors.white : Colors.black, fontSize: 20),
         ),
         Text(
           date,

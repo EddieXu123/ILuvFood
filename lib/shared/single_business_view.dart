@@ -10,6 +10,7 @@ import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:favorite_button/favorite_button.dart';
+import 'package:toast/toast.dart';
 
 ///
 /// Displays a specific business's information and all items they have currently listed
@@ -168,8 +169,13 @@ class _MenuTabState extends State<MenuTab> {
             SizedBox(height: 10.0),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Checkout()));
+                if (widget.cart.priceInCart == 0) {
+                  Toast.show("Your Cart is Empty!", context,
+                      duration: 2, gravity: Toast.CENTER);
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Checkout()));
+                }
                 // Navigator.of(context).push(
                 //   MaterialPageRoute(builder: (BuildContext context) {
                 //     var test = context.watch<CartModel>();

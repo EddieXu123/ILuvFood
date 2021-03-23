@@ -11,6 +11,7 @@ import 'package:iluvfood/models/business.dart';
 import 'pickup.dart';
 import 'customer_page_style.dart';
 import 'track_order.dart';
+import 'package:iluvfood/screens/home/customer/customer_home.dart';
 
 // TODO: How do we track the most recent order
 // to display? should pass in the order id into
@@ -22,6 +23,10 @@ class OrderSummary extends StatelessWidget {
     var itemNameStyle = Theme.of(context).textTheme.headline6;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.home, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text("Your Order is Complete!"),
         centerTitle: true,
       ),
