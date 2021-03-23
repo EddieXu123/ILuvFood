@@ -41,8 +41,9 @@ showAlertDialog(BuildContext context) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => OrderSummary()));
         sendMail();
-        Toast.show("Order Placed! Check your inbox for your receipt!", context,
-            duration: 3, gravity: Toast.CENTER);
+
+        // Resetting cart at the VERY END
+        cart.reset();
       } catch (e) {
         print("Error adding to order history: $e");
       }
@@ -67,8 +68,8 @@ showAlertDialog(BuildContext context) {
 }
 
 sendMail() async {
-  String username = 'email'; // EMAIL HERE
-  String password = 'test'; // PASSWORD HERE
+  String username = 'iluvfood64@gmail.com'; // EMAIL HERE
+  String password = 'foodlover123'; // PASSWORD HERE
 
   final smtpServer = gmail(username, password);
   // Use the SmtpServer class to configure an SMTP server:
@@ -78,11 +79,12 @@ sendMail() async {
 
   // Create our message.
   final message = Message()
-    ..from = Address(username, 'Your name')
-    ..recipients.add('xutopiajohnson@gmail.com') // Customer email here
+    ..from = Address(username, 'ILuvFood')
+    ..recipients.add('erx@case.edu') // Customer email here
     // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
     // ..bccRecipients.add(Address('bccAddress@example.com'))
-    ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
+    ..subject =
+        'Order Confirmation For <user> from <business>' //${DateTime.now()}'
     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
     ..html =
         "<h1>Your order has been placed</h1>\n<p>Hey! Here's some HTML content</p>";

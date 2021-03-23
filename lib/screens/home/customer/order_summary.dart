@@ -8,7 +8,7 @@ class OrderSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Order Confirmed!"),
+        title: Text("Order Placed! Check your inbox for your receipt!"),
         centerTitle: true,
       ),
       body: Center(
