@@ -1,40 +1,16 @@
 import 'package:flutter/material.dart';
 import 'customer_page_style.dart';
 
+// TODO: How do we track the most recent order
+// to display? should pass in the order id into
+// this widget
 class TrackOrderPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: trackOrderPage(),
-    );
-  }
-}
-
-class trackOrderPage extends StatefulWidget {
-  @override
-  _trackOrderPageState createState() => _trackOrderPageState();
-}
-
-class _trackOrderPageState extends State<trackOrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-        ),
-        title: Text(
-          "Track Order",
-          style: TextStyle(color: Colors.black),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-          )
-        ],
+        title: Text("Order Confirmed!"),
+        centerTitle: true,
       ),
       body: Container(
         padding: EdgeInsets.all(20),
@@ -156,7 +132,7 @@ class _trackOrderPageState extends State<trackOrderPage> {
                 width: 40,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("asset/images/$img.png"),
+                        image: AssetImage("assets/images/$img.png"),
                         fit: BoxFit.contain)),
               ),
               Text(

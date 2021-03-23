@@ -20,7 +20,6 @@ class OrderSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     CartModel cart = context.watch<CartModel>();
     var itemNameStyle = Theme.of(context).textTheme.headline6;
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Order is Complete!"),
@@ -34,11 +33,7 @@ class OrderSummary extends StatelessWidget {
             Container(
                 width: MediaQuery.of(context).size.width,
                 height: 200,
-                child: Image(image: AssetImage("assets/images/onBoard2.png"))
-                // decoration: BoxDecoration(
-                //     image: DecorationImage(
-                //         image: AssetImage('assets/images/onBoard2.png'))),
-                ),
+                child: Image(image: AssetImage("assets/images/onBoard2.png"))),
             SizedBox(
               height: 15,
             ),
@@ -117,40 +112,6 @@ class OrderSummary extends StatelessWidget {
                 Text(
                   "He",
                   style: headingStyle.copyWith(color: Colors.grey),
-                ),
-                ListView.builder(
-                  itemCount: cart.cartItems.length,
-                  itemBuilder: (context, index) => ListTile(
-                    leading: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () {
-                              cart.delete(cart.cartItems[index].uid);
-                            },
-                          ),
-                        ]),
-                    trailing:
-                        Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.remove_circle_outline),
-                        onPressed: () {
-                          cart.remove(cart.cartItems[index].uid);
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add_circle_outline),
-                        onPressed: () {
-                          cart.add(cart.cartItems[index].uid);
-                        },
-                      ),
-                    ]),
-                    title: Text(
-                      "${cart.cartItems[index].item} (${cart.cartItems[index].quantity})",
-                      style: itemNameStyle,
-                    ),
-                  ),
                 ),
               ],
             ),
