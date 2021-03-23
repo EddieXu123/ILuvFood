@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'customer_page_style.dart';
+import 'package:flutter/material.dart';
+import 'package:iluvfood/screens/home/customer/customer_home.dart';
+import 'package:iluvfood/screens/home/customer/customer_profile.dart';
+import 'package:iluvfood/screens/home/customer/customer_favorites_list.dart';
+import 'package:iluvfood/shared/constants.dart';
+import 'package:iluvfood/shared/errorPage.dart';
 
 // TODO: How do we track the most recent order
 // to display? should pass in the order id into
@@ -83,13 +89,14 @@ class TrackOrderPage extends StatelessWidget {
         iconSize: 30,
         items: [
           BottomNavigationBarItem(
+              icon: Icon(Icons.track_changes), title: Text("Track Order")),
+          BottomNavigationBarItem(
             icon: Icon(Icons.home),
             title: Text("Home"),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.track_changes), title: Text("Track Order")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.view_list), title: Text("My Orders")),
+              icon: Icon(Icons.view_list),
+              title: Text("My Orders")), // OrderHistory()
           BottomNavigationBarItem(
             icon: Icon(Icons.track_changes),
             title: Text("Profile"),
