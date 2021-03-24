@@ -163,7 +163,8 @@ class _MenuTabState extends State<MenuTab> {
             //           : Loading();
             //     }),
             SizedBox(
-              child: Text("Cart Price: \$${widget.cart.priceInCart}"),
+              child: Text(
+                  "Cart Price: \$${widget.cart.priceInCart.toStringAsFixed(2)}"),
             ),
             SizedBox(height: 10.0),
             InkWell(

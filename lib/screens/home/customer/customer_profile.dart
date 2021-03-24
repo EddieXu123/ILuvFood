@@ -6,7 +6,7 @@ import 'package:iluvfood/screens/home/customer/password_reset.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/shared/functions.dart';
+import 'package:iluvfood/shared/utils.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -88,9 +88,11 @@ class _CustomerProfileState extends State<CustomerProfile> {
                                 print(_customerName);
                                 try {
                                   if (changed) {
-                                    await DatabaseService(uid: user.uid)
-                                        .updateCustomerData(
-                                            _customerName, _customerPhone);
+                                    await DatabaseService.updateCustomerData(
+                                        user.uid,
+                                        _customerName,
+                                        _customerPhone);
+                                    print("Updated profile");
                                     _scaffoldKey.currentState
                                         .showSnackBar(SnackBar(
                                       backgroundColor: Colors.pink,

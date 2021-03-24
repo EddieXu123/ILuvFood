@@ -12,11 +12,12 @@ class CustomerHomeController extends StatefulWidget {
     CustomerHome(0),
 
     //favorites page
-    //CustomerFavoritesList(),
-    CustomerHome(1),
+    // TODO: figure out bug with favorites.
+    // CustomerHome(1),
 
     // account page
     CustomerProfile(),
+    // CustomerHome(2)
 
     // ErrorPage(),
   ];
@@ -42,8 +43,8 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
           currentIndex: _currentIndex,
           items: [
             BottomNavigationBarItem(icon: new Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite), label: 'Favorites'),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.favorite), label: 'Favorites'),
             BottomNavigationBarItem(
                 icon: new Icon(Icons.account_circle), label: "Account")
           ]),
@@ -78,6 +79,7 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+      print(index);
     });
   }
 }
