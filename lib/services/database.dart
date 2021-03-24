@@ -96,7 +96,9 @@ class DatabaseService {
     });
   }
 
-  Future<void> updateCustomerData(String name, String phone) {
+  static Future<void> updateCustomerData(String uid, String name, String phone) {
+    final CollectionReference userDetails =
+      FirebaseFirestore.instance.collection('userdetails');
     return userDetails.doc(uid).update({
       "name": name,
       "phone": phone,

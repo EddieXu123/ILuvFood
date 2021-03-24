@@ -302,8 +302,9 @@ class _CartTotal extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Consumer<CartModel>(
-                builder: (context, cart, child) =>
-                    Text('\$${cart.priceInCart}', style: hugeStyle)),
+                builder: (context, cart, child) => Text(
+                    '\$${cart.priceInCart.toStringAsFixed(2)}',
+                    style: hugeStyle)),
             SizedBox(width: 24),
           ],
         ),
