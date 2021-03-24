@@ -93,7 +93,7 @@ sendMail() async {
   // Create our message.
   final message = Message()
     ..from = Address(username, 'ILuvFood')
-    ..recipients.add('erx@case.edu') // Customer email here
+    ..recipients.add('iluvfood64@case.edu') // Customer email here
     // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
     // ..bccRecipients.add(Address('bccAddress@example.com'))
     ..subject =
@@ -154,7 +154,7 @@ class _CartList extends StatelessWidget {
     return new Scaffold(
         body: Column(children: <Widget>[
       Container(
-        height: 250,
+        height: 225,
         child: Container(
           height: 250,
           child: ListView.builder(
