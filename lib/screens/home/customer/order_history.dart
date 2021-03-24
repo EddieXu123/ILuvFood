@@ -41,10 +41,10 @@ class _OrderHistoryState extends State<OrderHistory> {
                   slivers: [
                     SliverList(
                       delegate: SliverChildListDelegate([
-                        for (String orderUid in customerOrders)
+                        for (var i = customerOrders.length - 1; i >= 0; i--)
                           StreamBuilder<Order>(
                             stream:
-                                DatabaseService(uid: orderUid).customerOrder,
+                                DatabaseService(uid: customerOrders[i]).customerOrder,
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 Order order = snapshot.data;
