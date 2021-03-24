@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
-import 'package:iluvfood/shared/functions.dart';
+import 'package:iluvfood/shared/utils.dart';
 
 /*
 CustomerRegister page UI
