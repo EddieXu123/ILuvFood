@@ -40,7 +40,7 @@ showAlertDialog(BuildContext context) {
 
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => OrderSummary()));
-        sendMail();
+        await sendMail();
 
         // Resetting cart at the VERY END
         cart.reset();
