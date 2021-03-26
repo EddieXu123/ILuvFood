@@ -53,7 +53,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                         for (var i = customerOrders.length - 1; i >= 0; i--)
                           StreamBuilder<Order>(
                             stream: DatabaseService(uid: customerOrders[i])
-                                .customerOrder,
+                                .orders,
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 Order order = snapshot.data;

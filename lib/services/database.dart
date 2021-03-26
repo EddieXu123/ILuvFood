@@ -219,14 +219,14 @@ class DatabaseService {
   // get customer data from snapshot
   Customer _customerDataFromSnapshot(DocumentSnapshot snapshot) {
     try {
-      print(snapshot.id);
+      final dat = snapshot.data();
       return Customer(
           uid: snapshot.id,
-          name: snapshot.data()['name'] ?? '<no name found>',
-          email: snapshot.data()['email'] ?? '<no email found>',
-          phone: snapshot.data()['phone'] ?? '<no phone found',
-          favorites: snapshot.data()['favorites'] ?? [],
-          orderIds: snapshot.data()['orderIds'] ?? []);
+          name: dat['name'] ?? '<no name found>',
+          email: dat['email'] ?? '<no email found>',
+          phone: dat['phone'] ?? '<no phone found',
+          favorites: dat['favorites'] ?? [],
+          orderIds: dat['orderIds'] ?? []);
     } catch (e) {
       print('error returning customer data...');
       return Customer();
@@ -277,6 +277,7 @@ class DatabaseService {
         lng: dat["lng"],
         businessName: dat["name"],
         phone: dat["phone"],
+        orderIds: dat['orderIds'] ?? [],
         isOpen: dat["isOpen"] ?? false,
       );
     } catch (e) {
@@ -342,7 +343,7 @@ class DatabaseService {
     return userDetails.doc(uid).snapshots().map(_customerOrdersUidsFromSnapshot);
   }
 
-  Stream<Order> get customerOrder {
+  Stream<Order> get orders {
     return pastOrders.doc(uid).snapshots().map(_orderFromSnapshot);
   }
 
