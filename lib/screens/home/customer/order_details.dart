@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/services/database.dart';
+import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -68,23 +69,42 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                             " " +
                             timeFormat.format(order.dateTime),
                         style: TextStyle(fontSize: 20))),
-                SizedBox(height: 20),
+                SizedBox(height: 40),
+                Container(
+                  color: Colors.grey[100],
+                  height: 30,
+                  width: 450,
+                  child: SizedBox(
+                    child: Text(
+                      "Items Ordered",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 500,
                   child: CustomScrollView(
                     slivers: [
                       SliverList(
-                        delegate: SliverChildListDelegate([
-                          for (CartItem item in cartItemList)
-                            Card(
-                                child: ListTile(
-                              title: Text(item.item),
-                              subtitle: Text("Quantity: " +
-                                  item.quantity.toString() +
-                                  "          Price: \$" +
-                                  item.price.toString()),
-                            )),
-                        ]),
+                        delegate: SliverChildListDelegate(
+                          [
+                            for (CartItem item in cartItemList)
+                              ListTile(
+                                title: Text(item.item),
+                                subtitle: Text(
+                                  "Quantity: " +
+                                      item.quantity.toString() +
+                                      "          Price: \$" +
+                                      item.price.toString(),
+                                ),
+                                tileColor: Colors.grey[100],
+                              ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

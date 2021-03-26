@@ -88,7 +88,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                             "-" +
                                             dateTime.year.toString(),
                                         style: TextStyle(
-                                            color: Colors.purple[300],
+                                            color: Colors.grey[600],
                                             fontWeight: FontWeight.bold,
                                             fontSize: 17.0),
                                       ),
@@ -96,7 +96,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                         children: <Widget>[
                                           Text("Order Id: " + order.orderId,
                                               style: TextStyle(
-                                                  color: Colors.purple[300],
+                                                  color: Colors.grey[600],
                                                   fontSize: 17.0))
                                         ],
                                       ),
