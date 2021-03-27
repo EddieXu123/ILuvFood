@@ -6,6 +6,7 @@ import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
+import 'package:iluvfood/shared/utils.dart';
 import 'package:provider/provider.dart';
 
 /*
@@ -110,7 +111,7 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                       keyboardType: TextInputType.number,
                                       decoration: textInputDecoration.copyWith(
                                           labelText: "Price"),
-                                      //validator: priceValidator,
+                                      validator: priceValidator,
                                       onChanged: (val) {
                                         price = val;
                                       }),
@@ -120,7 +121,7 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                       keyboardType: TextInputType.number,
                                       decoration: textInputDecoration.copyWith(
                                           labelText: "Quantity"),
-                                      //validator: quantityValidator,
+                                      validator: quantityValidator,
                                       onChanged: (val) {
                                         quantity = val;
                                       }),
