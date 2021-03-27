@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/shared/functions.dart';
+import 'package:iluvfood/shared/utils.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';

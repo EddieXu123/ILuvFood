@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/screens/home/customer/customer_home.dart';
 import 'package:iluvfood/screens/home/customer/customer_profile.dart';
+import 'package:iluvfood/screens/home/customer/customer_favorites_list.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/errorPage.dart';
 
@@ -8,12 +9,16 @@ import 'package:iluvfood/shared/errorPage.dart';
 class CustomerHomeController extends StatefulWidget {
   final List<Widget> screens = <Widget>[
     // maps page
-    CustomerHome(),
+    CustomerHome(0),
+
+    //favorites page
+    // TODO: figure out bug with favorites.
+    // CustomerHome(1),
 
     // account page
     CustomerProfile(),
+    // CustomerHome(2)
 
-    // // favorites page
     // ErrorPage(),
   ];
   @override
@@ -38,6 +43,8 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
           currentIndex: _currentIndex,
           items: [
             BottomNavigationBarItem(icon: new Icon(Icons.home), label: "Home"),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.favorite), label: 'Favorites'),
             BottomNavigationBarItem(
                 icon: new Icon(Icons.account_circle), label: "Account")
           ]),
@@ -72,6 +79,7 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+      print(index);
     });
   }
 }

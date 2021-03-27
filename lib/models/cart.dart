@@ -8,12 +8,13 @@ import 'package:iluvfood/services/database.dart';
 
 class CartModel extends ChangeNotifier {
   String businessUid;
+  String businessName;
   final _databaseService = DatabaseService();
-  int _priceInCart = 0;
+  double _priceInCart = 0;
 
-  CartModel({this.businessUid});
+  CartModel({this.businessUid, this.businessName});
 
-  /// Internal, private state of the cart. Stores the item-name:qty
+  /// Internal, private state of the cart. Stores the item-name:cart_item
   final Map<String, CartItem> _itemMap = Map();
 
   // get itemids map
@@ -25,11 +26,12 @@ class CartModel extends ChangeNotifier {
     print("resetting cart!");
     _priceInCart = 0;
     businessUid = '';
+    businessName = '';
     _itemMap.clear();
   }
 
   /// The current total price of all items.
-  int get priceInCart {
+  double get priceInCart {
     return _priceInCart;
     // try {
     //   _itemMap.forEach((k, v) async {
@@ -53,7 +55,7 @@ class CartModel extends ChangeNotifier {
       var item = await _databaseService.readBusinessItem(businessUid, itemId);
       // print("calculating price for ${item.item}");
       // print("adding price of ${item.price}");
-      _priceInCart += int.parse(item.price);
+      _priceInCart += double.parse(item.price);
       if (_itemMap.containsKey(item.item)) {
         _itemMap.update(
             item.item,
@@ -114,7 +116,7 @@ class CartModel extends ChangeNotifier {
       if (_itemMap.containsKey(item.item)) {
         var totalQuantity = _itemMap[item.item].quantity;
         print("Total Quantity: $totalQuantity");
-        var cost = int.parse(item.price);
+        var cost = double.parse(item.price);
         print("Cost Of Item: $cost");
         var totalRemovedCost = totalQuantity * cost;
 
@@ -138,6 +140,19 @@ class CartModel extends ChangeNotifier {
       print("could not put in dict:  $e");
     }
   }
+
+  /// Get quantity of  [item] in cart.
+  Future<int> getQuantity(String itemId) async {
+    try {
+      var item = await _databaseService.readBusinessItem(businessUid, itemId);
+      return (_itemMap.containsKey(item.item))
+          ? _itemMap[item.item].quantity
+          : 0;
+    } catch (e) {
+      print("could not get quantity:  $e");
+    }
+  }
+
   // void removeNoInventory(String itemId) {
   //   print("Removing from cart, items sold out");
   //   remove(itemId);

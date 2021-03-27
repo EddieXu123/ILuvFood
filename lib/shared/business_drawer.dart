@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/screens/home/business/business_profile.dart';
-
+import 'package:iluvfood/screens/home/business/business_order_history.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 
@@ -41,6 +41,15 @@ class _BusinessDrawerState extends State<BusinessDrawer> {
                   MaterialPageRoute(builder: (context) => BusinessProfile()));
             },
           ),
+          ListTile(
+              title: Text('Order History'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BusinessOrderHistory()));
+              }),
         ],
       ),
     );

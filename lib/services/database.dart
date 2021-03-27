@@ -40,20 +40,22 @@ class DatabaseService {
       'orderId': order.orderId,
       'dateTime': order.dateTime,
       'businessUid': order.businessUid,
-      'customerUid': order.customerUid
+      'customerUid': order.customerUid,
+      'businessName': order.businessName,
+      'customerName': order.customerName
       // Could add business and customer names if needed
     });
     String orderUid = res.id;
     print("added");
 
     // create a cartitems subcollection within the order document
-    // iterate through the cart items create a document for each item inside
+    // iterate through the cart items create a document for each item inside 
     for (CartItem cartItem in order.items) {
       await pastOrders.doc(orderUid).collection("cartItems").add({
-        "item": cartItem.item,
-        "price": cartItem.price,
-        "quantity": cartItem.quantity,
-      });
+      "item": cartItem.item,
+      "price": cartItem.price,
+      "quantity": cartItem.quantity,
+    });
     }
 
     // link orderuid to customer
@@ -94,7 +96,9 @@ class DatabaseService {
     });
   }
 
-  Future<void> updateCustomerData(String name, String phone) {
+  static Future<void> updateCustomerData(String uid, String name, String phone) {
+    final CollectionReference userDetails =
+      FirebaseFirestore.instance.collection('userdetails');
     return userDetails.doc(uid).update({
       "name": name,
       "phone": phone,
@@ -125,6 +129,16 @@ class DatabaseService {
     } catch (e) {
       print("error parsing item: $e");
       return BusinessItem();
+    }
+  }
+
+  Future<Business> readBusiness(String businessId) async {
+    try {
+      var snapshot = await businessItems.doc(businessId).get();
+      return _businessDataFromSnapshot(snapshot);
+    } catch (e) {
+      print("error retrieving item from db: $e");
+      return null;
     }
   }
 
@@ -174,20 +188,61 @@ class DatabaseService {
     }).toList();
   }
 
+  List<CartItem> _cartItemsFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      final dat = doc.data();
+      return CartItem(
+        uid: doc.id,
+        item: dat["item"],
+        quantity: dat["quantity"],
+        price: dat["price"] 
+      );
+    }).toList();
+  }
+
+  Order _orderFromSnapshot(DocumentSnapshot snapshot) {
+    try {
+      print(snapshot.id);
+      return Order(
+          uid: snapshot.id,
+          orderId: snapshot.data()['orderId'] ?? '<no orderId found>',
+          dateTime: snapshot.data()['dateTime'].toDate() ?? '<no dateTime found>',
+          businessUid: snapshot.data()['businessUid'] ?? '<no businessUid found>',
+          customerUid: snapshot.data()['customerUid'] ?? '<no customerUid found>',
+          businessName: snapshot.data()['businessName'] ?? '<no businessName found>',
+          customerName: snapshot.data()['customerName'] ?? '<no customerName found>');
+    } catch (e) {
+      print(e);
+      print('error returning order...');
+      return Order();
+    }
+  }
+
   // get customer data from snapshot
   Customer _customerDataFromSnapshot(DocumentSnapshot snapshot) {
     try {
-      print(snapshot.id);
+      final dat = snapshot.data();
       return Customer(
           uid: snapshot.id,
-          name: snapshot.data()['name'] ?? '<no name found>',
-          email: snapshot.data()['email'] ?? '<no email found>',
-          phone: snapshot.data()['phone'] ?? '<no phone found',
-          favorites: snapshot.data()['favorites'] ?? [],
-          orderIds: snapshot.data()['orderIds'] ?? []);
+          name: dat['name'] ?? '<no name found>',
+          email: dat['email'] ?? '<no email found>',
+          phone: dat['phone'] ?? '<no phone found>',
+          favorites: dat['favorites'] ?? [],
+          orderIds: dat['orderIds'] ?? []);
     } catch (e) {
       print('error returning customer data...');
       return Customer();
+    }
+  }
+
+  // get customer orders from snapshot
+  List _customerOrdersUidsFromSnapshot(DocumentSnapshot snapshot) {
+    try {
+      Customer customer = _customerDataFromSnapshot(snapshot);
+      return customer.orderIds;
+    } catch (e) {
+      print('error returning customer data...');
+      return [];
     }
   }
 
@@ -224,6 +279,7 @@ class DatabaseService {
         lng: dat["lng"],
         businessName: dat["name"],
         phone: dat["phone"],
+        orderIds: dat['orderIds'] ?? [],
         isOpen: dat["isOpen"] ?? false,
       );
     } catch (e) {
@@ -283,6 +339,18 @@ class DatabaseService {
 
   Stream<Role> get userRole {
     return userDetails.doc(uid).snapshots().map(_userRoleDataFromSnapshot);
+  }
+
+  Stream<List> get customerOrderUids {
+    return userDetails.doc(uid).snapshots().map(_customerOrdersUidsFromSnapshot);
+  }
+
+  Stream<Order> get orders {
+    return pastOrders.doc(uid).snapshots().map(_orderFromSnapshot);
+  }
+
+  Stream<List<CartItem>> getCartItems(String orderUid) {
+    return pastOrders.doc(orderUid).collection('cartItems').snapshots().map(_cartItemsFromSnapshot);
   }
 
   // get list of business stream

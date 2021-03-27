@@ -6,9 +6,11 @@ import 'package:iluvfood/models/cart.dart';
 import 'package:iluvfood/screens/home/customer/checkout.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
+import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:favorite_button/favorite_button.dart';
+import 'package:toast/toast.dart';
 
 ///
 /// Displays a specific business's information and all items they have currently listed
@@ -26,6 +28,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
   Widget build(BuildContext context) {
     CartModel cart = context.watch<CartModel>();
     cart.businessUid = widget.business.uid;
+    cart.businessName = widget.business.businessName;
     return StreamProvider<List<BusinessItem>>.value(
       value: DatabaseService().getBusinessItem(widget.business.uid),
       child: StreamBuilder<Business>(
@@ -161,13 +164,19 @@ class _MenuTabState extends State<MenuTab> {
             //           : Loading();
             //     }),
             SizedBox(
-              child: Text("Cart Price: \$${widget.cart.priceInCart}"),
+              child: Text(
+                  "Cart Price: \$${widget.cart.priceInCart.toStringAsFixed(2)}"),
             ),
             SizedBox(height: 10.0),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Checkout()));
+                if (widget.cart.priceInCart == 0) {
+                  Toast.show("Your Cart is Empty!", context,
+                      duration: 2, gravity: Toast.CENTER);
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Checkout()));
+                }
                 // Navigator.of(context).push(
                 //   MaterialPageRoute(builder: (BuildContext context) {
                 //     var test = context.watch<CartModel>();
@@ -224,11 +233,105 @@ class _MyListItem extends StatelessWidget {
 
   _MyListItem(this.businessId, this.index, {Key key}) : super(key: key);
 
+  List<BusinessItem> itemList;
+
+  //TODO: add quantity checks
+  Widget _decrementButton(BuildContext context, int index) {
+    return Container(
+        width: 30.0,
+        height: 30.0,
+        child: FittedBox(
+            child: FloatingActionButton(
+                heroTag: null,
+                child: Icon(Icons.remove, color: Colors.black87),
+                backgroundColor: Colors.white,
+                onPressed: () async {
+                  print("attempting to remove from cart");
+                  try {
+                    var cart = context.read<CartModel>();
+                    cart.remove(itemList[index].uid);
+                    final val = await _databaseService.readBusinessItem(
+                        businessId, itemList[index].uid);
+                    print("removed? ${val.item}");
+                  } catch (e) {
+                    print("something went wrong: $e");
+                  }
+                })));
+  }
+
+  Widget _incrementButton(BuildContext context, int index) {
+    return Container(
+        width: 30.0,
+        height: 30.0,
+        child: FittedBox(
+            child: FloatingActionButton(
+                heroTag: null,
+                child: Icon(Icons.add, color: Colors.black87),
+                backgroundColor: Colors.white,
+                onPressed: () async {
+                  print("attempting to add to cart");
+                  try {
+                    var cart = context.read<CartModel>();
+                    cart.add(itemList[index].uid);
+                    final val = await _databaseService.readBusinessItem(
+                        businessId, itemList[index].uid);
+                    print("added? ${val.item}");
+                  } catch (e) {
+                    print("something went wrong: $e");
+                  }
+                })));
+  }
+
+  Future<int> getQuantity(BuildContext context, int index) {
+    var cart = context.read<CartModel>();
+    return cart.getQuantity(itemList[index].uid);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final itemList = Provider.of<List<BusinessItem>>(context) ?? [];
+    itemList = Provider.of<List<BusinessItem>>(context) ?? [];
 
-    return Padding(
+    return Card(
+      elevation: 1.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            SizedBox(
+              width: 150.0,
+              child: Text(
+                "Entree: ${itemList[index].item} \nPrice: \$${itemList[index].price}",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
+              ),
+            ),
+            _decrementButton(context, index),
+            FutureBuilder(
+              future: getQuantity(context, index),
+              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    '${snapshot.data}',
+                    style: TextStyle(fontSize: 18.0),
+                  );
+                } else {
+                  return Text('E');
+                }
+              },
+            ),
+            _incrementButton(context, index),
+          ],
+        ),
+      ),
+    );
+
+    /*
+    Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: LimitedBox(
         maxHeight: 48,
@@ -260,11 +363,13 @@ class _MyListItem extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
                 ),
+                /*
                 Text(
                   "Qty: ${itemList[index].quantity}",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
                 ),
+                */
               ],
             )
                 // child: Text(
@@ -275,6 +380,6 @@ class _MyListItem extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ); */
   }
 }
