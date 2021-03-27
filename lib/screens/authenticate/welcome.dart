@@ -79,7 +79,7 @@ class Welcome extends StatelessWidget {
                                         BusinessAuthenticate()));
                           },
                           child: Text(
-                            'I\'m a bsiness owner',
+                            'I\'m a business owner',
                             style: linkedPageTextStyle,
                           ),
                         ),

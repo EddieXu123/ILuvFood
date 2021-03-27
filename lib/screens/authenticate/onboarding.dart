@@ -24,8 +24,13 @@ class _onboardingState extends State<onboarding> {
   );
   @override
   Widget build(BuildContext context) {
-    var first = "We make delivering food easy";
-    var second = "We now deliver to everyone!";
+    var first =
+        "We make delivering food easy! With a few clicks of a button, you will be able to sell your";
+    var second =
+        "Simply place your order and wait for a store to package your order";
+    var third = "Pick the time when you want your stuff";
+    var fourth = "You can come to the stores on the time you are free";
+    var fifth = "Pay back later";
     return Scaffold(
       body: Stack(
         children: [
@@ -44,11 +49,11 @@ class _onboardingState extends State<onboarding> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    onBoardPage("onBoard1", "Choose Clothes"),
-                    onBoardPage("onBoard2", "Schedule Pickup"),
-                    onBoardPage("onBoard3", "Get Best Iron Service"),
-                    onBoardPage("onBoard2", "Get on Time Delivery"),
-                    onBoardPage("onBoard4", "Pay Later"),
+                    onBoardPage("onBoard1", "Choose Clothes", first),
+                    onBoardPage("onBoard2", "Schedule Pickup", second),
+                    onBoardPage("onBoard3", "Third Slot", third),
+                    onBoardPage("onBoard2", "Get on Time Delivery", fourth),
+                    onBoardPage("onBoard4", "Get Cash Back", fifth),
                   ],
                   onPageChanged: (value) => {setCurrentPage(value)},
                 ),
@@ -102,7 +107,7 @@ class _onboardingState extends State<onboarding> {
             color: (currentPage == pageNo) ? Colors.orange : Colors.grey));
   }
 
-  Column onBoardPage(String img, String title) {
+  Column onBoardPage(String img, String title, String body) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -127,7 +132,7 @@ class _onboardingState extends State<onboarding> {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
           child: Text(
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text",
+            body,
             style: TextStyle(fontSize: 16, color: Colors.grey),
             textAlign: TextAlign.center,
           ),
