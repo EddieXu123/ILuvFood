@@ -42,46 +42,60 @@ class _BusinessHomeState extends State<BusinessHome> {
               resizeToAvoidBottomInset: false,
               body: ListView(
                 children: <Widget>[
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.history),
-                      title: Text('Orders'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BusinessOrders(),
-                          ),
-                        );
-                      },
+                  Container(
+                    margin: const EdgeInsets.all(10.0),
+                    width: 48.0,
+                    height: 100.0,
+                    child: Card(
+                      child: ListTile(
+                        leading: Icon(Icons.history),
+                        title: Text('Orders'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BusinessOrders(),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.list),
-                      title: Text('Menu'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BusinessMenu(),
-                          ),
-                        );
-                      },
+                  Container(
+                    margin: const EdgeInsets.all(10.0),
+                    width: 48.0,
+                    height: 100.0,
+                    child: Card(
+                      child: ListTile(
+                        leading: Icon(Icons.list),
+                        title: Text('Menu'),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BusinessMenu(),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.account_circle),
-                      title: Text('Profile'),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BusinessProfile(),
-                          ),
-                        );
-                      },
+                  Container(
+                    margin: const EdgeInsets.all(10.0),
+                    width: 48.0,
+                    height: 100.0,
+                    child: Card(
+                      child: ListTile(
+                          leading: Icon(Icons.account_circle),
+                          title: Text('Profile'),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BusinessProfile(),
+                              ),
+                            );
+                          }),
                     ),
                   ),
                 ],
