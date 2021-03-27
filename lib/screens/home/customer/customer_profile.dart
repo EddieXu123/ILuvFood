@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/customer.dart';
-import 'package:iluvfood/screens/home/customer/order_history.dart';
+import 'package:iluvfood/screens/home/customer/customer_order_history.dart';
 import 'package:iluvfood/screens/home/customer/password_reset.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
@@ -139,7 +139,7 @@ class _CustomerProfileState extends State<CustomerProfile> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => OrderHistory()));
+                                      builder: (context) => CustomerOrderHistory()));
                               print('Order History');
                             },
                             child: Center(

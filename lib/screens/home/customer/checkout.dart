@@ -6,6 +6,7 @@ import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:iluvfood/models/business.dart';
+import 'package:uuid/uuid.dart';
 import 'pickup.dart';
 import 'customer_page_style.dart';
 import 'package:toast/toast.dart';
@@ -18,6 +19,7 @@ import 'package:mailer/smtp_server.dart';
 showAlertDialog(BuildContext context) {
   CartModel cart = Provider.of<CartModel>(context, listen: false);
   var user = Provider.of<User>(context, listen: false);
+  var uuid = Uuid();
   // set up the buttons
   Widget cancelButton = FlatButton(
     child: Text("Cancel"),
@@ -35,7 +37,7 @@ showAlertDialog(BuildContext context) {
               duration: 2, gravity: Toast.CENTER);
         } else {
           await DatabaseService().initializePastOrder(Order(
-              orderId: "orderId", // TODO - determine how to generate an orderId
+              orderId: uuid.v1().substring(0, 8),
               dateTime: DateTime.now(),
               businessUid: cart.businessUid,
               customerUid: user.uid,
