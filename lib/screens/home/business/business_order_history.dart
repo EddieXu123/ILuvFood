@@ -1,23 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
-import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/models/order.dart';
-import 'package:iluvfood/screens/home/customer/order_details.dart';
-import 'package:iluvfood/services/auth.dart';
+import 'package:iluvfood/screens/home/business/business_order_details.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
-import 'package:iluvfood/shared/constants.dart';
 
-class OrderHistory extends StatefulWidget {
-  OrderHistory();
+class BusinessOrderHistory extends StatefulWidget {
+  BusinessOrderHistory();
 
   @override
-  _OrderHistoryState createState() => _OrderHistoryState();
+  _BusinessOrderHistoryState createState() => _BusinessOrderHistoryState();
 }
 
-class _OrderHistoryState extends State<OrderHistory> {
+class _BusinessOrderHistoryState extends State<BusinessOrderHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
@@ -111,7 +108,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                     // TODO - could go to its own order details page with the reciept used for getting tax deduction
-                                                        OrderDetails(
+                                                        BusinessOrderDetails(
                                                             order: order)));
                                           },
                                         ),

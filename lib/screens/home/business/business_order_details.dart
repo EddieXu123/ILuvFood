@@ -8,15 +8,15 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-class OrderDetails extends StatefulWidget {
+class BusinessOrderDetails extends StatefulWidget {
   final Order order;
-  OrderDetails({this.order});
+  BusinessOrderDetails({this.order});
 
   @override
-  _OrderDetailsState createState() => _OrderDetailsState();
+  _BusinessOrderDetailsState createState() => _BusinessOrderDetailsState();
 }
 
-class _OrderDetailsState extends State<OrderDetails> {
+class _BusinessOrderDetailsState extends State<BusinessOrderDetails> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<CartItem>>.value(

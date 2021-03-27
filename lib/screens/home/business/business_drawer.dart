@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/screens/home/business/business_profile.dart';
-import 'package:iluvfood/screens/home/business/order_history.dart';
+import 'package:iluvfood/screens/home/business/business_order_history.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 
@@ -49,7 +49,7 @@ class _BusinessDrawerState extends State<BusinessDrawer> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => OrderHistory()));
+                      builder: (context) => BusinessOrderHistory()));
               }
           ),
         ],
