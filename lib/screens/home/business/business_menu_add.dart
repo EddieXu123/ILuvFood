@@ -43,7 +43,6 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
             Business business = snapshot.data;
             return new Scaffold(
                 key: _scaffoldKey,
-                drawer: BusinessDrawer(),
                 appBar: AppBar(
                   title: Text(
                       '${business.businessName ?? "<no name found>"} Portal'),
