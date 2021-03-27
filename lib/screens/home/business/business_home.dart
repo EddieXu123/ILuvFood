@@ -27,10 +27,18 @@ class _BusinessHomeState extends State<BusinessHome> {
             Business business = snapshot.data;
             return new Scaffold(
               appBar: AppBar(
-                title: Text(
-                    '${business.businessName ?? "<no name found>"} Portal'),
-                elevation: 0.0,
-              ),
+                  title: Text(
+                      '${business.businessName ?? "<no name found>"} Portal'),
+                  elevation: 0.0,
+                  actions: <Widget>[
+                    TextButton.icon(
+                      icon: Icon(Icons.person),
+                      onPressed: () async {
+                        await _auth.signOut();
+                      },
+                      label: Text('logout'),
+                    )
+                  ]),
               resizeToAvoidBottomInset: false,
               body: ListView(
                 children: <Widget>[
@@ -74,23 +82,6 @@ class _BusinessHomeState extends State<BusinessHome> {
                           ),
                         );
                       },
-                    ),
-                  ),
-                  Container(
-                    height: 40.0,
-                    child: FlatButton(
-                      color: Theme.of(context).accentColor,
-                      onPressed: () async {
-                        await _auth.signOut();
-                      },
-                      child: Center(
-                        child: Text(
-                          'Logout',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat'),
-                        ),
-                      ),
                     ),
                   ),
                 ],
