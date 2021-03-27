@@ -1,18 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
-import 'package:iluvfood/screens/home/business/business_add_menu.dart';
+import 'package:iluvfood/screens/home/business/business_orders.dart';
 import 'package:iluvfood/screens/home/business/business_menu.dart';
 import 'package:iluvfood/screens/home/business/business_profile.dart';
+import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
+import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 
-class Test extends StatefulWidget {
+class BusinessHome extends StatefulWidget {
   @override
-  _TestState createState() => _TestState();
+  _BusinessHomeState createState() => _BusinessHomeState();
 }
 
-class _TestState extends State<Test> {
+class _BusinessHomeState extends State<BusinessHome> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -32,13 +36,13 @@ class _TestState extends State<Test> {
                 children: <Widget>[
                   Card(
                     child: ListTile(
-                      leading: Icon(Icons.add),
-                      title: Text('Add/View Items'),
+                      leading: Icon(Icons.history),
+                      title: Text('Orders'),
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BusinessAddMenu(),
+                            builder: (context) => BusinessOrders(),
                           ),
                         );
                       },
@@ -47,7 +51,7 @@ class _TestState extends State<Test> {
                   Card(
                     child: ListTile(
                       leading: Icon(Icons.list),
-                      title: Text('Current Orders'),
+                      title: Text('Menu'),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -60,8 +64,8 @@ class _TestState extends State<Test> {
                   ),
                   Card(
                     child: ListTile(
-                      leading: Icon(Icons.list),
-                      title: Text('Order History'),
+                      leading: Icon(Icons.account_circle),
+                      title: Text('Profile'),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -72,9 +76,30 @@ class _TestState extends State<Test> {
                       },
                     ),
                   ),
+                  Container(
+                    height: 40.0,
+                    child: FlatButton(
+                      color: Theme.of(context).accentColor,
+                      onPressed: () async {
+                        Navigator.pop(context);
+                        await _auth.signOut();
+                      },
+                      child: Center(
+                        child: Text(
+                          'Logout',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat'),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );
+          } else {
+            print("LOADING BUSINESS HOME");
+            return Loading();
           }
         });
   }

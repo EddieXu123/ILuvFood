@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
+import 'package:iluvfood/screens/home/business/business_order_history.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
-import 'business_menu_add.dart';
 
-class BusinessMenu extends StatefulWidget {
+class BusinessOrders extends StatefulWidget {
   @override
-  _BusinessMenuState createState() => _BusinessMenuState();
+  _BusinessOrdersState createState() => _BusinessOrdersState();
 }
 
-class _BusinessMenuState extends State<BusinessMenu> {
+class _BusinessOrdersState extends State<BusinessOrders> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -32,13 +32,13 @@ class _BusinessMenuState extends State<BusinessMenu> {
                 resizeToAvoidBottomInset: false,
                 body: Card(
                   child: ListTile(
-                    leading: Icon(Icons.add),
-                    title: Text('Add Items'),
+                    leading: Icon(Icons.history),
+                    title: Text('Order History'),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BusinessAddMenu(),
+                          builder: (context) => BusinessOrderHistory(),
                         ),
                       );
                     },

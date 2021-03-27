@@ -2,11 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/business_item.dart';
-import 'package:iluvfood/screens/home/business/business_drawer.dart';
+import 'package:iluvfood/shared/business_drawer.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
-
 import 'package:iluvfood/shared/loading.dart';
 import 'package:iluvfood/shared/utils.dart';
 import 'package:provider/provider.dart';

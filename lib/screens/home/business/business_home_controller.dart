@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/screens/home/business/business_menu.dart';
+import 'package:iluvfood/screens/home/business/business_orders.dart';
 import 'package:iluvfood/screens/home/business/business_profile.dart';
 import 'package:iluvfood/screens/home/business/business_home.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class BusinessHomeController extends StatefulWidget {
   final List<Widget> screens = <Widget>[
-    // Menu page
-    Test(),
+    // Home Page
+    BusinessHome(),
 
-    // Add Item Page
+    // Orders Page
+    BusinessOrders(),
+
+    // Menu Page
     BusinessMenu(),
 
     // Account page
@@ -36,9 +40,10 @@ class _BusinessHomeControllerState extends State<BusinessHomeController> {
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           items: [
-            BottomNavigationBarItem(icon: new Icon(Icons.list), label: "Menu"),
+            BottomNavigationBarItem(icon: new Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(
-                icon: new Icon(Icons.add), label: "Add Item"),
+                icon: new Icon(Icons.list), label: "Orders"),
+            BottomNavigationBarItem(icon: new Icon(Icons.add), label: "Menu"),
             BottomNavigationBarItem(
                 icon: new Icon(Icons.account_circle), label: "Account")
           ]),
@@ -48,6 +53,7 @@ class _BusinessHomeControllerState extends State<BusinessHomeController> {
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+      print(_currentIndex);
     });
   }
 }

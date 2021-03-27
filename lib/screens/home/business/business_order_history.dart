@@ -4,14 +4,13 @@ import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
-import 'business_menu_add.dart';
 
-class BusinessMenu extends StatefulWidget {
+class BusinessOrderHistory extends StatefulWidget {
   @override
-  _BusinessMenuState createState() => _BusinessMenuState();
+  _BusinessOrderHistoryState createState() => _BusinessOrderHistoryState();
 }
 
-class _BusinessMenuState extends State<BusinessMenu> {
+class _BusinessOrderHistoryState extends State<BusinessOrderHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -31,18 +30,7 @@ class _BusinessMenuState extends State<BusinessMenu> {
                 ),
                 resizeToAvoidBottomInset: false,
                 body: Card(
-                  child: ListTile(
-                    leading: Icon(Icons.add),
-                    title: Text('Add Items'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BusinessAddMenu(),
-                        ),
-                      );
-                    },
-                  ),
+                  child: Text('Orders'),
                 ));
           } else
             return Loading();
