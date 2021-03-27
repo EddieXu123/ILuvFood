@@ -42,7 +42,6 @@ showAlertDialog(BuildContext context) {
               businessUid: cart.businessUid,
               customerUid: user.uid,
               businessName: cart.businessName,
-              customerName: "customerName",
               items: cart.cartItems));
           // on add, take them to a summary page
           // Navigator.pop(context);
