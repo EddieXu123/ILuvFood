@@ -81,7 +81,6 @@ class _BusinessHomeState extends State<BusinessHome> {
                     child: FlatButton(
                       color: Theme.of(context).accentColor,
                       onPressed: () async {
-                        Navigator.pop(context);
                         await _auth.signOut();
                       },
                       child: Center(
