@@ -226,7 +226,7 @@ class DatabaseService {
           uid: snapshot.id,
           name: dat['name'] ?? '<no name found>',
           email: dat['email'] ?? '<no email found>',
-          phone: dat['phone'] ?? '<no phone found',
+          phone: dat['phone'] ?? '<no phone found>',
           favorites: dat['favorites'] ?? [],
           orderIds: dat['orderIds'] ?? []);
     } catch (e) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/services/database.dart';
-import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +9,8 @@ import 'package:intl/date_symbol_data_local.dart';
 
 class BusinessOrderDetails extends StatefulWidget {
   final Order order;
-  BusinessOrderDetails({this.order});
+  final String customerName;
+  BusinessOrderDetails({this.order, this.customerName});
 
   @override
   _BusinessOrderDetailsState createState() => _BusinessOrderDetailsState();
@@ -21,13 +21,17 @@ class _BusinessOrderDetailsState extends State<BusinessOrderDetails> {
   Widget build(BuildContext context) {
     return StreamProvider<List<CartItem>>.value(
         value: DatabaseService().getCartItems(widget.order.uid),
-        child: LayoutWidget(order: widget.order));
+        child: LayoutWidget(
+          order: widget.order,
+          customerName: widget.customerName,
+        ));
   }
 }
 
 class LayoutWidget extends StatefulWidget {
   final Order order;
-  LayoutWidget({this.order});
+  final String customerName;
+  LayoutWidget({this.order, this.customerName});
 
   @override
   _LayoutWidgetState createState() => _LayoutWidgetState();
@@ -48,6 +52,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
   @override
   Widget build(BuildContext context) {
     Order order = widget.order;
+    String customerName = widget.customerName;
     final cartItemList = Provider.of<List<CartItem>>(context);
     return cartItemList == null
         ? Loading()
@@ -60,7 +65,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
               children: <Widget>[
                 SizedBox(height: 40),
                 Container(
-                    child: Text(order.businessName,
+                    child: Text("Customer Name: " + customerName,
                         style: TextStyle(fontSize: 20))),
                 SizedBox(height: 20),
                 Container(

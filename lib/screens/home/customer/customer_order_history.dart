@@ -2,23 +2,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/models/order.dart';
-import 'package:iluvfood/screens/home/customer/order_details.dart';
+import 'package:iluvfood/screens/home/customer/customer_order_details.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
-import 'package:iluvfood/shared/constants.dart';
 
-class OrderHistory extends StatefulWidget {
+class CustomerOrderHistory extends StatefulWidget {
   final Customer customer;
   final AuthService auth;
-  OrderHistory({this.customer, this.auth});
+  CustomerOrderHistory({this.customer, this.auth});
 
   @override
-  _OrderHistoryState createState() => _OrderHistoryState();
+  _CustomerOrderHistoryState createState() => _CustomerOrderHistoryState();
 }
 
-class _OrderHistoryState extends State<OrderHistory> {
+class _CustomerOrderHistoryState extends State<CustomerOrderHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
 
@@ -108,7 +107,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    OrderDetails(
+                                                    CustomerOrderDetails(
                                                         order: order)));
                                       },
                                     ),
