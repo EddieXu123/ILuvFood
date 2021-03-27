@@ -37,10 +37,8 @@ class _BusinessDrawerState extends State<BusinessDrawer> {
             title: Text('Update Profile'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BusinessProfileForm()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BusinessProfile()));
             },
           ),
         ],

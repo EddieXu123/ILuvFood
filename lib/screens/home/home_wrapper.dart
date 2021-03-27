@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
-
-import 'package:iluvfood/screens/home/business/business_home.dart';
-
-import 'package:iluvfood/screens/home/customer/customer_home.dart';
 import 'package:iluvfood/screens/home/customer/customer_home_controller.dart';
+import 'package:iluvfood/screens/home/business/business_home_controller.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/enum.dart';
@@ -31,7 +28,7 @@ class HomeWrapper extends StatelessWidget {
                 return CustomerHomeController();
               case (Role.BUSINESS):
                 print("Logging into Business portal");
-                return BusinessHome();
+                return BusinessHomeController();
               default:
                 print("Bad role, do something, maybe logout?");
                 return ErrorPage();
