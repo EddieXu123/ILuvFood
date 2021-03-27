@@ -10,7 +10,7 @@ class CartModel extends ChangeNotifier {
   String businessUid;
   String businessName;
   final _databaseService = DatabaseService();
-  int _priceInCart = 0;
+  double _priceInCart = 0;
 
   CartModel({this.businessUid, this.businessName});
 
@@ -31,7 +31,7 @@ class CartModel extends ChangeNotifier {
   }
 
   /// The current total price of all items.
-  int get priceInCart {
+  double get priceInCart {
     return _priceInCart;
     // try {
     //   _itemMap.forEach((k, v) async {
@@ -55,7 +55,7 @@ class CartModel extends ChangeNotifier {
       var item = await _databaseService.readBusinessItem(businessUid, itemId);
       // print("calculating price for ${item.item}");
       // print("adding price of ${item.price}");
-      _priceInCart += int.parse(item.price);
+      _priceInCart += double.parse(item.price);
       if (_itemMap.containsKey(item.item)) {
         _itemMap.update(
             item.item,
@@ -116,7 +116,7 @@ class CartModel extends ChangeNotifier {
       if (_itemMap.containsKey(item.item)) {
         var totalQuantity = _itemMap[item.item].quantity;
         print("Total Quantity: $totalQuantity");
-        var cost = int.parse(item.price);
+        var cost = double.parse(item.price);
         print("Cost Of Item: $cost");
         var totalRemovedCost = totalQuantity * cost;
 

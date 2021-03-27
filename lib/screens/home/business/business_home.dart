@@ -114,7 +114,7 @@ class _BusinessHomeState extends State<BusinessHome> {
                                       keyboardType: TextInputType.number,
                                       decoration: textInputDecoration.copyWith(
                                           labelText: "Price"),
-                                      validator: numberValidator,
+                                      validator: priceValidator,
                                       onChanged: (val) {
                                         price = val;
                                       }),
@@ -124,7 +124,7 @@ class _BusinessHomeState extends State<BusinessHome> {
                                       keyboardType: TextInputType.number,
                                       decoration: textInputDecoration.copyWith(
                                           labelText: "Quantity"),
-                                      validator: numberValidator,
+                                      validator: quantityValidator,
                                       onChanged: (val) {
                                         quantity = val;
                                       }),
