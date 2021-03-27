@@ -43,7 +43,7 @@ class OrderSummary extends StatelessWidget {
               height: 15,
             ),
             Text(
-              "Thank you for choosing ILuvFood!",
+              "Thank you for choosing FoodRescue!",
               style: headingStyle,
             ),
             Text(

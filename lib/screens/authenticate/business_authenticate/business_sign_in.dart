@@ -31,13 +31,13 @@ class _BusinessSignInState extends State<BusinessSignIn> {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                    child: Text('Biz',
+                    child: Text('Supplier',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(
-                        30.0, 175.0, 0.0, 0.0), // Change if prefer aligned
+                        80.0, 190.0, 0.0, 0.0), // Change if prefer aligned
                     child: Text('Sign In',
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
@@ -119,32 +119,6 @@ class _BusinessSignInState extends State<BusinessSignIn> {
                             style: TextStyle(color: Colors.red, fontSize: 12.0),
                           ),
                         ),
-                        SizedBox(height: 10.0),
-                        Container(
-                          height: 40.0,
-                          color: Colors.transparent,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.black,
-                                    style: BorderStyle.solid,
-                                    width: 1.0),
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(20.0)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(width: 10.0),
-                                Center(
-                                  child: Text(':)',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat')),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
                       ],
                     ))),
             SizedBox(height: 15.0),
@@ -152,7 +126,7 @@ class _BusinessSignInState extends State<BusinessSignIn> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Create your business account:',
+                  'Create your supplier account:',
                   style: TextStyle(fontFamily: 'Montserrat'),
                 ),
                 SizedBox(width: 5.0),

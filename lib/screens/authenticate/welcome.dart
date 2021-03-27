@@ -18,19 +18,19 @@ class Welcome extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                    child: Text('Eat.',
+                    child: Text('Rescue.',
                         style: TextStyle(
                             fontSize: 60.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(
-                        30.0, 175.0, 0.0, 0.0), // Change if prefer aligned
-                    child: Text('Save.',
+                        110.0, 175.0, 0.0, 0.0), // Change if prefer aligned
+                    child: Text('Feed.',
                         style: TextStyle(
                             fontSize: 60.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(45.0, 240.0, 80.0, 100.0),
+                    padding: EdgeInsets.fromLTRB(155.0, 240.0, 0, 100.0),
                     child: Text('<3 food',
                         style: TextStyle(
                             fontSize: 60.0,
@@ -58,7 +58,7 @@ class Welcome extends StatelessWidget {
                                     builder: (context) =>
                                         CustomerAuthenticate()));
                           },
-                          child: Text('Sign in as customer',
+                          child: Text('Sign in as Rescuer',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Montserrat')),
@@ -78,7 +78,7 @@ class Welcome extends StatelessWidget {
                                         BusinessAuthenticate()));
                           },
                           child: Text(
-                            'I\'m a business owner',
+                            'I\'m a Supplier',
                             style: linkedPageTextStyle,
                           ),
                         ),

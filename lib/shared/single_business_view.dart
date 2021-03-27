@@ -49,7 +49,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                       bottom: TabBar(
                         tabs: [
                           Tab(icon: Icon(Icons.store)),
-                          Tab(icon: Icon(Icons.tapas)),
+                          Tab(icon: Icon(Icons.fastfood)),
                         ],
                       ),
                       title: Text(
@@ -147,7 +147,7 @@ class _MenuTabState extends State<MenuTab> {
             SizedBox(height: 25.0),
             SizedBox(
               width: 300.0,
-              height: 500.0,
+              height: 550.0,
               child: ItemScrollView(businessId: widget.business.uid),
               // child: snapshot.hasData
               //     ? ItemScrollView(
@@ -163,11 +163,11 @@ class _MenuTabState extends State<MenuTab> {
             //           ? Text("Cart Price: \$${snapshot.data}")
             //           : Loading();
             //     }),
-            SizedBox(
-              child: Text(
-                  "Cart Price: \$${widget.cart.priceInCart.toStringAsFixed(2)}"),
-            ),
-            SizedBox(height: 10.0),
+            // SizedBox(
+            //   child: Text(
+            //       "Cart Price: \$${widget.cart.priceInCart.toStringAsFixed(2)}"),
+            // ),
+            SizedBox(height: 30.0),
             InkWell(
               onTap: () {
                 if (widget.cart.priceInCart == 0) {
@@ -187,7 +187,12 @@ class _MenuTabState extends State<MenuTab> {
               },
               child: Text(
                 'Checkout',
-                style: linkedPageTextStyle,
+                style: TextStyle(
+                    color: Colors.pink,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                    fontSize: 23.0),
               ),
             ),
           ],
@@ -305,7 +310,8 @@ class _MyListItem extends StatelessWidget {
             SizedBox(
               width: 150.0,
               child: Text(
-                "Entree: ${itemList[index].item} \nPrice: \$${itemList[index].price}",
+                //"Entree: ${itemList[index].item} \nPrice: \$${itemList[index].price}",
+                "${itemList[index].item}",
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
               ),

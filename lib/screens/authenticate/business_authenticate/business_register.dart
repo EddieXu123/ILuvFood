@@ -40,13 +40,13 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                       Container(
                         padding: EdgeInsets.fromLTRB(15.0, 40.0, 0.0, 0.0),
                         child: Text(
-                          'Register Your Biz',
+                          'Register',
                           style: TextStyle(
                               fontSize: 80.0, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(320.0, 135.0, 0.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(320.0, 40.0, 0.0, 0.0),
                         child: Text(
                           '.',
                           style: TextStyle(
@@ -87,7 +87,7 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                             SizedBox(height: 10.0),
                             TextFormField(
                                 decoration: textInputDecoration.copyWith(
-                                    labelText: "Business Name"),
+                                    labelText: "Supplier Name"),
                                 validator: (val) =>
                                     val.isEmpty ? 'Enter a name' : null,
                                 onChanged: (val) {

@@ -132,7 +132,7 @@ class Checkout extends StatelessWidget {
               ),
             ),
             Divider(height: 4, color: Colors.black),
-            _CartTotal(),
+            //_CartTotal(),
             _PurchaseNow()
           ],
         ),

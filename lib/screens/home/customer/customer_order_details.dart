@@ -97,9 +97,9 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                                 title: Text(item.item),
                                 subtitle: Text(
                                   "Quantity: " +
-                                      item.quantity.toString() +
-                                      "          Price: \$" +
-                                      item.price.toString(),
+                                      item.quantity.toString(), //+
+                                      // "          Price: \$" +
+                                      // item.price.toString(),
                                 ),
                                 tileColor: Colors.grey[100],
                               ),

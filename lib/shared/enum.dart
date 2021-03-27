@@ -5,3 +5,5 @@ extension ParseToString on Role {
     return this.toString().split('.').last;
   }
 }
+
+enum Status { CONFIRMED, PACKING, READY, DELIVERED}
