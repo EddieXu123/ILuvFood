@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/models/business_item.dart';
@@ -288,6 +289,34 @@ class _MyListItem extends StatelessWidget {
                 })));
   }
 
+  void _setQuantity(BuildContext context, int index, int currentQuantity,
+      int newQuantity) async {
+    print("attempting to set the quantity of an item in cart");
+
+    int totalQuantity = int.parse(itemList[index].quantity);
+    try {
+      var cart = context.read<CartModel>();
+      while (currentQuantity != newQuantity) {
+        if (currentQuantity > newQuantity) {
+          cart.remove(itemList[index].uid);
+          currentQuantity--;
+        } else {
+          if (totalQuantity == currentQuantity) {
+            print("max quantity reached");
+            break;
+          }
+          cart.add(itemList[index].uid);
+          currentQuantity++;
+        }
+      }
+      final val = await _databaseService.readBusinessItem(
+          businessId, itemList[index].uid);
+      print("updated? ${val.item}");
+    } catch (e) {
+      print("something went wrong: $e");
+    }
+  }
+
   Future<int> getQuantity(BuildContext context, int index) {
     var cart = context.read<CartModel>();
     return cart.getQuantity(itemList[index].uid);
@@ -318,6 +347,7 @@ class _MyListItem extends StatelessWidget {
               ),
             ),
             _decrementButton(context, index),
+            /*
             FutureBuilder(
               future: getQuantity(context, index),
               builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
@@ -330,6 +360,41 @@ class _MyListItem extends StatelessWidget {
                   return Text('E');
                 }
               },
+            ),
+            */
+            SizedBox(
+              width: 50.0,
+              child: FutureBuilder(
+                future: getQuantity(context, index),
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  if (snapshot.hasData) {
+                    String newQuantity;
+                    return TextField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        onChanged: (val) {
+                          newQuantity = val;
+                          print("Changed to: " + val);
+                        },
+                        onEditingComplete: () {
+                          _setQuantity(context, index, snapshot.data,
+                              int.parse(newQuantity));
+                        },
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: '${snapshot.data}',
+                            labelStyle: TextStyle(fontSize: 18.0)));
+                  } else {
+                    return TextField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: '',
+                            labelStyle: TextStyle(fontSize: 18.0)));
+                  }
+                },
+              ),
             ),
             _incrementButton(context, index),
           ],
