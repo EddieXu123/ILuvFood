@@ -110,6 +110,7 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                       keyboardType: TextInputType.number,
                                       decoration: textInputDecoration.copyWith(
                                           labelText: "Price"),
+                                      //validator: priceValidator,
                                       onChanged: (val) {
                                         price = val;
                                       }),
@@ -119,6 +120,7 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                       keyboardType: TextInputType.number,
                                       decoration: textInputDecoration.copyWith(
                                           labelText: "Quantity"),
+                                      //validator: quantityValidator,
                                       onChanged: (val) {
                                         quantity = val;
                                       }),
