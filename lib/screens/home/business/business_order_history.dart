@@ -127,8 +127,9 @@ class _BusinessOrderHistoryState extends State<BusinessOrderHistory> {
                                                           builder: (context) =>
                                                               // TODO - could go to its own order details page with the reciept used for getting tax deduction
                                                               BusinessOrderDetails(
-                                                                  order:
-                                                                      order, customerName: customerName)));
+                                                                  order: order,
+                                                                  customerName:
+                                                                      customerName)));
                                                 },
                                               ),
                                             ),

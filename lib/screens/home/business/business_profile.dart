@@ -2,18 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/shared/errorPage.dart';
 import 'package:iluvfood/shared/utils.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-class BusinessProfileForm extends StatefulWidget {
+class BusinessProfile extends StatefulWidget {
   @override
-  _BusinessProfileFormState createState() => _BusinessProfileFormState();
+  _BusinessProfileState createState() => _BusinessProfileState();
 }
 
-class _BusinessProfileFormState extends State<BusinessProfileForm> {
+class _BusinessProfileState extends State<BusinessProfile> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool loading = false;
   String error = '';
