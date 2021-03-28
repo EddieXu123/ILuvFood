@@ -42,6 +42,16 @@ class _BusinessSignInState extends State<BusinessSignIn> {
                         style: TextStyle(
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
+                  Container(
+                        padding: EdgeInsets.fromLTRB(330.0, 190.0, 0.0, 0.0),
+                        child: Text(
+                          '.',
+                          style: TextStyle(
+                              fontSize: 80.0,
+                              fontWeight: FontWeight.bold,
+                              // Change color if needed
+                              color: Colors.pink),
+                        ),),
                 ],
               ),
             ),

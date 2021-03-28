@@ -48,13 +48,13 @@ class _BusinessHomeState extends State<BusinessHome> {
                     height: 100.0,
                     child: Card(
                       child: ListTile(
-                        leading: Icon(Icons.history),
-                        title: Text('Orders'),
+                        leading: Icon(Icons.list),
+                        title: Text('Listings'),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => BusinessOrders(),
+                              builder: (context) => BusinessMenu(),
                             ),
                           );
                         },
@@ -67,13 +67,13 @@ class _BusinessHomeState extends State<BusinessHome> {
                     height: 100.0,
                     child: Card(
                       child: ListTile(
-                        leading: Icon(Icons.list),
-                        title: Text('Menu'),
+                        leading: Icon(Icons.history),
+                        title: Text('Orders'),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => BusinessMenu(),
+                              builder: (context) => BusinessOrders(),
                             ),
                           );
                         },

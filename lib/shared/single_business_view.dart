@@ -49,7 +49,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                       bottom: TabBar(
                         tabs: [
                           Tab(icon: Icon(Icons.store)),
-                          Tab(icon: Icon(Icons.fastfood)),
+                          Tab(icon: Icon(Icons.list)),
                         ],
                       ),
                       title: Text(

@@ -58,7 +58,7 @@ class _BusinessProfileState extends State<BusinessProfile> {
                             TextFormField(
                                 initialValue: businessData.businessName,
                                 decoration: textInputDecoration.copyWith(
-                                    labelText: "Business Name"),
+                                    labelText: "Supplier Name"),
                                 validator: (val) =>
                                     val.isEmpty ? 'Enter a name' : null,
                                 onChanged: (val) {
