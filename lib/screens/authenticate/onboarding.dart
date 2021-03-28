@@ -25,7 +25,7 @@ class _onboardingState extends State<onboarding> {
   @override
   Widget build(BuildContext context) {
     var first =
-        "We make delivering food easy! With a few clicks of a button, you will be able to sell your";
+        "We make delivering food easy! With just a few clicks of a button, you will be able to sell your";
     var second =
         "Simply place your order and wait for a store to package your order";
     var third = "Pick the time when you want your stuff";
@@ -49,7 +49,7 @@ class _onboardingState extends State<onboarding> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    onBoardPage("onBoard1", "Choose Clothes", first),
+                    onBoardPage("onBoard1", "Delivering Food Easier", first),
                     onBoardPage("onBoard2", "Schedule Pickup", second),
                     onBoardPage("onBoard3", "Third Slot", third),
                     onBoardPage("onBoard2", "Get on Time Delivery", fourth),
