@@ -42,8 +42,6 @@ class DatabaseService {
       'businessUid': order.businessUid,
       'customerUid': order.customerUid,
       'businessName': order.businessName,
-      'customerName': order.customerName
-      // Could add business and customer names if needed
     });
     String orderUid = res.id;
     print("added");
