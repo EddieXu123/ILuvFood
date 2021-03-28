@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 import 'customer_page_style.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
 import 'package:iluvfood/models/order.dart';
-import 'package:iluvfood/screens/home/customer/order_summary.dart';
-import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:iluvfood/models/business.dart';
-import 'pickup.dart';
-import 'customer_page_style.dart';
 import 'track_order.dart';
-import 'package:iluvfood/screens/home/customer/customer_home.dart';
 
-// TODO: How do we track the most recent order
-// to display? should pass in the order id into
-// this widget
 class OrderSummary extends StatelessWidget {
+  final Order order;
+  OrderSummary({this.order});
+
   @override
   Widget build(BuildContext context) {
     CartModel cart = context.watch<CartModel>();
@@ -67,7 +59,7 @@ class OrderSummary extends StatelessWidget {
                       gradient: gradientStyle,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Text(
-                    "<OrderIDHere>",
+                    order == null ? "<orderId>" : order.orderId,
                     //style: headingStyle.copyWith(color: Colors.white),
                   ),
                 )

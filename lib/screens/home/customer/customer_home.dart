@@ -7,10 +7,8 @@ import 'package:iluvfood/screens/home/customer/customer_favorites_list.dart';
 import 'package:iluvfood/screens/home/customer/customer_profile.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
-import 'package:iluvfood/shared/business_scroll_view.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/material.dart';
 
 class CustomerHome extends StatelessWidget {
   final AuthService _auth = AuthService();

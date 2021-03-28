@@ -130,6 +130,33 @@ class DatabaseService {
     }
   }
 
+  Future<Customer> readCustomer(String customerId) async {
+    try {
+      var snapshot = await userDetails.doc(customerId).get();
+      return _customerDataFromSnapshot(snapshot);
+    } catch (e) {
+      print("error retrieving item from db: $e");
+      return null;
+    }
+  }
+
+  Future<Order> readOrder(String orderId) async {
+    try {
+      var snapshot = await pastOrders.doc(orderId).get();
+      return _orderFromSnapshot(snapshot);
+    } catch (e) {
+      print("error retrieving item from db: $e");
+      return null;
+    }
+  }
+
+  Future<Order> getMostRecentOrder(String customerId) async {
+    Customer customer = await readCustomer(customerId);
+    List orderIds = customer.orderIds;
+    String mostRecent = orderIds.last;
+    return await readOrder(mostRecent);
+  }
+
   Future<Business> readBusiness(String businessId) async {
     try {
       var snapshot = await businessItems.doc(businessId).get();
@@ -201,14 +228,14 @@ class DatabaseService {
   Order _orderFromSnapshot(DocumentSnapshot snapshot) {
     try {
       print(snapshot.id);
+      final dat = snapshot.data();
       return Order(
           uid: snapshot.id,
-          orderId: snapshot.data()['orderId'] ?? '<no orderId found>',
-          dateTime: snapshot.data()['dateTime'].toDate() ?? '<no dateTime found>',
-          businessUid: snapshot.data()['businessUid'] ?? '<no businessUid found>',
-          customerUid: snapshot.data()['customerUid'] ?? '<no customerUid found>',
-          businessName: snapshot.data()['businessName'] ?? '<no businessName found>',
-          customerName: snapshot.data()['customerName'] ?? '<no customerName found>');
+          orderId: dat['orderId'] ?? '<no orderId found>',
+          dateTime: dat['dateTime'].toDate() ?? '<no dateTime found>',
+          businessUid: dat['businessUid'] ?? '<no businessUid found>',
+          customerUid: dat['customerUid'] ?? '<no customerUid found>',
+          businessName: dat['businessName'] ?? '<no businessName found>');
     } catch (e) {
       print(e);
       print('error returning order...');
@@ -230,17 +257,6 @@ class DatabaseService {
     } catch (e) {
       print('error returning customer data...');
       return Customer();
-    }
-  }
-
-  // get customer orders from snapshot
-  List _customerOrdersUidsFromSnapshot(DocumentSnapshot snapshot) {
-    try {
-      Customer customer = _customerDataFromSnapshot(snapshot);
-      return customer.orderIds;
-    } catch (e) {
-      print('error returning customer data...');
-      return [];
     }
   }
 
@@ -337,10 +353,6 @@ class DatabaseService {
 
   Stream<Role> get userRole {
     return userDetails.doc(uid).snapshots().map(_userRoleDataFromSnapshot);
-  }
-
-  Stream<List> get customerOrderUids {
-    return userDetails.doc(uid).snapshots().map(_customerOrdersUidsFromSnapshot);
   }
 
   Stream<Order> get orders {

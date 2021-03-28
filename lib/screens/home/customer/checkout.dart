@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
+import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
@@ -43,12 +45,16 @@ showAlertDialog(BuildContext context) {
               customerUid: user.uid,
               businessName: cart.businessName,
               items: cart.cartItems));
+          Order order = await DatabaseService().getMostRecentOrder(user.uid);
           // on add, take them to a summary page
           // Navigator.pop(context);
           Navigator.of(context).popUntil((route) => route.isFirst);
-
+          
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => OrderSummary()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      OrderSummary(order: order)));
           print("Resetting After Purchase");
           cart.reset();
         }

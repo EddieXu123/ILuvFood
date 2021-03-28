@@ -7,7 +7,6 @@ class Order {
   final String businessUid;
   final String customerUid;
   final String businessName;
-  final String customerName;
   final List<CartItem> items;
   Order(
       {this.uid, 
@@ -16,6 +15,5 @@ class Order {
       this.businessUid,
       this.customerUid,
       this.businessName,
-      this.customerName,
       this.items});
 }
