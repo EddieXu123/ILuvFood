@@ -293,7 +293,7 @@ class _MyListItem extends StatelessWidget {
       int newQuantity) async {
     print("attempting to set the quantity of an item in cart");
 
-    int totalQuantity = int.parse(itemList[index].quantity);
+    int totalQuantity = int.parse(itemList[index].quantity) + currentQuantity;
     try {
       var cart = context.read<CartModel>();
       while (currentQuantity != newQuantity) {
@@ -303,6 +303,7 @@ class _MyListItem extends StatelessWidget {
         } else {
           if (totalQuantity == currentQuantity) {
             print("max quantity reached");
+
             break;
           }
           cart.add(itemList[index].uid);
@@ -368,23 +369,34 @@ class _MyListItem extends StatelessWidget {
                 future: getQuantity(context, index),
                 builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                   if (snapshot.hasData) {
-                    String newQuantity;
-                    return TextField(
+                    String _newQuantity = snapshot.data.toString();
+                    int _totalQuantity = int.parse(itemList[index].quantity) +
+                        int.parse(_newQuantity);
+                    return TextFormField(
+                        initialValue: _newQuantity,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
                         ],
                         onChanged: (val) {
-                          newQuantity = val;
-                          print("Changed to: " + val);
+                          _newQuantity = val;
                         },
                         onEditingComplete: () {
-                          _setQuantity(context, index, snapshot.data,
-                              int.parse(newQuantity));
+                          if (int.parse(_newQuantity) > _totalQuantity) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                  "Too many items selected, there are a maximum of ${_totalQuantity}."),
+                            );
+                          } else {
+                            _setQuantity(context, index, snapshot.data,
+                                int.parse(_newQuantity));
+                          }
                         },
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: '${snapshot.data}',
                             labelStyle: TextStyle(fontSize: 18.0)));
                   } else {
                     return TextField(
