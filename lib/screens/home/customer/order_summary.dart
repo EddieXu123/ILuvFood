@@ -1,158 +1,176 @@
 import 'package:flutter/material.dart';
+import 'package:iluvfood/models/cart_item.dart';
+import 'package:iluvfood/services/database.dart';
+import 'package:iluvfood/shared/loading.dart';
 import 'customer_page_style.dart';
-import 'package:iluvfood/models/cart.dart';
 import 'package:iluvfood/models/order.dart';
 import 'package:provider/provider.dart';
 import 'track_order.dart';
 
-class OrderSummary extends StatelessWidget {
+class OrderSummary extends StatefulWidget {
   final Order order;
   OrderSummary({this.order});
 
   @override
+  _OrderSummaryState createState() => _OrderSummaryState();
+}
+
+class _OrderSummaryState extends State<OrderSummary> {
+  @override
   Widget build(BuildContext context) {
-    CartModel cart = context.watch<CartModel>();
+    return StreamProvider<List<CartItem>>.value(
+        value: DatabaseService().getCartItems(widget.order.uid),
+        child: LayoutWidget(
+          order: widget.order,
+        ));
+  }
+}
+
+class LayoutWidget extends StatefulWidget {
+  final Order order;
+  LayoutWidget({this.order});
+
+  @override
+  _LayoutWidgetState createState() => _LayoutWidgetState();
+}
+
+class _LayoutWidgetState extends State<LayoutWidget> {
+  @override
+  Widget build(BuildContext context) {
+    Order order = widget.order;
+    final cartItemList = Provider.of<List<CartItem>>(context);
     var itemNameStyle = Theme.of(context).textTheme.headline6;
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.home, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text("Your Order is Complete!"),
-        centerTitle: true,
-      ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                width: MediaQuery.of(context).size.width,
-                height: 200,
-                child: Image(image: AssetImage("assets/images/onBoard2.png"))),
-            SizedBox(
-              height: 15,
-            ),
-            Text(
-              "Thank you for choosing FoodRescue!",
-              style: headingStyle,
-            ),
-            Text(
-              "Your order has been placed and a confirmation email has been sent!",
-              style: contentStyle,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Order ID",
-                  style: headingStyle,
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      gradient: gradientStyle,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Text(
-                    order == null ? "<orderId>" : order.orderId,
-                    //style: headingStyle.copyWith(color: Colors.white),
-                  ),
-                )
-              ],
-            ),
-            divider(),
-            // ListView.builder(
-            //   itemCount: cart.cartItems.length,
-            //   itemBuilder: (context, index) => ListTile(
-            //     leading:
-            //         Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            //       IconButton(
-            //         icon: Icon(Icons.delete),
-            //         onPressed: () {
-            //           cart.delete(cart.cartItems[index].uid);
-            //         },
-            //       ),
-            //     ]),
-            //     trailing:
-            //         Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            //       IconButton(
-            //         icon: Icon(Icons.remove_circle_outline),
-            //         onPressed: () {
-            //           cart.remove(cart.cartItems[index].uid);
-            //         },
-            //       ),
-            //       IconButton(
-            //         icon: Icon(Icons.add_circle_outline),
-            //         onPressed: () {
-            //           cart.add(cart.cartItems[index].uid);
-            //         },
-            //       ),
-            //     ]),
-            //     title: Text(
-            //       "${cart.cartItems[index].item} (${cart.cartItems[index].quantity})",
-            //       style: itemNameStyle,
-            //     ),
-            //   ),
-            // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Order Information",
-                  style: headingStyle,
-                ),
-                Text(
-                  "<DropDown>",
-                  style: headingStyle.copyWith(color: Colors.grey),
-                ),
-              ],
-            ),
-            divider(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Pick up Date & Time",
-                  style: headingStyle,
-                ),
-                Text(
-                  "Wednesday, 24 March, 2021. Between 10:00 AM & 12:00 PM",
-                  textAlign: TextAlign.center,
-                  style: contentStyle.copyWith(
-                      color: Colors.black54, fontSize: 16),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Container(),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TrackOrderPage()));
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(vertical: 20),
-                decoration: BoxDecoration(gradient: gradientStyle),
-                child: Center(
-                  child: Text(
-                    "TRACK ORDER",
-                    style: contentStyle.copyWith(
-                        color: Colors.white, fontSize: 22),
-                  ),
-                ),
+    return cartItemList == null
+        ? Loading()
+        : Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(Icons.home, color: Colors.black),
+                onPressed: () => Navigator.of(context).pop(),
               ),
-            )
-          ],
-        ),
-      ),
-    );
+              title: Text("Your Order is Complete!"),
+              centerTitle: true,
+            ),
+            body: Container(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 200,
+                      child: Image(
+                          image: AssetImage("assets/images/onBoard2.png"))),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "Thank you for choosing FoodRescue!",
+                    style: headingStyle,
+                  ),
+                  Text(
+                    "Your order has been placed and a confirmation email has been sent!",
+                    style: contentStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Order ID",
+                        style: headingStyle,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            gradient: gradientStyle,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Text(
+                          order == null ? "<orderId>" : order.orderId,
+                          //style: headingStyle.copyWith(color: Colors.white),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Items Ordered",
+                      style: headingStyle,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
+                      child: Column(
+                        children: cartItemList
+                            .map((i) => Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(i.item,
+                                      style: contentStyle.copyWith(
+                                          color: Colors.black54, fontSize: 16),
+                                    ),
+                                Text("Quantity: " +
+                                          i.quantity.toString(), style: contentStyle.copyWith(
+                                          color: Colors.black54, fontSize: 16))
+                              ],
+                            ))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                  divider(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Pick up Date & Time",
+                        style: headingStyle,
+                      ),
+                      Text(
+                        "Wednesday, 24 March, 2021. Between 10:00 AM & 12:00 PM",
+                        textAlign: TextAlign.center,
+                        style: contentStyle.copyWith(
+                            color: Colors.black54, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TrackOrderPage()));
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      decoration: BoxDecoration(gradient: gradientStyle),
+                      child: Center(
+                        child: Text(
+                          "TRACK ORDER",
+                          style: contentStyle.copyWith(
+                              color: Colors.white, fontSize: 22),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
   }
 }
 
