@@ -5,16 +5,11 @@ import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:iluvfood/models/business.dart';
 import 'package:uuid/uuid.dart';
-import 'pickup.dart';
 import 'customer_page_style.dart';
-import 'package:toast/toast.dart';
 import 'package:toast/toast.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
-
-// TODO: Add Restaurant information under the Cart
 
 showAlertDialog(BuildContext context) {
   CartModel cart = Provider.of<CartModel>(context, listen: false);
@@ -42,14 +37,18 @@ showAlertDialog(BuildContext context) {
               businessUid: cart.businessUid,
               customerUid: user.uid,
               businessName: cart.businessName,
-              customerName: "customerName",
-              items: cart.cartItems));
+              items: cart.cartItems,
+              status: "CONFIRMED"));
+          Order order = await DatabaseService().getMostRecentOrder(user.uid);
           // on add, take them to a summary page
           // Navigator.pop(context);
           Navigator.of(context).popUntil((route) => route.isFirst);
-
+          
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => OrderSummary()));
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      OrderSummary(order: order)));
           print("Resetting After Purchase");
           cart.reset();
         }
@@ -132,7 +131,7 @@ class Checkout extends StatelessWidget {
               ),
             ),
             Divider(height: 4, color: Colors.black),
-            _CartTotal(),
+            //_CartTotal(),
             _PurchaseNow()
           ],
         ),

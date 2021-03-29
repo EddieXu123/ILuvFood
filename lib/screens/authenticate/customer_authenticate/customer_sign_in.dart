@@ -33,17 +33,17 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                     padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
                     child: Text('Love',
                         style: TextStyle(
-                            fontSize: 80.0, fontWeight: FontWeight.bold)),
+                            fontSize: 75.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(
                         30.0, 175.0, 0.0, 0.0), // Change if prefer aligned
-                    child: Text('Food',
+                    child: Text('Rescuing',
                         style: TextStyle(
-                            fontSize: 80.0, fontWeight: FontWeight.bold)),
+                            fontSize: 75.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                    padding: EdgeInsets.fromLTRB(213.0, 175.0, 0.0, 0.0),
+                    padding: EdgeInsets.fromLTRB(345.0, 175.0, 0.0, 0.0),
                     child: Text('?',
                         style: TextStyle(
                             fontSize: 80.0,
@@ -182,7 +182,7 @@ class _CustomerSignInState extends State<CustomerSignIn> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'New to iLuvFood?',
+                  'New to FoodRescue?',
                   style: TextStyle(fontFamily: 'Montserrat'),
                 ),
                 SizedBox(width: 5.0),

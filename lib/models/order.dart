@@ -1,4 +1,5 @@
 import 'package:iluvfood/models/cart_item.dart';
+import 'package:iluvfood/shared/enum.dart';
 
 class Order {
   final String uid;
@@ -7,8 +8,8 @@ class Order {
   final String businessUid;
   final String customerUid;
   final String businessName;
-  final String customerName;
   final List<CartItem> items;
+  final String status;
   Order(
       {this.uid, 
       this.orderId,
@@ -16,6 +17,6 @@ class Order {
       this.businessUid,
       this.customerUid,
       this.businessName,
-      this.customerName,
-      this.items});
+      this.items,
+      this.status});
 }

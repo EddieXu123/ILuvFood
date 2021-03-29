@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
               child: StreamProvider<User>.value(
                 value: AuthService().user,
                 child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
                   theme: themeNotifier.getTheme(),
                   initialRoute: '/wrapper',
                   routes: {

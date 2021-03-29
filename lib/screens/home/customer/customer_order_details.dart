@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/models/order.dart';
+import 'package:iluvfood/screens/home/customer/track_order.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+
+import 'customer_page_style.dart';
 
 class CustomerOrderDetails extends StatefulWidget {
   final Order order;
@@ -69,6 +72,10 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                             " " +
                             timeFormat.format(order.dateTime),
                         style: TextStyle(fontSize: 20))),
+                SizedBox(height: 20),
+                Container(
+                  child: Text("Status: " + order.status, style: TextStyle(fontSize: 20)),
+                ),
                 SizedBox(height: 40),
                 Container(
                   color: Colors.grey[100],
@@ -86,7 +93,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                   ),
                 ),
                 SizedBox(
-                  height: 500,
+                  height: 394,
                   child: CustomScrollView(
                     slivers: [
                       SliverList(
@@ -96,10 +103,9 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                               ListTile(
                                 title: Text(item.item),
                                 subtitle: Text(
-                                  "Quantity: " +
-                                      item.quantity.toString() +
-                                      "          Price: \$" +
-                                      item.price.toString(),
+                                  "Quantity: " + item.quantity.toString(), //+
+                                  // "          Price: \$" +
+                                  // item.price.toString(),
                                 ),
                                 tileColor: Colors.grey[100],
                               ),
@@ -109,6 +115,26 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                     ],
                   ),
                 ),
+                InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TrackOrderPage(order.status)));
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      decoration: BoxDecoration(gradient: gradientStyle),
+                      child: Center(
+                        child: Text(
+                          "TRACK ORDER",
+                          style: contentStyle.copyWith(
+                              color: Colors.white, fontSize: 22),
+                        ),
+                      ),
+                    ),
+                  )
               ],
             ),
           );

@@ -49,7 +49,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                       bottom: TabBar(
                         tabs: [
                           Tab(icon: Icon(Icons.store)),
-                          Tab(icon: Icon(Icons.tapas)),
+                          Tab(icon: Icon(Icons.list)),
                         ],
                       ),
                       title: Text(
@@ -163,10 +163,10 @@ class _MenuTabState extends State<MenuTab> {
             //           ? Text("Cart Price: \$${snapshot.data}")
             //           : Loading();
             //     }),
-            SizedBox(
-              child: Text(
-                  "Cart Price: \$${widget.cart.priceInCart.toStringAsFixed(2)}"),
-            ),
+            // SizedBox(
+            //   child: Text(
+            //       "Cart Price: \$${widget.cart.priceInCart.toStringAsFixed(2)}"),
+            // ),
             SizedBox(height: 10.0),
             InkWell(
               onTap: () {
@@ -187,7 +187,12 @@ class _MenuTabState extends State<MenuTab> {
               },
               child: Text(
                 'Checkout',
-                style: linkedPageTextStyle,
+                style: TextStyle(
+                    color: Colors.pink,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                    fontSize: 23.0),
               ),
             ),
           ],
@@ -276,6 +281,7 @@ class _MyListItem extends StatelessWidget {
                     final val = await _databaseService.readBusinessItem(
                         businessId, itemList[index].uid);
                     print("added? ${val.item}");
+                    print(cart.cartItems);
                   } catch (e) {
                     print("something went wrong: $e");
                   }
@@ -305,7 +311,8 @@ class _MyListItem extends StatelessWidget {
             SizedBox(
               width: 150.0,
               child: Text(
-                "Entree: ${itemList[index].item} \nPrice: \$${itemList[index].price}",
+                //"Entree: ${itemList[index].item} \nPrice: \$${itemList[index].price}",
+                "${itemList[index].item}",
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
               ),

@@ -43,7 +43,7 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                       Container(
                         padding: EdgeInsets.fromLTRB(15.0, 40.0, 0.0, 0.0),
                         child: Text(
-                          'Customer Sign Up',
+                          'Rescuer Sign Up',
                           style: TextStyle(
                               fontSize: 80.0, fontWeight: FontWeight.bold),
                         ),

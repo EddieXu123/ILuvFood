@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 String quantityValidator(String value) {
   String pattern = r'(^[1-9][0-9]*$)';
   RegExp regExp = new RegExp(pattern);
@@ -30,3 +33,10 @@ String validateMobile(String value) {
   }
   return null;
 }
+
+Icon getStatus(String status) {
+    if (status == "DELIVERED") {
+      return Icon(Icons.check);
+    }
+    return Icon(Icons.history);
+  }

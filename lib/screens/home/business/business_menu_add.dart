@@ -67,7 +67,7 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                               padding:
                                   EdgeInsets.fromLTRB(15.0, 20.0, 0.0, 0.0),
                               child: Text(
-                                "add food",
+                                "add item",
                                 style: TextStyle(
                                     fontSize: 80.0,
                                     fontWeight: FontWeight.bold),
@@ -98,23 +98,23 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                   TextFormField(
                                       controller: _controller0,
                                       decoration: textInputDecoration.copyWith(
-                                          labelText: "Entree"),
+                                          labelText: "Item"),
                                       validator: (val) => val.isEmpty
-                                          ? 'Enter an entree'
+                                          ? 'Enter an item'
                                           : null,
                                       onChanged: (val) {
                                         item = val;
                                       }),
-                                  SizedBox(height: 10.0),
-                                  TextFormField(
-                                      controller: _controller1,
-                                      keyboardType: TextInputType.number,
-                                      decoration: textInputDecoration.copyWith(
-                                          labelText: "Price"),
-                                      validator: priceValidator,
-                                      onChanged: (val) {
-                                        price = val;
-                                      }),
+                                  // SizedBox(height: 10.0),
+                                  // TextFormField(
+                                  //     controller: _controller1,
+                                  //     keyboardType: TextInputType.number,
+                                  //     decoration: textInputDecoration.copyWith(
+                                  //         labelText: "Price"),
+                                  //     validator: priceValidator,
+                                  //     onChanged: (val) {
+                                  //       price = val;
+                                  //     }),
                                   SizedBox(height: 10.0),
                                   TextFormField(
                                       controller: _controller2,
@@ -139,7 +139,7 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                             await DatabaseService(uid: user.uid)
                                                 .enterBusinessItem(BusinessItem(
                                                     item: item,
-                                                    price: price,
+                                                    price: "0.0",
                                                     quantity: quantity));
                                             setState(() => loading = false);
                                             _clearControllers();

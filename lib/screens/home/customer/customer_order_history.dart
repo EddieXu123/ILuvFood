@@ -7,6 +7,7 @@ import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:iluvfood/shared/utils.dart';
 
 class CustomerOrderHistory extends StatefulWidget {
   final Customer customer;
@@ -20,14 +21,6 @@ class CustomerOrderHistory extends StatefulWidget {
 class _CustomerOrderHistoryState extends State<CustomerOrderHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
-
-  Icon getStatus(Order order) {
-    // TODO - change this to if the status is complete
-    if (order.orderId == "orderId") {
-      return Icon(Icons.check, color: Colors.purple[300], size: 30.0);
-    }
-    return Icon(Icons.sync, color: Colors.purple[300], size: 30.0);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +69,7 @@ class _CustomerOrderHistoryState extends State<CustomerOrderHistory> {
                                                 color: Colors.purple[300]),
                                           ),
                                         ),
-                                        child: getStatus(order),
+                                        child: getStatus(order.status),
                                       ),
                                       title: Text(
                                         order.businessName +
