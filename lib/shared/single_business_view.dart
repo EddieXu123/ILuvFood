@@ -327,7 +327,7 @@ class _MyListItem extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0),
                   );
                 } else {
-                  return Text('E');
+                  return Loading();
                 }
               },
             ),
