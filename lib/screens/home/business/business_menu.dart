@@ -36,22 +36,7 @@ class _BusinessMenuState extends State<BusinessMenu> {
                           elevation: 0.0,
                         ),
                         resizeToAvoidBottomInset: false,
-                        body:
-                            // new Card(
-                            //   child: ListTile(
-                            //     leading: Icon(Icons.add),
-                            //     title: Text('Add Items'),
-                            //     onTap: () {
-                            //       Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //           builder: (context) => BusinessAddMenu(),
-                            //         ),
-                            //       );
-                            //     },
-                            //   ),
-                            // ),
-                            CustomScrollView(
+                        body: CustomScrollView(
                           slivers: [
                             SliverList(
                               delegate: SliverChildListDelegate([
@@ -99,22 +84,7 @@ class _BusinessMenuState extends State<BusinessMenu> {
                               ]),
                             )
                           ],
-                        )
-                        // new Card(
-                        //   child: ListTile(
-                        //     leading: Icon(Icons.add),
-                        //     title: Text('Add Items'),
-                        //     onTap: () {
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) => BusinessAddMenu(),
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        // )
-                        );
+                        ));
                   } else {
                     return Loading();
                   }
