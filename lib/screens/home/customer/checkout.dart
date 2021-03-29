@@ -27,7 +27,7 @@ showAlertDialog(BuildContext context) {
     onPressed: () async {
       print("processing order!");
       try {
-        if (cart.priceInCart == 0) {
+        if (cart.cartItems.length == 0) {
           Toast.show("Your Cart is Empty!", context,
               duration: 2, gravity: Toast.CENTER);
         } else {
@@ -43,12 +43,11 @@ showAlertDialog(BuildContext context) {
           // on add, take them to a summary page
           // Navigator.pop(context);
           Navigator.of(context).popUntil((route) => route.isFirst);
-          
+
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      OrderSummary(order: order)));
+                  builder: (context) => OrderSummary(order: order)));
           print("Resetting After Purchase");
           cart.reset();
         }
