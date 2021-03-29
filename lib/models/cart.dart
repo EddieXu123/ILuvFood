@@ -145,11 +145,19 @@ class CartModel extends ChangeNotifier {
   Future<int> getQuantity(String itemId) async {
     try {
       var item = await _databaseService.readBusinessItem(businessUid, itemId);
+      if (_itemMap.containsKey(item.item)) {
+        var quantity = _itemMap[item.item].quantity;
+        if (quantity != null) {
+          return quantity;
+        }
+      }
+      return 0;
       return (_itemMap.containsKey(item.item))
           ? _itemMap[item.item].quantity
           : 0;
     } catch (e) {
       print("could not get quantity:  $e");
+      return 0;
     }
   }
 
