@@ -42,19 +42,20 @@ class DatabaseService {
       'businessUid': order.businessUid,
       'customerUid': order.customerUid,
       'businessName': order.businessName,
+      'orderDate': order.orderDate,
       'status': order.status
     });
     String orderUid = res.id;
     print("added");
 
     // create a cartitems subcollection within the order document
-    // iterate through the cart items create a document for each item inside 
+    // iterate through the cart items create a document for each item inside
     for (CartItem cartItem in order.items) {
       await pastOrders.doc(orderUid).collection("cartItems").add({
-      "item": cartItem.item,
-      "price": cartItem.price,
-      "quantity": cartItem.quantity,
-    });
+        "item": cartItem.item,
+        "price": cartItem.price,
+        "quantity": cartItem.quantity,
+      });
     }
 
     // link orderuid to customer
@@ -101,9 +102,10 @@ class DatabaseService {
     });
   }
 
-  static Future<void> updateCustomerData(String uid, String name, String phone) {
+  static Future<void> updateCustomerData(
+      String uid, String name, String phone) {
     final CollectionReference userDetails =
-      FirebaseFirestore.instance.collection('userdetails');
+        FirebaseFirestore.instance.collection('userdetails');
     return userDetails.doc(uid).update({
       "name": name,
       "phone": phone,
@@ -224,11 +226,10 @@ class DatabaseService {
     return snapshot.docs.map((doc) {
       final dat = doc.data();
       return CartItem(
-        uid: doc.id,
-        item: dat["item"],
-        quantity: dat["quantity"],
-        price: dat["price"] 
-      );
+          uid: doc.id,
+          item: dat["item"],
+          quantity: dat["quantity"],
+          price: dat["price"]);
     }).toList();
   }
 
@@ -236,6 +237,10 @@ class DatabaseService {
     try {
       print(snapshot.id);
       final dat = snapshot.data();
+      print("PRINTING DAT KEYS");
+      for (String s in dat.keys) {
+        print(s);
+      }
       return Order(
           uid: snapshot.id,
           orderId: dat['orderId'] ?? '<no orderId found>',
@@ -243,6 +248,7 @@ class DatabaseService {
           businessUid: dat['businessUid'] ?? '<no businessUid found>',
           customerUid: dat['customerUid'] ?? '<no customerUid found>',
           businessName: dat['businessName'] ?? '<no businessName found>',
+          orderDate: dat['orderDate'] ?? '<no orderDate found>',
           status: dat['status'] ?? '<no status found>');
     } catch (e) {
       print(e);
@@ -368,7 +374,11 @@ class DatabaseService {
   }
 
   Stream<List<CartItem>> getCartItems(String orderUid) {
-    return pastOrders.doc(orderUid).collection('cartItems').snapshots().map(_cartItemsFromSnapshot);
+    return pastOrders
+        .doc(orderUid)
+        .collection('cartItems')
+        .snapshots()
+        .map(_cartItemsFromSnapshot);
   }
 
   // get list of business stream

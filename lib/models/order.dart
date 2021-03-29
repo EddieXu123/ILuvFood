@@ -8,6 +8,7 @@ class Order {
   final String businessUid;
   final String customerUid;
   final String businessName;
+  final String orderDate;
   final List<CartItem> items;
   String status;
   Order(
@@ -17,6 +18,7 @@ class Order {
       this.businessUid,
       this.customerUid,
       this.businessName,
+      this.orderDate,
       this.items,
       this.status});
 }

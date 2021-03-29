@@ -11,6 +11,9 @@ import 'customer_page_style.dart';
 import 'package:toast/toast.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+String pickDay = "";
 
 showAlertDialog(BuildContext context) {
   CartModel cart = Provider.of<CartModel>(context, listen: false);
@@ -39,9 +42,15 @@ showAlertDialog(BuildContext context) {
               customerUid: user.uid,
               businessName: cart.businessName,
               items: cart.cartItems,
+              orderDate: pickDay,
               status: "CONFIRMED"));
+          print(pickDay + " Eddie");
+
           Order order = await DatabaseService().getMostRecentOrder(user.uid);
+          print("Business Name: " + order.businessName);
+          print("PickupDate: " + order.orderDate);
           String message = content(cart);
+          // String dateMessage = dayOfWeek(pick)
           await sendMail(user.email, user.displayName, order, message);
           Navigator.of(context).popUntil((route) => route.isFirst);
 
@@ -98,11 +107,11 @@ sendMail(String emailAddress, String userName, Order order,
     ..from = Address(username, 'ILuvFood')
     ..recipients.add(emailAddress)
     ..subject =
-        'Order Confirmation from ${order.businessName}. Confirmation #: ${order.uid}' //${DateTime.now()}'
+        'Order Confirmation from ${order.businessName}. OrderID: ${order.uid}' //${DateTime.now()}'
     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-    ..html =
-        "<div style=\"text-align: center;\"><h2>Thank you for using FoodRescuer!</h2>\n<p>${order.businessName} has received your request" +
-            " and will be packaging your order for pickup. Here is the list of items you ordered: <br> <br> $messageBody </div>";
+    ..html = "<div style=\"text-align: center;\"><h2>Thank you for using FoodRescue!</h2>\n<p>${order.businessName} has received your request" +
+        " and will be packaging your order for pickup. Your order will be ready on $pickDay at 10:00 am."
+            " Here is the list of items you ordered: <br> <br> $messageBody </div>";
 
   try {
     final sendReport = await send(message, smtpServer);
@@ -120,7 +129,7 @@ class Checkout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
+        title: Text('Cart + Select Pickup Date'),
       ),
       body: Container(
         child: Column(
@@ -217,66 +226,126 @@ class _CartList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Pick up Date",
-                style: headingStyle,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    // TODO: Make them into buttons and use This.Date + 3 days
-                    // Need to talk with team to decide how long actually
-                    dateWidget("Wed", "24 March", true), // ThisDate + 3
-                    dateWidget("Thu", "25 March", false), // ThisDate + 4
-                    dateWidget("Fri", "26 March", false), // etc
-                    dateWidget("Sat", "27 March", false),
-                    dateWidget("Mon", "28 March", false),
-                    dateWidget("Tue", "29 March", false)
-                  ],
+              TableCalendar(
+                calendarStyle: CalendarStyle(
+                    canEventMarkersOverflow: true,
+                    todayColor: Colors.orange,
+                    selectedColor: Colors.blue[300],
+                    todayStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Colors.white)),
+                headerStyle: HeaderStyle(
+                  centerHeaderTitle: true,
+                  formatButtonDecoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  formatButtonTextStyle: TextStyle(color: Colors.white),
+                  formatButtonShowsNext: false,
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 1,
-                color: Colors.grey,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Pick up Time",
-                style: headingStyle,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    // DITTO THE ABOVE
-                    timeWidget("10:00 AM to 12:00 PM", false),
-                    timeWidget("12:00 PM to 02:00 PM", true),
-                    timeWidget("02:00 PM to 04:00 PM", false),
-                    timeWidget("04:00 PM to 06:00 PM", false),
-                  ],
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                builders: CalendarBuilders(
+                  selectedDayBuilder: (context, date, events) {
+                    pickDay = dayOfWeek(date.weekday) +
+                        ', ' +
+                        getMonth(date.month) +
+                        ' ' +
+                        date.day.toString() +
+                        'th, ' +
+                        date.year.toString();
+                    print("Day to pick " + pickDay);
+                    print(date.weekday.toString() + " Hello");
+                    return new Container(
+                        margin: const EdgeInsets.all(4.0),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.blue[300],
+                            borderRadius: BorderRadius.circular(10.0)),
+                        child: TextButton(
+                          onPressed: () {
+                            pickDay = date.day.toString();
+                            (context as Element).markNeedsBuild();
+                            print(date.day.toString());
+                          },
+                          child: Text(
+                            date.day.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          //
+                        ));
+                  },
+                  todayDayBuilder: (context, date, events) => Container(
+                      margin: const EdgeInsets.all(4.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: Text(
+                        date.day.toString(),
+                        style: TextStyle(color: Colors.white),
+                      )),
                 ),
-              ),
-              // SizedBox(
-              //   height: 20,
-              // ),
+                calendarController: CalendarController(),
+              )
             ],
           ),
         ),
       ),
     ]));
   }
+}
+
+String getMonth(int month) {
+  switch (month) {
+    case 1:
+      return "January";
+    case 2:
+      return "February";
+    case 3:
+      return "March";
+    case 4:
+      return "April";
+    case 5:
+      return "May";
+    case 6:
+      return "June";
+    case 7:
+      return "July";
+    case 8:
+      return "August";
+    case 9:
+      return "September";
+    case 10:
+      return "October";
+    case 11:
+      return "November";
+    case 12:
+      return "December";
+  }
+
+  return "";
+}
+
+String dayOfWeek(int day) {
+  switch (day) {
+    case 1:
+      return "Monday";
+    case 2:
+      return "Tuesday";
+    case 3:
+      return "Wednesday";
+    case 4:
+      return "Thursday";
+    case 5:
+      return "Friday";
+    case 6:
+      return "Saturday";
+    case 7:
+      return "Sunday";
+  }
+
+  return "";
 }
 
 class _CartTotal extends StatelessWidget {
@@ -322,6 +391,7 @@ class _PurchaseNow extends StatelessWidget {
                       duration: 2, gravity: Toast.CENTER);
                 } else {
                   print("processing order!");
+                  print(pickDay);
                   showAlertDialog(context);
                 }
               },
@@ -335,6 +405,10 @@ class _PurchaseNow extends StatelessWidget {
       ),
     );
   }
+}
+
+String getDay(String day) {
+  return "";
 }
 
 Container dateWidget(String day, String date, bool isActive) {
