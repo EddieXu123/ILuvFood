@@ -403,57 +403,5 @@ class _MyListItem extends StatelessWidget {
         ),
       ),
     );
-
-    /*
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: LimitedBox(
-        maxHeight: 48,
-        child: Container(
-          child: RaisedButton(
-            color: Theme.of(context).accentColor,
-            onPressed: (() async {
-              print("attempting to add to cart");
-              try {
-                var cart = context.read<CartModel>();
-                cart.add(itemList[index].uid);
-                final val = await _databaseService.readBusinessItem(
-                    businessId, itemList[index].uid);
-                print("added? ${val.item}");
-              } catch (e) {
-                print("something went wrong: $e");
-              }
-            }),
-            child: Center(
-                child: Column(
-              children: [
-                Text(
-                  "Entree: ${itemList[index].item}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
-                ),
-                Text(
-                  "Price: \$${itemList[index].price}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
-                ),
-                /*
-                Text(
-                  "Qty: ${itemList[index].quantity}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
-                ),
-                */
-              ],
-            )
-                // child: Text(
-                //   businessItems[index].item,
-
-                // ),
-                ),
-          ),
-        ),
-      ),
-    ); */
   }
 }
