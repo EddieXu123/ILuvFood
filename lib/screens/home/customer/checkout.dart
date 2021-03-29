@@ -326,7 +326,7 @@ class _PurchaseNow extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {
-                if (cart.priceInCart == 0) {
+                if (cart.cartItems.length == 0) {
                   Toast.show("Your Cart is Empty!", context,
                       duration: 2, gravity: Toast.CENTER);
                 } else {

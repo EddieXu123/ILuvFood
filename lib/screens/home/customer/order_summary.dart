@@ -35,7 +35,6 @@ class LayoutWidget extends StatefulWidget {
 }
 
 class _LayoutWidgetState extends State<LayoutWidget> {
-
   @override
   Widget build(BuildContext context) {
     Order order = widget.order;
@@ -114,17 +113,20 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                       child: Column(
                         children: cartItemList
                             .map((i) => Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(i.item,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      i.item,
                                       style: contentStyle.copyWith(
                                           color: Colors.black54, fontSize: 16),
                                     ),
-                                Text("Quantity: " +
-                                          i.quantity.toString(), style: contentStyle.copyWith(
-                                          color: Colors.black54, fontSize: 16))
-                              ],
-                            ))
+                                    Text("Quantity: " + i.quantity.toString(),
+                                        style: contentStyle.copyWith(
+                                            color: Colors.black54,
+                                            fontSize: 16))
+                                  ],
+                                ))
                             .toList(),
                       ),
                     ),
@@ -153,7 +155,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TrackOrderPage(order.status)));
+                              builder: (context) => TrackOrderPage(order.uid)));
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
