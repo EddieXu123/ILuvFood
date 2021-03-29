@@ -170,7 +170,7 @@ class _MenuTabState extends State<MenuTab> {
             SizedBox(height: 10.0),
             InkWell(
               onTap: () {
-                if (widget.cart.priceInCart == 0) {
+                if (widget.cart.cartItems.length == 0) {
                   Toast.show("Your Cart is Empty!", context,
                       duration: 2, gravity: Toast.CENTER);
                 } else {
