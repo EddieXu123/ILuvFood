@@ -34,9 +34,20 @@ String validateMobile(String value) {
   return null;
 }
 
-Icon getStatus(String status) {
-    if (status == "DELIVERED") {
-      return Icon(Icons.check);
-    }
-    return Icon(Icons.history);
+String validateZip(String value) {
+  String pattern = r'(^\d{5}(-\d{4})?$)';
+  RegExp regExp = new RegExp(pattern);
+  if (value.length == 0) {
+    return 'Enter a zip code';
+  } else if (!regExp.hasMatch(value)) {
+    return 'Enter a valid zip code';
   }
+  return null;
+}
+
+Icon getStatus(String status) {
+  if (status == "DELIVERED") {
+    return Icon(Icons.check);
+  }
+  return Icon(Icons.history);
+}

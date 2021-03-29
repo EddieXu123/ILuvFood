@@ -122,7 +122,7 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                 decoration: textInputDecoration.copyWith(
                                   labelText: "Zip Code",
                                 ),
-                                // validator: (val) => validateMobile(val),
+                                validator: (val) => validateZip(val),
                                 onChanged: (val) {
                                   zipCode = val;
                                 }),
