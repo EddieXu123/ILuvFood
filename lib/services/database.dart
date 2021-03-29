@@ -48,13 +48,13 @@ class DatabaseService {
     print("added");
 
     // create a cartitems subcollection within the order document
-    // iterate through the cart items create a document for each item inside 
+    // iterate through the cart items create a document for each item inside
     for (CartItem cartItem in order.items) {
       await pastOrders.doc(orderUid).collection("cartItems").add({
-      "item": cartItem.item,
-      "price": cartItem.price,
-      "quantity": cartItem.quantity,
-    });
+        "item": cartItem.item,
+        "price": cartItem.price,
+        "quantity": cartItem.quantity,
+      });
     }
 
     // link orderuid to customer
@@ -101,13 +101,25 @@ class DatabaseService {
     });
   }
 
-  static Future<void> updateCustomerData(String uid, String name, String phone) {
+  static Future<void> updateCustomerData(
+      String uid, String name, String phone) {
     final CollectionReference userDetails =
-      FirebaseFirestore.instance.collection('userdetails');
+        FirebaseFirestore.instance.collection('userdetails');
     return userDetails.doc(uid).update({
       "name": name,
       "phone": phone,
     });
+  }
+
+  Future<List<Business>> getBusinesses(List businessesIDs) async {
+    List<Business> businesses = [];
+    for (var i = 0; i < businessesIDs.length; i++) {
+      Business newBusiness = await readBusiness(businessesIDs[i]);
+      if (newBusiness != null) {
+        businesses.add(newBusiness);
+      }
+    }
+    return businesses;
   }
 
   Future<void> enterBusinessItem(BusinessItem bizitem) async {
@@ -224,11 +236,10 @@ class DatabaseService {
     return snapshot.docs.map((doc) {
       final dat = doc.data();
       return CartItem(
-        uid: doc.id,
-        item: dat["item"],
-        quantity: dat["quantity"],
-        price: dat["price"] 
-      );
+          uid: doc.id,
+          item: dat["item"],
+          quantity: dat["quantity"],
+          price: dat["price"]);
     }).toList();
   }
 
@@ -368,7 +379,11 @@ class DatabaseService {
   }
 
   Stream<List<CartItem>> getCartItems(String orderUid) {
-    return pastOrders.doc(orderUid).collection('cartItems').snapshots().map(_cartItemsFromSnapshot);
+    return pastOrders
+        .doc(orderUid)
+        .collection('cartItems')
+        .snapshots()
+        .map(_cartItemsFromSnapshot);
   }
 
   // get list of business stream
