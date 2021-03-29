@@ -25,10 +25,11 @@ class _onboardingState extends State<onboarding> {
   @override
   Widget build(BuildContext context) {
     var first =
-        "We make delivering food easy! With just a few clicks of a button, you will be able to sell your";
+        "We make rescuing food easy! With just a few clicks of a button, we help community distributors find suppliers with excess food to donate.";
     var second =
-        "Simply place your order and wait for a store to package your order";
-    var third = "Pick the time when you want your stuff";
+        "Rescuers can choose what items they want from a given supplier, and then schedule a time to pick it up.";
+    var third =
+        "Suppliers donate excess food that count as charitable tax deductions, and receive itemized summaries of their deducations.";
     var fourth = "You can come to the stores on the time you are free";
     var fifth = "Pay back later";
     return Scaffold(
@@ -49,9 +50,9 @@ class _onboardingState extends State<onboarding> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    onBoardPage("onBoard1", "Delivering Food Easier", first),
-                    onBoardPage("onBoard2", "Schedule Pickup", second),
-                    onBoardPage("onBoard3", "Third Slot", third),
+                    onBoardPage("onBoard1", "Rescuing Food", first),
+                    onBoardPage("onBoard2", "Feeding Communities", second),
+                    onBoardPage("onBoard3", "Saving Money", third),
                     onBoardPage("onBoard2", "Get on Time Delivery", fourth),
                     onBoardPage("onBoard4", "Get Cash Back", fifth),
                   ],
