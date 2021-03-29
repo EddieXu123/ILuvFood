@@ -152,12 +152,8 @@ class CartModel extends ChangeNotifier {
         }
       }
       return 0;
-      return (_itemMap.containsKey(item.item))
-          ? _itemMap[item.item].quantity
-          : 0;
     } catch (e) {
       print("could not get quantity:  $e");
-      return 0;
     }
   }
 

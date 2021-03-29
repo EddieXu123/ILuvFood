@@ -339,15 +339,11 @@ class _MyListItem extends StatelessWidget {
   Future<int> getQuantity(BuildContext context, int index) {
     var cart = context.read<CartModel>();
     return cart.getQuantity(itemList[index].uid);
-    //const quantity = itemList[index].quantity;
-    //return (quantity == null) ? 999 : quantity;
   }
 
   @override
   Widget build(BuildContext context) {
     itemList = Provider.of<List<BusinessItem>>(context) ?? [];
-    myController
-        .addListener(() => {print("New Quantity: ${myController.text}")});
 
     return Card(
       elevation: 1.0,
