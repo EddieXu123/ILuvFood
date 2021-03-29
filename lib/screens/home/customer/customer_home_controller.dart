@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:iluvfood/screens/home/customer/customer_favorites_2.dart';
+import 'package:iluvfood/screens/home/customer/customer_favorites.dart';
 import 'package:iluvfood/screens/home/customer/customer_home.dart';
 import 'package:iluvfood/screens/home/customer/customer_profile.dart';
-import 'package:iluvfood/screens/home/customer/customer_favorites_list.dart';
-import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/shared/errorPage.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class CustomerHomeController extends StatefulWidget {
   final List<Widget> screens = <Widget>[
     // maps page
-    CustomerHome(0),
+    CustomerHome(),
 
     //favorites page
     // TODO: figure out bug with favorites.
