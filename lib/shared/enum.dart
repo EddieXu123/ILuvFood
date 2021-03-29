@@ -6,10 +6,10 @@ extension ParseToString on Role {
   }
 }
 
-enum Status { CONFIRMED, PACKING, READY, DELIVERED}
+// enum STATUS { CONFIRMED, PACKING, READY, DELIVERED}
 
-extension ParseStatusToString on Status {
-  String toShortString() {
-    return this.toString().split('.').last;
-  }
-}
+// extension ParseStatusToString on STATUS {
+//   String toShortString() {
+//     return this.toString().split('.').last;
+//   }
+// }

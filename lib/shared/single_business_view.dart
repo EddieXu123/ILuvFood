@@ -147,7 +147,7 @@ class _MenuTabState extends State<MenuTab> {
             SizedBox(height: 25.0),
             SizedBox(
               width: 300.0,
-              height: 550.0,
+              height: 500.0,
               child: ItemScrollView(businessId: widget.business.uid),
               // child: snapshot.hasData
               //     ? ItemScrollView(
@@ -167,7 +167,7 @@ class _MenuTabState extends State<MenuTab> {
             //   child: Text(
             //       "Cart Price: \$${widget.cart.priceInCart.toStringAsFixed(2)}"),
             // ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 10.0),
             InkWell(
               onTap: () {
                 if (widget.cart.priceInCart == 0) {
@@ -281,6 +281,7 @@ class _MyListItem extends StatelessWidget {
                     final val = await _databaseService.readBusinessItem(
                         businessId, itemList[index].uid);
                     print("added? ${val.item}");
+                    print(cart.cartItems);
                   } catch (e) {
                     print("something went wrong: $e");
                   }

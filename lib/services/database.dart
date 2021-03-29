@@ -42,6 +42,7 @@ class DatabaseService {
       'businessUid': order.businessUid,
       'customerUid': order.customerUid,
       'businessName': order.businessName,
+      'status': order.status
     });
     String orderUid = res.id;
     print("added");
@@ -91,6 +92,12 @@ class DatabaseService {
       "lng": business.lng,
       "name": business.businessName,
       "phone": business.phone
+    });
+  }
+
+  Future<void> updateOrderStatus(String orderUid, String status) {
+    return pastOrders.doc(orderUid).update({
+      "status": status,
     });
   }
 
@@ -235,7 +242,8 @@ class DatabaseService {
           dateTime: dat['dateTime'].toDate() ?? '<no dateTime found>',
           businessUid: dat['businessUid'] ?? '<no businessUid found>',
           customerUid: dat['customerUid'] ?? '<no customerUid found>',
-          businessName: dat['businessName'] ?? '<no businessName found>');
+          businessName: dat['businessName'] ?? '<no businessName found>',
+          status: dat['status'] ?? '<no status found>');
     } catch (e) {
       print(e);
       print('error returning order...');

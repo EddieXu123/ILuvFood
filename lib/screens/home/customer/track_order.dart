@@ -7,24 +7,30 @@ import 'package:iluvfood/screens/home/customer/customer_favorites_list.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/errorPage.dart';
 
-// TODO: How do we track the most recent order
-// to display? should pass in the order id into
-// this widget
 class TrackOrderPage extends StatelessWidget {
+  final String status;
+  TrackOrderPage(this.status);
+
+
   @override
   Widget build(BuildContext context) {
+    bool isDelivered = status == "DELIVERED";
+    bool isReady = (isDelivered || status == "READY");
+    bool isPacking = (isReady || status == "PACKING");
+    bool isConfirmed = (isPacking || status == "CONFIRMED");
     return Scaffold(
       appBar: AppBar(
-        title: Text("Order Confirmed!"),
+        title: Text("Order Status"),
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.fromLTRB(110, 100, 50, 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
+                SizedBox(height: 400),
                 Container(
                   margin: EdgeInsets.only(left: 13, top: 50),
                   width: 4,
@@ -33,76 +39,71 @@ class TrackOrderPage extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    statusWidget('confirmed', "Confirmed", true),
-                    statusWidget('servicesImg', "  Packing", false),
-                    statusWidget('shipped', "  Ready", false),
-                    statusWidget('Delivery', "Delivered", false),
+                    statusWidget('confirmed', "Confirmed", isConfirmed),
+                    statusWidget('packing', "  Packing", isPacking),
+                    statusWidget('ready', "  Ready", isReady),
+                    statusWidget('delivered', "Delivered", isDelivered),
                   ],
                 )
               ],
-            ),
-            Container(
-              height: 20,
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 15),
-              height: 1,
-              color: Colors.grey,
-            ),
-            Container(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(
-                        color: Colors.white,
-                      )),
-                  child: Text(
-                    "Cancel Order",
-                    style: contentStyle.copyWith(color: Colors.white),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.orange,
-                  ),
-                  child: Text(
-                    "My Orders",
-                    style: contentStyle.copyWith(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.orange,
-        iconSize: 30,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.track_changes), title: Text("Track Order")),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.view_list),
-              title: Text("My Orders")), // OrderHistory()
-          BottomNavigationBarItem(
-            icon: Icon(Icons.track_changes),
-            title: Text("Profile"),
-          ),
-        ],
-      ),
+            ),]))
+            // Container(
+            //   height: 20,
+            // ),
+            // Container(
+            //   margin: EdgeInsets.symmetric(vertical: 15),
+            //   height: 1,
+            //   color: Colors.grey,
+            // ),
+            // Container(
+            //   height: 50,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Container(
+            //       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            //       decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.all(Radius.circular(10)),
+            //           border: Border.all(
+            //             color: Colors.white,
+            //           )),
+            //       child: Text(
+            //         "Cancel Order",
+            //         style: contentStyle.copyWith(color: Colors.white),
+            //       ),
+            //     ),
+                // Container(
+                //   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.all(Radius.circular(10)),
+                //     color: Colors.orange,
+                //   ),
+                //   child: Text(
+                //     "My Orders",
+                //     style: contentStyle.copyWith(color: Colors.white),
+                //   ),
+                //),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   type: BottomNavigationBarType.fixed,
+      //   selectedItemColor: Colors.orange,
+      //   iconSize: 30,
+      //   items: [
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.track_changes), title: Text("Track Order")),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       title: Text("Home"),
+      //     ),
+      //     BottomNavigationBarItem(
+      //         icon: Icon(Icons.view_list),
+      //         title: Text("My Orders")), // OrderHistory()
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.track_changes),
+      //       title: Text("Profile"),
+      //     ),
+      //   ],
+      // ),
     );
   }
 

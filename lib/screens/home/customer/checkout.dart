@@ -1,22 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
-import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:iluvfood/models/business.dart';
 import 'package:uuid/uuid.dart';
-import 'pickup.dart';
 import 'customer_page_style.dart';
-import 'package:toast/toast.dart';
 import 'package:toast/toast.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
-
-// TODO: Add Restaurant information under the Cart
 
 showAlertDialog(BuildContext context) {
   CartModel cart = Provider.of<CartModel>(context, listen: false);
@@ -44,7 +37,8 @@ showAlertDialog(BuildContext context) {
               businessUid: cart.businessUid,
               customerUid: user.uid,
               businessName: cart.businessName,
-              items: cart.cartItems));
+              items: cart.cartItems,
+              status: "CONFIRMED"));
           Order order = await DatabaseService().getMostRecentOrder(user.uid);
           // on add, take them to a summary page
           // Navigator.pop(context);

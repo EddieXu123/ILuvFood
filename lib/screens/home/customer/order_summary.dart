@@ -35,6 +35,7 @@ class LayoutWidget extends StatefulWidget {
 }
 
 class _LayoutWidgetState extends State<LayoutWidget> {
+
   @override
   Widget build(BuildContext context) {
     Order order = widget.order;
@@ -152,7 +153,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TrackOrderPage()));
+                              builder: (context) => TrackOrderPage(order.status)));
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
