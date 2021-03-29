@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
+import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
@@ -40,22 +41,17 @@ showAlertDialog(BuildContext context) {
               items: cart.cartItems,
               status: "CONFIRMED"));
           Order order = await DatabaseService().getMostRecentOrder(user.uid);
-          // on add, take them to a summary page
-          // Navigator.pop(context);
+          String message = content(cart);
+          await sendMail(user.email, user.displayName, order, message);
           Navigator.of(context).popUntil((route) => route.isFirst);
 
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => OrderSummary(order: order)));
-          print("Resetting After Purchase");
           cart.reset();
         }
 
-        await sendMail();
-
-        // Resetting cart at the VERY END
-        // Unless we want to do this in order_summary.dart, which we probs do
         cart.reset();
       } catch (e) {
         print("Error adding to order history: $e");
@@ -80,27 +76,33 @@ showAlertDialog(BuildContext context) {
   );
 }
 
-sendMail() async {
+String content(CartModel cart) {
+  String output = "";
+
+  for (CartItem item in cart.cartItems) {
+    output += (item.item + ' x' + item.quantity.toString() + '<br>');
+  }
+
+  return output;
+}
+
+sendMail(String emailAddress, String userName, Order order,
+    String messageBody) async {
   String username = 'iluvfood64@gmail.com'; // EMAIL HERE
   String password = 'foodlover123'; // PASSWORD HERE
 
   final smtpServer = gmail(username, password);
-  // Use the SmtpServer class to configure an SMTP server:
-  // final smtpServer = SmtpServer('smtp.domain.com');
-  // See the named arguments of SmtpServer for further configuration
-  // options.
 
   // Create our message.
   final message = Message()
     ..from = Address(username, 'ILuvFood')
-    ..recipients.add('iluvfood64@case.edu') // Customer email here
-    // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
-    // ..bccRecipients.add(Address('bccAddress@example.com'))
+    ..recipients.add(emailAddress)
     ..subject =
-        'Order Confirmation For <user> from <business>' //${DateTime.now()}'
+        'Order Confirmation from ${order.businessName}. Confirmation #: ${order.uid}' //${DateTime.now()}'
     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
     ..html =
-        "<h1>Your order has been placed</h1>\n<p>Hey! Here's some HTML content</p>";
+        "<div style=\"text-align: center;\"><h2>Thank you for using FoodRescuer!</h2>\n<p>${order.businessName} has received your request" +
+            " and will be packaging your order for pickup. Here is the list of items you ordered: <br> <br> $messageBody </div>";
 
   try {
     final sendReport = await send(message, smtpServer);
@@ -130,7 +132,6 @@ class Checkout extends StatelessWidget {
               ),
             ),
             Divider(height: 4, color: Colors.black),
-            //_CartTotal(),
             _PurchaseNow()
           ],
         ),
@@ -178,7 +179,6 @@ class _CartList extends StatelessWidget {
                   onPressed: () {
                     // itemPrice = "${cart.cartItems[index].price}";
                     cart.remove(cart.cartItems[index].uid);
-                    // print(itemPrice);
                   },
                 ),
                 Container(
@@ -201,7 +201,6 @@ class _CartList extends StatelessWidget {
               title: Text(
                 // itemPrice == "-1"
                 "${cart.cartItems[index].item}", // LATER: (\$${cart.cartItems[index].price})",
-                // : "${cart.cartItems[index].item} ($itemPrice)", //(${cart.cartItems[index].quantity})",
                 style: itemNameStyle,
               ),
             ),
@@ -262,16 +261,8 @@ class _CartList extends StatelessWidget {
                 child: Row(
                   children: [
                     // DITTO THE ABOVE
-                    TextButton(
-                      onPressed: () {
-                        selected_time = true;
-                      },
-                      child: timeWidget("10:00 AM to 12:00 PM", selected_time),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: timeWidget("12:00 PM to 02:00 PM", true),
-                    ),
+                    timeWidget("10:00 AM to 12:00 PM", false),
+                    timeWidget("12:00 PM to 02:00 PM", true),
                     timeWidget("02:00 PM to 04:00 PM", false),
                     timeWidget("04:00 PM to 06:00 PM", false),
                   ],
@@ -317,7 +308,7 @@ class _PurchaseNow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartModel cart = Provider.of<CartModel>(context, listen: false);
-    var user = Provider.of<User>(context, listen: false);
+
     return SizedBox(
       height: 50,
       child: Center(
@@ -356,16 +347,16 @@ Container dateWidget(String day, String date, bool isActive) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          day,
-          style: contentStyle.copyWith(
-              color: (isActive) ? Colors.white : Colors.black, fontSize: 20),
+        TextButton(
+          onPressed: () {
+            print("Hello");
+          },
+          child: Text(
+            day + '\n' + date,
+            style: contentStyle.copyWith(
+                color: (isActive) ? Colors.white : Colors.black, fontSize: 20),
+          ),
         ),
-        Text(
-          date,
-          style: contentStyle.copyWith(
-              color: (isActive) ? Colors.white : Colors.black, fontSize: 13),
-        )
       ],
     ),
   );
@@ -381,11 +372,16 @@ Container timeWidget(String time, bool isActive) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          time,
-          style: contentStyle.copyWith(
-              color: (isActive) ? Colors.white : Colors.black, fontSize: 15),
-        ),
+        TextButton(
+          onPressed: () {
+            print("Pressed Button");
+          },
+          child: Text(
+            time,
+            style: contentStyle.copyWith(
+                color: (isActive) ? Colors.white : Colors.black, fontSize: 15),
+          ),
+        )
       ],
     ),
   );
