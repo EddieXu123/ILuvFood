@@ -1,68 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/screens/home/customer/customer_page_style.dart';
 import 'package:iluvfood/services/database.dart';
+import 'package:iluvfood/shared/loading.dart';
+import 'package:provider/provider.dart';
 
 class UpdateOrderStatusPage extends StatefulWidget {
-  final String orderUid;
-  String status;
-  UpdateOrderStatusPage(this.orderUid, this.status);
+  Order order;
+  UpdateOrderStatusPage(this.order);
 
   @override
   _UpdateOrderStatusPageState createState() => _UpdateOrderStatusPageState();
 }
 
 class _UpdateOrderStatusPageState extends State<UpdateOrderStatusPage> {
-
   @override
   Widget build(BuildContext context) {
-    String status = widget.status;
+    Order streamedOrder = widget.order;
+    String status = streamedOrder == null ? "DELIVERED" : streamedOrder.status;
     bool isDelivered = status == "DELIVERED";
     bool isReady = (isDelivered || status == "READY");
     bool isPacking = (isReady || status == "PACKING");
     bool isConfirmed = (isPacking || status == "CONFIRMED");
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Order Status"),
-        centerTitle: true,
-      ),
-      body: Container(
-        padding: EdgeInsets.fromLTRB(110, 100, 50, 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                SizedBox(height: 400),
-                Container(
-                  margin: EdgeInsets.only(left: 13, top: 50),
-                  width: 4,
-                  height: 300,
-                  color: Colors.grey,
-                ),
-                Column(
-                  children: [
-                    statusWidget('confirmed', "Confirmed", isConfirmed),
-                    statusWidget('packing', "  Packing", isPacking),
-                    statusWidget('ready', "  Ready", isReady),
-                    statusWidget('delivered', "Delivered", isDelivered),
-                  ],
-                )
-              ],
+    print("HUHHH");
+    print(status);
+    return streamedOrder == null
+        ? Loading()
+        : Scaffold(
+            appBar: AppBar(
+              title: Text("Order Status"),
+              centerTitle: true,
             ),
-          ],
-        ),
-      ),
-    );
+            body: Container(
+              padding: EdgeInsets.fromLTRB(110, 100, 50, 50),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      SizedBox(height: 400),
+                      Container(
+                        margin: EdgeInsets.only(left: 13, top: 50),
+                        width: 4,
+                        height: 300,
+                        color: Colors.grey,
+                      ),
+                      Column(
+                        children: [
+                          statusWidget('confirmed', "Confirmed", isConfirmed,
+                              streamedOrder.uid),
+                          statusWidget('packing', "  Packing", isPacking,
+                              streamedOrder.uid),
+                          statusWidget(
+                              'ready', "  Ready", isReady, streamedOrder.uid),
+                          statusWidget('delivered', "Delivered", isDelivered,
+                              streamedOrder.uid),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
   }
 
-  Container statusWidget(String img, String status, bool isActive) {
+  Container statusWidget(String img, String status, bool isActive, String uid) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20),
       child: GestureDetector(
         onTap: () {
-          updateStatus(img.toUpperCase());
+          updateStatus(img.toUpperCase(), uid);
           setState(() {
-            widget.status = img.toUpperCase();
+            widget.order.status = img.toUpperCase();
           });
         },
         child: Row(
@@ -103,7 +113,7 @@ class _UpdateOrderStatusPageState extends State<UpdateOrderStatusPage> {
     );
   }
 
-  void updateStatus(String status) async{
-    await DatabaseService().updateOrderStatus(widget.orderUid, status);
+  void updateStatus(String status, String uid) async {
+    await DatabaseService().updateOrderStatus(uid, status);
   }
 }
