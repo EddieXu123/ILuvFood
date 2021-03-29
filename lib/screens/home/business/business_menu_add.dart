@@ -99,9 +99,8 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                       controller: _controller0,
                                       decoration: textInputDecoration.copyWith(
                                           labelText: "Item"),
-                                      validator: (val) => val.isEmpty
-                                          ? 'Enter an item'
-                                          : null,
+                                      validator: (val) =>
+                                          val.isEmpty ? 'Enter an item' : null,
                                       onChanged: (val) {
                                         item = val;
                                       }),
@@ -133,6 +132,7 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                       onPressed: () async {
                                         _formKey.currentState.validate();
                                         if (_formKey.currentState.validate()) {
+                                          FocusScope.of(context).unfocus();
                                           setState(() => loading = true);
                                           try {
                                             print(item + price + quantity);

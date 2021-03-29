@@ -74,7 +74,8 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                         style: TextStyle(fontSize: 20))),
                 SizedBox(height: 20),
                 Container(
-                  child: Text("Status: " + order.status, style: TextStyle(fontSize: 20)),
+                  child: Text("Status: " + order.status,
+                      style: TextStyle(fontSize: 20)),
                 ),
                 SizedBox(height: 40),
                 Container(
@@ -116,25 +117,25 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                   ),
                 ),
                 InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TrackOrderPage(order.status)));
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      decoration: BoxDecoration(gradient: gradientStyle),
-                      child: Center(
-                        child: Text(
-                          "TRACK ORDER",
-                          style: contentStyle.copyWith(
-                              color: Colors.white, fontSize: 22),
-                        ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TrackOrderPage(order.uid)));
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    decoration: BoxDecoration(gradient: gradientStyle),
+                    child: Center(
+                      child: Text(
+                        "TRACK ORDER",
+                        style: contentStyle.copyWith(
+                            color: Colors.white, fontSize: 22),
                       ),
                     ),
-                  )
+                  ),
+                )
               ],
             ),
           );

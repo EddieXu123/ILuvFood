@@ -86,7 +86,7 @@ class CartModel extends ChangeNotifier {
       // print("calculating price for ${item.item}");
       // print("adding price of ${item.price}");
       if (_itemMap.containsKey(item.item)) {
-        _priceInCart -= int.parse(item.price);
+        // _priceInCart -= int.parse(item.price);
         if (_itemMap[item.item].quantity == 1) {
           _itemMap.remove(item.item);
         } else {
@@ -104,7 +104,7 @@ class CartModel extends ChangeNotifier {
       // todo: probably makes sense to also check if there is enough inventory?
       notifyListeners();
     } catch (e) {
-      print("could not put in dict:  $e");
+      print("could not remove from dict:  $e");
     }
   }
 

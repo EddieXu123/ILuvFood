@@ -9,9 +9,9 @@ class Order {
   final String customerUid;
   final String businessName;
   final List<CartItem> items;
-  final String status;
+  String status;
   Order(
-      {this.uid, 
+      {this.uid,
       this.orderId,
       this.dateTime,
       this.businessUid,

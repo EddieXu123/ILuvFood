@@ -1,103 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:iluvfood/models/order.dart';
+import 'package:iluvfood/services/database.dart';
+import 'package:iluvfood/shared/loading.dart';
 import 'customer_page_style.dart';
 
 class TrackOrderPage extends StatelessWidget {
-  final String status;
-  TrackOrderPage(this.status);
+  final String uid;
+  TrackOrderPage(this.uid);
 
   @override
   Widget build(BuildContext context) {
-    bool isDelivered = status == "DELIVERED";
-    bool isReady = (isDelivered || status == "READY");
-    bool isPacking = (isReady || status == "PACKING");
-    bool isConfirmed = (isPacking || status == "CONFIRMED");
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Order Status"),
-          centerTitle: true,
-        ),
-        body: Container(
-            padding: EdgeInsets.fromLTRB(110, 100, 50, 50),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Stack(
-                children: [
-                  SizedBox(height: 400),
-                  Container(
-                    margin: EdgeInsets.only(left: 13, top: 50),
-                    width: 4,
-                    height: 300,
-                    color: Colors.grey,
-                  ),
-                  Column(
-                    children: [
-                      statusWidget('confirmed', "Confirmed", isConfirmed),
-                      statusWidget('packing', "  Packing", isPacking),
-                      statusWidget('ready', "  Ready", isReady),
-                      statusWidget('delivered', "Delivered", isDelivered),
-                    ],
-                  )
-                ],
-              ),
-            ]))
-        // Container(
-        //   height: 20,
-        // ),
-        // Container(
-        //   margin: EdgeInsets.symmetric(vertical: 15),
-        //   height: 1,
-        //   color: Colors.grey,
-        // ),
-        // Container(
-        //   height: 50,
-        // ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Container(
-        //       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        //       decoration: BoxDecoration(
-        //           borderRadius: BorderRadius.all(Radius.circular(10)),
-        //           border: Border.all(
-        //             color: Colors.white,
-        //           )),
-        //       child: Text(
-        //         "Cancel Order",
-        //         style: contentStyle.copyWith(color: Colors.white),
-        //       ),
-        //     ),
-        // Container(
-        //   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.all(Radius.circular(10)),
-        //     color: Colors.orange,
-        //   ),
-        //   child: Text(
-        //     "My Orders",
-        //     style: contentStyle.copyWith(color: Colors.white),
-        //   ),
-        //),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   type: BottomNavigationBarType.fixed,
-        //   selectedItemColor: Colors.orange,
-        //   iconSize: 30,
-        //   items: [
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.track_changes), title: Text("Track Order")),
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.home),
-        //       title: Text("Home"),
-        //     ),
-        //     BottomNavigationBarItem(
-        //         icon: Icon(Icons.view_list),
-        //         title: Text("My Orders")), // OrderHistory()
-        //     BottomNavigationBarItem(
-        //       icon: Icon(Icons.track_changes),
-        //       title: Text("Profile"),
-        //     ),
-        //   ],
-        // ),
-        );
+    print("UID: $uid");
+    return StreamBuilder<Order>(
+        stream: DatabaseService(uid: uid).orders,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            Order streamedOrder = snapshot.data;
+            String status = streamedOrder.status;
+            bool isDelivered = status == "DELIVERED";
+            bool isReady = (isDelivered || status == "READY");
+            bool isPacking = (isReady || status == "PACKING");
+            bool isConfirmed = (isPacking || status == "CONFIRMED");
+            print("status: $status");
+
+            return Scaffold(
+                appBar: AppBar(
+                  title: Text("Order Status"),
+                  centerTitle: true,
+                ),
+                body: Container(
+                    padding: EdgeInsets.fromLTRB(110, 100, 50, 50),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              SizedBox(height: 400),
+                              Container(
+                                margin: EdgeInsets.only(left: 13, top: 50),
+                                width: 4,
+                                height: 300,
+                                color: Colors.grey,
+                              ),
+                              Column(
+                                children: [
+                                  statusWidget(
+                                      'confirmed', "Confirmed", isConfirmed),
+                                  statusWidget(
+                                      'packing', "  Packing", isPacking),
+                                  statusWidget('ready', "  Ready", isReady),
+                                  statusWidget(
+                                      'delivered', "Delivered", isDelivered),
+                                ],
+                              )
+                            ],
+                          ),
+                        ])));
+          } else {
+            return Loading();
+          }
+        });
   }
 
   Container statusWidget(String img, String status, bool isActive) {
