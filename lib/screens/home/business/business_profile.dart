@@ -24,7 +24,7 @@ class _BusinessProfileState extends State<BusinessProfile> {
   String _lng = '';
   String _phone = '';
   bool changed = false;
-
+  final TextEditingController _controller0 = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -38,6 +38,7 @@ class _BusinessProfileState extends State<BusinessProfile> {
             _lat = businessData.lat;
             _lng = businessData.lng;
             _phone = businessData.phone;
+            _controller0.text = _address;
             print("NEW ADDRESS: $_address");
             return new Scaffold(
                 resizeToAvoidBottomInset: false,
@@ -70,10 +71,11 @@ class _BusinessProfileState extends State<BusinessProfile> {
                             SizedBox(height: 10.0),
                             TextFormField(
                                 key: Key(_address),
+                                controller: _controller0,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
-                                initialValue:
-                                    businessData.address.replaceAll("\n", ""),
+                                // initialValue:
+                                //     businessData.address.replaceAll("\n", ""),
                                 decoration: textInputDecoration.copyWith(
                                     labelText: "Address"),
                                 validator: (val) =>
@@ -124,10 +126,12 @@ class _BusinessProfileState extends State<BusinessProfile> {
                               child: FlatButton(
                                 color: Theme.of(context).accentColor,
                                 onPressed: () async {
+                                  FocusScope.of(context).unfocus();
                                   if (_formKey.currentState.validate()) {
                                     setState(() => loading = true);
                                     try {
                                       if (changed) {
+                                        _controller0.clear();
                                         final query = "$_address";
                                         var addresses = await Geocoder.local
                                             .findAddressesFromQuery(query);
@@ -136,6 +140,8 @@ class _BusinessProfileState extends State<BusinessProfile> {
                                         var coords = first.coordinates;
                                         var lat = coords.latitude.toString();
                                         var lng = coords.longitude.toString();
+                                        print(
+                                            "geocoder addresline: $addressLine");
                                         await DatabaseService(uid: user.uid)
                                             .updateBusinessData(Business(
                                                 uid: user.uid,
@@ -171,6 +177,15 @@ class _BusinessProfileState extends State<BusinessProfile> {
                                     } catch (e) {
                                       if (mounted) {
                                         setState(() {
+                                          _scaffoldKey.currentState
+                                              .showSnackBar(SnackBar(
+                                            backgroundColor: Colors.pink,
+                                            duration: Duration(seconds: 2),
+                                            content: Text(
+                                              "Error Updating Profile",
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ));
                                           loading = false;
                                           error = e.message;
                                         });
