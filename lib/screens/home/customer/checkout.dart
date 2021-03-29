@@ -7,7 +7,6 @@ import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'customer_page_style.dart';
 import 'package:toast/toast.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -44,11 +43,7 @@ showAlertDialog(BuildContext context) {
               items: cart.cartItems,
               orderDate: pickDay,
               status: "CONFIRMED"));
-          print(pickDay + " Eddie");
-
           Order order = await DatabaseService().getMostRecentOrder(user.uid);
-          print("Business Name: " + order.businessName);
-          print("PickupDate: " + order.orderDate);
           String message = content(cart);
           // String dateMessage = dayOfWeek(pick)
           await sendMail(user.email, user.displayName, order, message);
@@ -254,8 +249,6 @@ class _CartList extends StatelessWidget {
                         date.day.toString() +
                         'th, ' +
                         date.year.toString();
-                    print("Day to pick " + pickDay);
-                    print(date.weekday.toString() + " Hello");
                     return new Container(
                         margin: const EdgeInsets.all(4.0),
                         alignment: Alignment.center,
@@ -266,7 +259,6 @@ class _CartList extends StatelessWidget {
                           onPressed: () {
                             pickDay = date.day.toString();
                             (context as Element).markNeedsBuild();
-                            print(date.day.toString());
                           },
                           child: Text(
                             date.day.toString(),
@@ -348,31 +340,6 @@ String dayOfWeek(int day) {
   return "";
 }
 
-class _CartTotal extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // CartModel cart = context.watch<CartModel>();
-    var hugeStyle =
-        Theme.of(context).textTheme.headline1.copyWith(fontSize: 48);
-
-    return SizedBox(
-      height: 50,
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Consumer<CartModel>(
-                builder: (context, cart, child) => Text(
-                    '\$${cart.priceInCart.toStringAsFixed(2)}',
-                    style: hugeStyle)),
-            SizedBox(width: 24),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _PurchaseNow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -391,7 +358,6 @@ class _PurchaseNow extends StatelessWidget {
                       duration: 2, gravity: Toast.CENTER);
                 } else {
                   print("processing order!");
-                  print(pickDay);
                   showAlertDialog(context);
                 }
               },
@@ -405,58 +371,4 @@ class _PurchaseNow extends StatelessWidget {
       ),
     );
   }
-}
-
-String getDay(String day) {
-  return "";
-}
-
-Container dateWidget(String day, String date, bool isActive) {
-  return Container(
-    margin: EdgeInsets.only(right: 10),
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-        color: (isActive) ? Colors.orange : Colors.grey.withOpacity(0.3),
-        borderRadius: BorderRadius.all(Radius.circular(20))),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextButton(
-          onPressed: () {
-            print("Hello");
-          },
-          child: Text(
-            day + '\n' + date,
-            style: contentStyle.copyWith(
-                color: (isActive) ? Colors.white : Colors.black, fontSize: 20),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Container timeWidget(String time, bool isActive) {
-  return Container(
-    margin: EdgeInsets.only(right: 10),
-    padding: EdgeInsets.all(12),
-    decoration: BoxDecoration(
-        color: (isActive) ? Colors.orange : Colors.grey.withOpacity(0.3),
-        borderRadius: BorderRadius.all(Radius.circular(20))),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextButton(
-          onPressed: () {
-            print("Pressed Button");
-          },
-          child: Text(
-            time,
-            style: contentStyle.copyWith(
-                color: (isActive) ? Colors.white : Colors.black, fontSize: 15),
-          ),
-        )
-      ],
-    ),
-  );
 }

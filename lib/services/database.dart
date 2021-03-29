@@ -237,10 +237,6 @@ class DatabaseService {
     try {
       print(snapshot.id);
       final dat = snapshot.data();
-      print("PRINTING DAT KEYS");
-      for (String s in dat.keys) {
-        print(s);
-      }
       return Order(
           uid: snapshot.id,
           orderId: dat['orderId'] ?? '<no orderId found>',
