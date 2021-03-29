@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/constants.dart';
@@ -37,6 +38,7 @@ class _BusinessProfileState extends State<BusinessProfile> {
             _lat = businessData.lat;
             _lng = businessData.lng;
             _phone = businessData.phone;
+            print("NEW ADDRESS: $_address");
             return new Scaffold(
                 resizeToAvoidBottomInset: false,
                 key: _scaffoldKey,
@@ -67,6 +69,9 @@ class _BusinessProfileState extends State<BusinessProfile> {
                                 }),
                             SizedBox(height: 10.0),
                             TextFormField(
+                                key: Key(_address),
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
                                 initialValue:
                                     businessData.address.replaceAll("\n", ""),
                                 decoration: textInputDecoration.copyWith(
@@ -89,25 +94,29 @@ class _BusinessProfileState extends State<BusinessProfile> {
                                 }),
                             SizedBox(height: 10.0),
                             TextFormField(
-                                initialValue: businessData.lng,
+                                key: Key(_lng),
+                                enabled: false,
+                                initialValue: _lng,
                                 decoration: textInputDecoration.copyWith(
                                     labelText: "GPS longitude"),
                                 validator: (val) =>
                                     val.isEmpty ? 'Enter a longitude' : null,
                                 onChanged: (val) {
-                                  changed = true;
-                                  _lng = val;
+                                  // changed = true;
+                                  // _lng = val;
                                 }),
                             SizedBox(height: 10.0),
                             TextFormField(
-                                initialValue: businessData.lat,
+                                enabled: false,
+                                key: Key(_lat),
+                                initialValue: _lat,
                                 decoration: textInputDecoration.copyWith(
                                     labelText: "GPS latitude"),
                                 validator: (val) =>
                                     val.isEmpty ? 'Enter a latitude' : null,
                                 onChanged: (val) {
-                                  changed = true;
-                                  _lat = val;
+                                  // changed = true;
+                                  // _lat = val;
                                 }),
                             SizedBox(height: 20.0),
                             Container(
@@ -119,15 +128,25 @@ class _BusinessProfileState extends State<BusinessProfile> {
                                     setState(() => loading = true);
                                     try {
                                       if (changed) {
+                                        final query = "$_address";
+                                        var addresses = await Geocoder.local
+                                            .findAddressesFromQuery(query);
+                                        var first = addresses.first;
+                                        var addressLine = first.addressLine;
+                                        var coords = first.coordinates;
+                                        var lat = coords.latitude.toString();
+                                        var lng = coords.longitude.toString();
                                         await DatabaseService(uid: user.uid)
                                             .updateBusinessData(Business(
                                                 uid: user.uid,
-                                                address: _address,
-                                                lat: _lat,
-                                                lng: _lng,
+                                                address: addressLine,
+                                                lat: lat,
+                                                lng: lng,
                                                 businessName: _businessName,
                                                 phone: _phone));
-                                        setState(() => loading = false);
+                                        setState(() {
+                                          loading = false;
+                                        });
                                         _scaffoldKey.currentState
                                             .showSnackBar(SnackBar(
                                           backgroundColor: Colors.pink,
