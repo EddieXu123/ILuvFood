@@ -13,6 +13,7 @@ import 'package:mailer/smtp_server.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 String pickDay = "";
+final _calendarController = CalendarController();
 
 showAlertDialog(BuildContext context) {
   CartModel cart = Provider.of<CartModel>(context, listen: false);
@@ -157,7 +158,7 @@ class _CartList extends StatelessWidget {
     CartModel cart = context.watch<CartModel>();
     // var itemPrice = "-1";
     return new Scaffold(
-        body: Column(children: <Widget>[
+        body: Column(children: [
       Container(
         height: 225,
         child: Container(
@@ -168,9 +169,12 @@ class _CartList extends StatelessWidget {
               leading:
                   Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Container(
-                  width: 15,
-                  child: IconButton(
-                    icon: Icon(Icons.delete),
+                  width: 30,
+                  child: FloatingActionButton(
+                    heroTag: null,
+                    elevation: 0,
+                    backgroundColor: Color(0xFFe4b4ec),
+                    child: Icon(Icons.delete),
                     onPressed: () {
                       cart.delete(cart.cartItems[index].uid);
                     },
@@ -178,24 +182,33 @@ class _CartList extends StatelessWidget {
                 ),
               ]),
               trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.remove_circle_outline),
-                  onPressed: () {
-                    // itemPrice = "${cart.cartItems[index].price}";
-                    cart.remove(cart.cartItems[index].uid);
-                  },
-                ),
+                Container(
+                    width: 30,
+                    child: FloatingActionButton(
+                      heroTag: null,
+                      elevation: 0,
+                      backgroundColor: Color(0xFFe4b4ec),
+                      child: Icon(Icons.remove_circle_outline),
+                      onPressed: () {
+                        // itemPrice = "${cart.cartItems[index].price}";
+                        cart.remove(cart.cartItems[index].uid);
+                      },
+                    )),
                 Container(
                   width: 30.0,
                   child: Text(
                     "(${cart.cartItems[index].quantity})",
+                    style: new TextStyle(fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Container(
-                  width: 20,
-                  child: IconButton(
-                    icon: Icon(Icons.add_circle_outline),
+                  width: 30,
+                  child: FloatingActionButton(
+                    heroTag: null,
+                    elevation: 0,
+                    child: Icon(Icons.add_circle_outline),
+                    backgroundColor: Color(0xFFe4b4ec),
                     onPressed: () {
                       cart.add(cart.cartItems[index].uid);
                     },
@@ -218,102 +231,97 @@ class _CartList extends StatelessWidget {
       Container(
         child: Container(
           padding: EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TableCalendar(
-                calendarStyle: CalendarStyle(
-                    canEventMarkersOverflow: true,
-                    todayColor: Colors.orange,
-                    selectedColor: Colors.blue[300],
-                    todayStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                        color: Colors.white)),
-                headerStyle: HeaderStyle(
-                  centerHeaderTitle: true,
-                  formatButtonDecoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  formatButtonTextStyle: TextStyle(color: Colors.white),
-                  formatButtonShowsNext: false,
-                ),
-                startingDayOfWeek: StartingDayOfWeek.monday,
-                builders: CalendarBuilders(
-                  selectedDayBuilder: (context, date, events) {
-                    var isValidSelectedDay = true;
-                    DateTime now = new DateTime.now();
+          child: TableCalendar(
+            calendarStyle: CalendarStyle(
+                canEventMarkersOverflow: true,
+                todayColor: Colors.orange,
+                selectedColor: Colors.blue[300],
+                todayStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                    color: Colors.white)),
+            headerStyle: HeaderStyle(
+              centerHeaderTitle: true,
+              formatButtonDecoration: BoxDecoration(
+                color: Colors.orange,
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              formatButtonTextStyle: TextStyle(color: Colors.white),
+              formatButtonShowsNext: false,
+            ),
+            startingDayOfWeek: StartingDayOfWeek.monday,
+            builders: CalendarBuilders(
+              selectedDayBuilder: (context, date, events) {
+                var isValidSelectedDay = true;
+                DateTime now = new DateTime.now();
 
-                    var dayDiff = date.difference(now).inDays;
-                    if (dayDiff <= 0 ||
-                        dayDiff > 14 ||
-                        date.weekday == 6 ||
-                        date.weekday == 7) {
-                      print("chooose a valid date");
-                      isValidSelectedDay = false;
-                    }
+                var dayDiff = date.difference(now).inDays;
+                if (dayDiff <= 0 ||
+                    dayDiff > 14 ||
+                    date.weekday == 6 ||
+                    date.weekday == 7) {
+                  print("chooose a valid date");
+                  isValidSelectedDay = false;
+                }
 
-                    if (isValidSelectedDay) {
-                      pickDay = dayOfWeek(date.weekday) +
-                          ', ' +
-                          getMonth(date.month) +
-                          ' ' +
-                          date.day.toString() +
-                          'th, ' +
-                          date.year.toString();
-                      return new Container(
-                          margin: const EdgeInsets.all(4.0),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Colors.blue[300],
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: TextButton(
-                            onPressed: () {
-                              pickDay = date.day.toString();
-                              (context as Element).markNeedsBuild();
-                            },
-                            child: Text(
-                              date.day.toString(),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            //
-                          ));
-                    } else {
-                      pickDay = '';
-                      return new Container(
-                          margin: const EdgeInsets.all(4.0),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: TextButton(
-                            onPressed: () {
-                              pickDay = date.day.toString();
-                              (context as Element).markNeedsBuild();
-                            },
-                            child: Text(
-                              date.day.toString(),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            //
-                          ));
-                    }
-                  },
-                  todayDayBuilder: (context, date, events) => Container(
+                if (isValidSelectedDay) {
+                  pickDay = dayOfWeek(date.weekday) +
+                      ', ' +
+                      getMonth(date.month) +
+                      ' ' +
+                      date.day.toString() +
+                      'th, ' +
+                      date.year.toString();
+                  return new Container(
                       margin: const EdgeInsets.all(4.0),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: Colors.orange,
+                          color: Colors.blue[300],
                           borderRadius: BorderRadius.circular(10.0)),
-                      child: Text(
-                        date.day.toString(),
-                        style: TextStyle(color: Colors.white),
-                      )),
-                ),
-                calendarController: CalendarController(),
-              )
-            ],
+                      child: TextButton(
+                        onPressed: () {
+                          pickDay = date.day.toString();
+                          (context as Element).markNeedsBuild();
+                        },
+                        child: Text(
+                          date.day.toString(),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        //
+                      ));
+                } else {
+                  pickDay = '';
+                  return new Container(
+                      margin: const EdgeInsets.all(4.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: TextButton(
+                        onPressed: () {
+                          pickDay = date.day.toString();
+                          (context as Element).markNeedsBuild();
+                        },
+                        child: Text(
+                          date.day.toString(),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        //
+                      ));
+                }
+              },
+              todayDayBuilder: (context, date, events) => Container(
+                  margin: const EdgeInsets.all(4.0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(10.0)),
+                  child: Text(
+                    date.day.toString(),
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+            calendarController: _calendarController,
           ),
         ),
       ),
