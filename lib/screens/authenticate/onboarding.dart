@@ -25,12 +25,14 @@ class _onboardingState extends State<onboarding> {
   @override
   Widget build(BuildContext context) {
     var first =
-        "We make delivering food easy! With just a few clicks of a button, you will be able to sell your";
+        "We make rescuing food easy! With just a few clicks of a button, we help rescuers find suppliers with excess food to donate.";
     var second =
-        "Simply place your order and wait for a store to package your order";
-    var third = "Pick the time when you want your stuff";
-    var fourth = "You can come to the stores on the time you are free";
-    var fifth = "Pay back later";
+        "Our rescuers are food banks, nonprofits, schools, churches, and other organizations that help distribute food to the community.";
+    var third =
+        "Rescuers can choose what items they want from a given supplier, and then schedule a time to pick it up.";
+    var fourth =
+        "Suppliers donate excess food that count as charitable tax deductions, and receive itemized summaries of their donations.";
+    var fifth = "Come join us in our mission to rescue food!";
     return Scaffold(
       body: Stack(
         children: [
@@ -49,11 +51,11 @@ class _onboardingState extends State<onboarding> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    onBoardPage("onBoard1", "Delivering Food Easier", first),
-                    onBoardPage("onBoard2", "Schedule Pickup", second),
-                    onBoardPage("onBoard3", "Third Slot", third),
-                    onBoardPage("onBoard2", "Get on Time Delivery", fourth),
-                    onBoardPage("onBoard4", "Get Cash Back", fifth),
+                    onBoardPage("onBoard1", "Help Us Rescue Food", first),
+                    onBoardPage("onBoard3", "Feeding Communities", second),
+                    onBoardPage("onBoard2", "Easy Pick-ups", third),
+                    onBoardPage("onBoard4", "Saving Suppliers Money", fourth),
+                    onBoardPage("onBoard5", "Sign Up Now", fifth),
                   ],
                   onPageChanged: (value) => {setCurrentPage(value)},
                 ),
@@ -133,7 +135,7 @@ class _onboardingState extends State<onboarding> {
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
           child: Text(
             body,
-            style: TextStyle(fontSize: 16, color: Colors.grey),
+            style: TextStyle(fontSize: 16, color: Colors.grey[800]),
             textAlign: TextAlign.center,
           ),
         )

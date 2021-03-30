@@ -3,6 +3,8 @@ import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/shared/constants.dart';
 import 'package:iluvfood/shared/utils.dart';
 import 'package:iluvfood/shared/loading.dart';
+import 'package:geocoder/geocoder.dart';
+
 /*
 BusinessRegister page UI
 */
@@ -24,6 +26,8 @@ class _BusinessRegisterState extends State<BusinessRegister> {
   String error = '';
   String businessName = '';
   String phone = '';
+  String zipCode = '';
+  String streetAddress = '';
   @override
   Widget build(BuildContext context) {
     return loading
@@ -38,7 +42,7 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                   child: Stack(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.fromLTRB(15.0, 40.0, 0.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Register',
                           style: TextStyle(
@@ -46,7 +50,7 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(320.0, 40.0, 0.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(320.0, 0.0, 0.0, 0.0),
                         child: Text(
                           '.',
                           style: TextStyle(
@@ -93,15 +97,63 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                 onChanged: (val) {
                                   businessName = val;
                                 }),
-                            SizedBox(height: 20.0),
+                            SizedBox(height: 10.0),
                             TextFormField(
                                 decoration: textInputDecoration.copyWith(
-                                    labelText: "Phone Number"),
+                                    labelText: " Number"),
                                 validator: (val) => validateMobile(val),
                                 onChanged: (val) {
                                   phone = val;
                                 }),
-                            SizedBox(height: 20.0),
+
+                            SizedBox(height: 10.0),
+                            TextFormField(
+                                decoration: textInputDecoration.copyWith(
+                                    labelText: "Street Address",
+                                    hintText: "eg: 1600 Amphiteatre Parkway "),
+                                validator: (val) => val.isEmpty
+                                    ? 'Enter a street address'
+                                    : null,
+                                onChanged: (val) {
+                                  streetAddress = val;
+                                }),
+                            SizedBox(height: 10.0),
+                            TextFormField(
+                                decoration: textInputDecoration.copyWith(
+                                  labelText: "Zip Code",
+                                ),
+                                validator: (val) => validateZip(val),
+                                onChanged: (val) {
+                                  zipCode = val;
+                                }),
+                            // Row(children: <Widget>[
+                            //   Flexible(
+                            //     flex: 1,
+                            //     child: TextFormField(
+                            //         decoration: textInputDecoration.copyWith(
+                            //             labelText: "Street Address",
+                            //             hintText:
+                            //                 "eg: 1600 Amphiteatre Parkway "),
+                            //         validator: (val) => validateMobile(val),
+                            //         onChanged: (val) {
+                            //           phone = val;
+                            //         }),
+                            //   ),
+                            //   SizedBox(
+                            //     width: 10,
+                            //   ),
+                            //   Flexible(
+                            //     flex: 1,
+                            //     child: TextFormField(
+                            //         decoration: textInputDecoration.copyWith(
+                            //             labelText: "Zip Code"),
+                            //         validator: (val) => validateMobile(val),
+                            //         onChanged: (val) {
+                            //           phone = val;
+                            //         }),
+                            //   ),
+                            // ]),
+                            SizedBox(height: 10.0),
                             Container(
                                 height: 40.0,
                                 child: Material(
@@ -114,12 +166,25 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                       if (_formKey.currentState.validate()) {
                                         setState(() => loading = true);
                                         try {
+                                          // get address
+                                          final query =
+                                              "$streetAddress, $zipCode";
+                                          var addresses = await Geocoder.local
+                                              .findAddressesFromQuery(query);
+                                          var first = addresses.first;
+                                          var addressLine = first.addressLine;
+                                          var coords = first.coordinates;
+                                          var lat = coords.latitude.toString();
+                                          var lng = coords.longitude.toString();
                                           await _auth
                                               .businessRegisterWithEmailandPassword(
                                                   email,
                                                   password,
                                                   businessName,
-                                                  phone);
+                                                  phone,
+                                                  addressLine,
+                                                  lat,
+                                                  lng);
                                           setState(() => loading = false);
                                           Navigator.pop(context);
                                         } catch (e) {

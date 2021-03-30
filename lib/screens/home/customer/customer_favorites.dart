@@ -157,8 +157,7 @@ class _MyListItem extends StatelessWidget {
                         builder: (context) => SingleBusinessView(
                             business: businesses[index], customer: customer)));
               }),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 SizedBox(
                   width: 50.0,
                   height: 50.0,
@@ -168,10 +167,12 @@ class _MyListItem extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 30.0),
-                Text(
-                  "${businesses[index].businessName}\n ${businesses[index].address}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
+                Flexible(
+                  child: Text(
+                    "${businesses[index].businessName}\n ${businesses[index].address}",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
+                  ),
                 ),
               ])),
         ),

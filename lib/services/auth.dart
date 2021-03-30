@@ -44,8 +44,14 @@ class AuthService {
   }
 
   Future businessRegisterWithEmailandPassword(
-      String email, String password, String businessName, String phone) async {
-    // attempt to registe ruser
+      String email,
+      String password,
+      String businessName,
+      String phone,
+      String addressLine,
+      String lat,
+      String lng) async {
+    // attempt to register ruser
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
@@ -54,7 +60,8 @@ class AuthService {
     final uid = _auth.currentUser.uid;
     await DatabaseService(uid: uid)
         .enterUserData(businessName, Role.BUSINESS, email, phone);
-    await DatabaseService(uid: uid).enterBusinessData(businessName);
+    await DatabaseService(uid: uid)
+        .enterBusinessData(businessName, addressLine, lat, lng, phone);
   }
 
   Future<UserCredential> signInWithGoogle() async {
