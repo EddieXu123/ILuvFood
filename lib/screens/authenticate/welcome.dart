@@ -42,7 +42,7 @@ class Welcome extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+              padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -85,7 +85,7 @@ class Welcome extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 25.0),
+                    SizedBox(height: 15.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
