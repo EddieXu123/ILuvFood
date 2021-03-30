@@ -46,6 +46,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                 child: DefaultTabController(
                   length: 2,
                   child: Scaffold(
+                    resizeToAvoidBottomInset: false,
                     appBar: AppBar(
                       bottom: TabBar(
                         tabs: [
@@ -98,6 +99,7 @@ class _InfoTabState extends State<InfoTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(children: [
           SizedBox(height: 20.0),
@@ -141,6 +143,7 @@ class _MenuTabState extends State<MenuTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(
           children: [
@@ -219,6 +222,7 @@ class _ItemScrollViewState extends State<ItemScrollView> {
     return itemList == null
         ? Loading()
         : Scaffold(
+            resizeToAvoidBottomInset: false,
             body: CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(child: SizedBox(height: 12)),
@@ -386,6 +390,7 @@ class _MyListItem extends StatelessWidget {
                           ],
                           onEditingComplete: () {
                             _setQuantity(context, index, snapshot.data);
+                            FocusScope.of(context).unfocus();
                           },
                         );
                       } else {
