@@ -42,6 +42,7 @@ class DatabaseService {
       'businessUid': order.businessUid,
       'customerUid': order.customerUid,
       'businessName': order.businessName,
+      'orderDate': order.orderDate,
       'status': order.status
     });
     String orderUid = res.id;
@@ -255,6 +256,7 @@ class DatabaseService {
           businessUid: dat['businessUid'] ?? '<no businessUid found>',
           customerUid: dat['customerUid'] ?? '<no customerUid found>',
           businessName: dat['businessName'] ?? '<no businessName found>',
+          orderDate: dat['orderDate'] ?? '<no orderDate found>',
           status: dat['status'] ?? '<no status found>');
     } catch (e) {
       print(e);
