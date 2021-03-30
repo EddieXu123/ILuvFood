@@ -37,13 +37,9 @@ class CustomerFavorites extends StatelessWidget {
                                 fontFamily: 'Montserrat'),
                           ),
                           elevation: 0.0,
+                          centerTitle: true,
                         ),
                         SliverToBoxAdapter(child: SizedBox(height: 12)),
-                        // if (businessList.length == 0) {
-                        //     return Padding(
-                        //         child: _NoFavorites(),
-                        //         padding: EdgeInsets.all(16));
-                        //   }
                         businessList.length == 0
                             ? SliverToBoxAdapter(
                                 child: Padding(
@@ -71,22 +67,6 @@ class CustomerFavorites extends StatelessWidget {
                                         0, businessList.length * 2 - 1))),
                       ],
                     );
-
-                    // : CustomScrollView(slivers: [
-                    //     SliverAppBar(
-                    //       title: Text(
-                    //         'Favorite Restaurants',
-                    //         style: TextStyle(
-                    //             fontWeight: FontWeight.bold,
-                    //             fontFamily: 'Montserrat'),
-                    //       ),
-                    //       elevation: 0.0,
-                    //     ),
-                    //     SliverToBoxAdapter(child: SizedBox(height: 12)),
-                    //     Padding(
-                    //         child: _NoFavorites(),
-                    //         padding: EdgeInsets.all(16))
-                    //   ]);
                   } else {
                     return Loading();
                   }
@@ -102,14 +82,11 @@ class _NoFavorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      // TODO: perhaps check for if businesses list is empty and display
-      // an alternate UI in that case
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: LimitedBox(
         maxHeight: 48,
         child: Container(
           child: TextButton(
-              // color: Theme.of(context).accentColor,
               onPressed: (() {}),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -146,10 +123,9 @@ class _MyListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: LimitedBox(
-        maxHeight: 48,
+        maxHeight: 80,
         child: Container(
           child: TextButton(
-              // color: Theme.of(context).accentColor,
               onPressed: (() {
                 Navigator.push(
                     context,
@@ -167,11 +143,23 @@ class _MyListItem extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 30.0),
-                Flexible(
-                  child: Text(
-                    "${businesses[index].businessName}\n ${businesses[index].address}",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
+                Container(
+                  width: 200.0,
+                  height: 60.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("${businesses[index].businessName}", style: TextStyle(color: Colors.black, fontSize: 17)),
+                      Flexible(
+                        child: Text(
+                          "${businesses[index].address}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                              fontSize: 15),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ])),

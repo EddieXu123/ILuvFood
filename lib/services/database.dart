@@ -303,6 +303,13 @@ class DatabaseService {
     }
   }
 
+  // Removes an item from a business's menu
+  void businessRemoveMenuItem(String businessUid, String menuItemUid) async {
+    businessItems
+        .doc(businessUid)
+        .collection('items').doc(menuItemUid).delete();
+  }
+
   // get business profile data from snapshot
   Business _businessDataFromSnapshot(DocumentSnapshot snapshot) {
     final dat = snapshot.data();
