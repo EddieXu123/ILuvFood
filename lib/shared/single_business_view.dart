@@ -222,7 +222,7 @@ class _ItemScrollViewState extends State<ItemScrollView> {
     return itemList == null
         ? Loading()
         : Scaffold(
-          resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: false,
             body: CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(child: SizedBox(height: 12)),
@@ -390,6 +390,7 @@ class _MyListItem extends StatelessWidget {
                           ],
                           onEditingComplete: () {
                             _setQuantity(context, index, snapshot.data);
+                            FocusScope.of(context).unfocus();
                           },
                         );
                       } else {
