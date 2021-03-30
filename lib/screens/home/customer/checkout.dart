@@ -131,7 +131,7 @@ class Checkout extends StatelessWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(32),
+                padding: const EdgeInsets.all(15),
                 child: _CartList(),
               ),
             ),
@@ -242,30 +242,63 @@ class _CartList extends StatelessWidget {
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 builders: CalendarBuilders(
                   selectedDayBuilder: (context, date, events) {
-                    pickDay = dayOfWeek(date.weekday) +
-                        ', ' +
-                        getMonth(date.month) +
-                        ' ' +
-                        date.day.toString() +
-                        'th, ' +
-                        date.year.toString();
-                    return new Container(
-                        margin: const EdgeInsets.all(4.0),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: Colors.blue[300],
-                            borderRadius: BorderRadius.circular(10.0)),
-                        child: TextButton(
-                          onPressed: () {
-                            pickDay = date.day.toString();
-                            (context as Element).markNeedsBuild();
-                          },
-                          child: Text(
-                            date.day.toString(),
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          //
-                        ));
+                    var isValidSelectedDay = true;
+                    DateTime now = new DateTime.now();
+
+                    var dayDiff = date.difference(now).inDays;
+                    if (dayDiff <= 0 ||
+                        dayDiff > 14 ||
+                        date.weekday == 6 ||
+                        date.weekday == 7) {
+                      print("chooose a valid date");
+                      isValidSelectedDay = false;
+                    }
+
+                    if (isValidSelectedDay) {
+                      pickDay = dayOfWeek(date.weekday) +
+                          ', ' +
+                          getMonth(date.month) +
+                          ' ' +
+                          date.day.toString() +
+                          'th, ' +
+                          date.year.toString();
+                      return new Container(
+                          margin: const EdgeInsets.all(4.0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.blue[300],
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: TextButton(
+                            onPressed: () {
+                              pickDay = date.day.toString();
+                              (context as Element).markNeedsBuild();
+                            },
+                            child: Text(
+                              date.day.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            //
+                          ));
+                    } else {
+                      pickDay = '';
+                      return new Container(
+                          margin: const EdgeInsets.all(4.0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: TextButton(
+                            onPressed: () {
+                              pickDay = date.day.toString();
+                              (context as Element).markNeedsBuild();
+                            },
+                            child: Text(
+                              date.day.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            //
+                          ));
+                    }
                   },
                   todayDayBuilder: (context, date, events) => Container(
                       margin: const EdgeInsets.all(4.0),
@@ -356,6 +389,12 @@ class _PurchaseNow extends StatelessWidget {
                 if (cart.cartItems.length == 0) {
                   Toast.show("Your Cart is Empty!", context,
                       duration: 2, gravity: Toast.CENTER);
+                } else if (pickDay.length == 0) {
+                  Toast.show(
+                      "Pickup date must be a weekday within next 2 weeks",
+                      context,
+                      duration: 2,
+                      gravity: Toast.BOTTOM);
                 } else {
                   print("processing order!");
                   showAlertDialog(context);
