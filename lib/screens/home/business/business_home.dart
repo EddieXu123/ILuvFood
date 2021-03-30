@@ -53,7 +53,11 @@ class _BusinessHomeState extends State<BusinessHome> {
                       elevation: 10,
                       child: ListTile(
                         leading: Icon(Icons.list, size: 40),
-                        title: Text('   Listings', style: TextStyle(fontSize: 20)),
+                        title: Text('   Listings', style: TextStyle(
+                                                      color: Colors.grey[900],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0)),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -75,7 +79,11 @@ class _BusinessHomeState extends State<BusinessHome> {
                       elevation: 10,
                       child: ListTile(
                         leading: Icon(Icons.history, size: 40),
-                        title: Text('   Orders', style: TextStyle(fontSize: 20)),
+                        title: Text('   Orders', style: TextStyle(
+                                                      color: Colors.grey[900],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0)),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -97,7 +105,11 @@ class _BusinessHomeState extends State<BusinessHome> {
                       elevation: 10,
                       child: ListTile(
                           leading: Icon(Icons.account_circle, size: 40),
-                          title: Text('   Profile', style: TextStyle(fontSize: 20)),
+                          title: Text('   Profile', style: TextStyle(
+                                                      color: Colors.grey[900],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0)),
                           onTap: () {
                             Navigator.push(
                               context,

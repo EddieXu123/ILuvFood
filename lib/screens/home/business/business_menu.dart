@@ -40,7 +40,11 @@ class _BusinessMenuState extends State<BusinessMenu> {
                             Card(
                               child: ListTile(
                                 leading: Icon(Icons.add),
-                                title: Text('Add Items'),
+                                title: Text('Add Items', style: TextStyle(
+                                                      color: Colors.grey[600],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 17.0)),
                                 onTap: () {
                                   Navigator.push(
                                     context,
