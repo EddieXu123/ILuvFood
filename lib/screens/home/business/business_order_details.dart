@@ -86,7 +86,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                                     style: TextStyle(fontSize: 20))),
                             SizedBox(height: 20),
                             Container(
-                              child: Text("Status: " + streamedOrder.status,
+                              child: Text("Pickup Date: " + order.orderDate,
                                   style: TextStyle(fontSize: 20)),
                             ),
                             SizedBox(height: 40),
@@ -106,7 +106,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                               ),
                             ),
                             SizedBox(
-                              height: 394,
+                              height: 294,
                               child: CustomScrollView(
                                 slivers: [
                                   SliverList(
@@ -126,6 +126,11 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                                   ),
                                 ],
                               ),
+                            ),
+                            SizedBox(height: 57),
+                            Container(
+                              child: Text("Status: " + streamedOrder.status,
+                                  style: TextStyle(fontSize: 20)),
                             ),
                             InkWell(
                               onTap: () {
