@@ -47,7 +47,7 @@ class _CustomerProfileState extends State<CustomerProfile> {
               body: Center(
                 child: SingleChildScrollView(
                   child: Container(
-                      padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                      padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0, bottom: 80.0),
                       child: Form(
                         key: _formKey,
                         child: Column(

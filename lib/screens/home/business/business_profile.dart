@@ -20,8 +20,6 @@ class _BusinessProfileState extends State<BusinessProfile> {
   final _formKey = GlobalKey<FormState>();
   String _businessName = '';
   String _address = '';
-  String _lat = '';
-  String _lng = '';
   String _phone = '';
   bool changed = false;
   final TextEditingController _controller0 = new TextEditingController();
@@ -35,8 +33,6 @@ class _BusinessProfileState extends State<BusinessProfile> {
             Business businessData = snapshot.data;
             _businessName = businessData.businessName;
             _address = businessData.address;
-            _lat = businessData.lat;
-            _lng = businessData.lng;
             _phone = businessData.phone;
             _controller0.text = _address;
             print("NEW ADDRESS: $_address");
@@ -45,11 +41,9 @@ class _BusinessProfileState extends State<BusinessProfile> {
                 key: _scaffoldKey,
                 appBar: AppBar(
                   title: Text(
-                    '${businessData.businessName ?? "<no name found>"} Profile',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
-                  ),
+                    'Profile Page'),
                   elevation: 0.0,
+                  centerTitle: true,
                 ),
                 body: Container(
                     padding:
@@ -74,8 +68,6 @@ class _BusinessProfileState extends State<BusinessProfile> {
                                 controller: _controller0,
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
-                                // initialValue:
-                                //     businessData.address.replaceAll("\n", ""),
                                 decoration: textInputDecoration.copyWith(
                                     labelText: "Address"),
                                 validator: (val) =>
@@ -93,32 +85,6 @@ class _BusinessProfileState extends State<BusinessProfile> {
                                 onChanged: (val) {
                                   changed = true;
                                   _phone = val;
-                                }),
-                            SizedBox(height: 10.0),
-                            TextFormField(
-                                key: Key(_lng),
-                                enabled: false,
-                                initialValue: _lng,
-                                decoration: textInputDecoration.copyWith(
-                                    labelText: "GPS longitude"),
-                                validator: (val) =>
-                                    val.isEmpty ? 'Enter a longitude' : null,
-                                onChanged: (val) {
-                                  // changed = true;
-                                  // _lng = val;
-                                }),
-                            SizedBox(height: 10.0),
-                            TextFormField(
-                                enabled: false,
-                                key: Key(_lat),
-                                initialValue: _lat,
-                                decoration: textInputDecoration.copyWith(
-                                    labelText: "GPS latitude"),
-                                validator: (val) =>
-                                    val.isEmpty ? 'Enter a latitude' : null,
-                                onChanged: (val) {
-                                  // changed = true;
-                                  // _lat = val;
                                 }),
                             SizedBox(height: 20.0),
                             Container(
@@ -141,7 +107,7 @@ class _BusinessProfileState extends State<BusinessProfile> {
                                         var lat = coords.latitude.toString();
                                         var lng = coords.longitude.toString();
                                         print(
-                                            "geocoder addresline: $addressLine");
+                                            "geocoder address line: $addressLine");
                                         await DatabaseService(uid: user.uid)
                                             .updateBusinessData(Business(
                                                 uid: user.uid,

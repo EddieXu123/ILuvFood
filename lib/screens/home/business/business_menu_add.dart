@@ -9,9 +9,7 @@ import 'package:iluvfood/shared/loading.dart';
 import 'package:iluvfood/shared/utils.dart';
 import 'package:provider/provider.dart';
 
-/*
-Customer landing page after they log in
-*/
+
 class BusinessAddMenu extends StatefulWidget {
   @override
   _BusinessAddMenuState createState() => _BusinessAddMenuState();
@@ -21,7 +19,6 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _formKey = GlobalKey<FormState>();
-  final AuthService _auth = AuthService();
   // text field state
   String item = '';
   String price = '';
@@ -39,22 +36,9 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
         stream: DatabaseService(uid: user.uid).businessData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            Business business = snapshot.data;
             return new Scaffold(
                 key: _scaffoldKey,
                 appBar: AppBar(
-                  title: Text(
-                      '${business.businessName ?? "<no name found>"} Portal'),
-                  elevation: 0.0,
-                  // actions: <Widget>[
-                  //   FlatButton.icon(
-                  //     icon: Icon(Icons.logout),
-                  //     onPressed: () async {
-                  //       await _auth.signOut();
-                  //     },
-                  //     label: Text(''),
-                  //   )
-                  // ]
                 ),
                 resizeToAvoidBottomInset: false,
                 body: Column(
@@ -104,16 +88,6 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                       onChanged: (val) {
                                         item = val;
                                       }),
-                                  // SizedBox(height: 10.0),
-                                  // TextFormField(
-                                  //     controller: _controller1,
-                                  //     keyboardType: TextInputType.number,
-                                  //     decoration: textInputDecoration.copyWith(
-                                  //         labelText: "Price"),
-                                  //     validator: priceValidator,
-                                  //     onChanged: (val) {
-                                  //       price = val;
-                                  //     }),
                                   SizedBox(height: 10.0),
                                   TextFormField(
                                       controller: _controller2,
@@ -135,7 +109,7 @@ class _BusinessAddMenuState extends State<BusinessAddMenu> {
                                           FocusScope.of(context).unfocus();
                                           setState(() => loading = true);
                                           try {
-                                            print(item + price + quantity);
+                                            print(item + quantity);
                                             await DatabaseService(uid: user.uid)
                                                 .enterBusinessItem(BusinessItem(
                                                     item: item,
