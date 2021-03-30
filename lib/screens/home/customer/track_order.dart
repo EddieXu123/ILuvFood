@@ -3,12 +3,6 @@ import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'customer_page_style.dart';
-import 'package:flutter/material.dart';
-import 'package:iluvfood/screens/home/customer/customer_home.dart';
-import 'package:iluvfood/screens/home/customer/customer_profile.dart';
-import 'package:iluvfood/screens/home/customer/customer_favorites_list.dart';
-import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/shared/errorPage.dart';
 
 class TrackOrderPage extends StatelessWidget {
   final String uid;

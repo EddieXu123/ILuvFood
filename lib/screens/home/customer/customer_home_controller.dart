@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:iluvfood/screens/home/customer/customer_favorites.dart';
 import 'package:iluvfood/screens/home/customer/customer_home.dart';
 import 'package:iluvfood/screens/home/customer/customer_profile.dart';
-import 'package:iluvfood/screens/home/customer/customer_favorites_list.dart';
-import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/shared/errorPage.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class CustomerHomeController extends StatefulWidget {
   final List<Widget> screens = <Widget>[
     // maps page
-    CustomerHome(0),
+    CustomerHome(),
 
     //favorites page
     // TODO: figure out bug with favorites.
-    // CustomerHome(1),
+    CustomerFavorites(),
 
     // account page
     CustomerProfile(),
@@ -43,8 +41,8 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
           currentIndex: _currentIndex,
           items: [
             BottomNavigationBarItem(icon: new Icon(Icons.home), label: "Home"),
-            // BottomNavigationBarItem(
-            //     icon: Icon(Icons.favorite), label: 'Favorites'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: 'Favorites'),
             BottomNavigationBarItem(
                 icon: new Icon(Icons.account_circle), label: "Account")
           ]),
