@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iluvfood/screens/authenticate/business_authenticate/business_auth_controller.dart';
 import 'package:iluvfood/screens/authenticate/customer_authenticate/customer_auth_controller.dart';
+import 'package:iluvfood/screens/authenticate/onboarding.dart';
 
 import 'package:iluvfood/shared/constants.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class Welcome extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+              padding: EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
@@ -80,6 +81,24 @@ class Welcome extends StatelessWidget {
                           child: Text(
                             'I\'m a Supplier',
                             style: linkedPageTextStyle,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Onboarding()));
+                          },
+                          child: Text(
+                            'How It Works',
+                            style: thirdTextStyle,
                           ),
                         ),
                       ],

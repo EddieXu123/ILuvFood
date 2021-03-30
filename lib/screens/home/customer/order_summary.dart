@@ -140,7 +140,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                         style: headingStyle,
                       ),
                       Text(
-                        "Wednesday, 24 March, 2021. Between 10:00 AM & 12:00 PM",
+                        "Your order will be ready to pick up at 10:00 am on ${order.orderDate}",
                         textAlign: TextAlign.center,
                         style: contentStyle.copyWith(
                             color: Colors.black54, fontSize: 16),

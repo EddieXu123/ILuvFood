@@ -389,9 +389,7 @@ class _MyListItem extends StatelessWidget {
                           },
                         );
                       } else {
-                        return TextFormField(
-                          initialValue: "E",
-                        );
+                        return Loading();
                       }
                     })),
             _incrementButton(context, index),

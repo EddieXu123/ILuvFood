@@ -1,15 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/cart.dart';
+import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/models/order.dart';
 import 'package:iluvfood/screens/home/customer/order_summary.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'customer_page_style.dart';
 import 'package:toast/toast.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+String pickDay = "";
 
 showAlertDialog(BuildContext context) {
   CartModel cart = Provider.of<CartModel>(context, listen: false);
@@ -38,24 +41,21 @@ showAlertDialog(BuildContext context) {
               customerUid: user.uid,
               businessName: cart.businessName,
               items: cart.cartItems,
+              orderDate: pickDay,
               status: "CONFIRMED"));
           Order order = await DatabaseService().getMostRecentOrder(user.uid);
-          // on add, take them to a summary page
-          // Navigator.pop(context);
+          String message = content(cart);
+          // String dateMessage = dayOfWeek(pick)
+          await sendMail(user.email, user.displayName, order, message);
           Navigator.of(context).popUntil((route) => route.isFirst);
 
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => OrderSummary(order: order)));
-          print("Resetting After Purchase");
           cart.reset();
         }
 
-        await sendMail();
-
-        // Resetting cart at the VERY END
-        // Unless we want to do this in order_summary.dart, which we probs do
         cart.reset();
       } catch (e) {
         print("Error adding to order history: $e");
@@ -80,27 +80,33 @@ showAlertDialog(BuildContext context) {
   );
 }
 
-sendMail() async {
+String content(CartModel cart) {
+  String output = "";
+
+  for (CartItem item in cart.cartItems) {
+    output += (item.item + ' x' + item.quantity.toString() + '<br>');
+  }
+
+  return output;
+}
+
+sendMail(String emailAddress, String userName, Order order,
+    String messageBody) async {
   String username = 'iluvfood64@gmail.com'; // EMAIL HERE
   String password = 'foodlover123'; // PASSWORD HERE
 
   final smtpServer = gmail(username, password);
-  // Use the SmtpServer class to configure an SMTP server:
-  // final smtpServer = SmtpServer('smtp.domain.com');
-  // See the named arguments of SmtpServer for further configuration
-  // options.
 
   // Create our message.
   final message = Message()
     ..from = Address(username, 'ILuvFood')
-    ..recipients.add('iluvfood64@case.edu') // Customer email here
-    // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
-    // ..bccRecipients.add(Address('bccAddress@example.com'))
+    ..recipients.add(emailAddress)
     ..subject =
-        'Order Confirmation For <user> from <business>' //${DateTime.now()}'
+        'Order Confirmation from ${order.businessName}. OrderID: ${order.uid}' //${DateTime.now()}'
     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
-    ..html =
-        "<h1>Your order has been placed</h1>\n<p>Hey! Here's some HTML content</p>";
+    ..html = "<div style=\"text-align: center;\"><h2>Thank you for using FoodRescue!</h2>\n<p>${order.businessName} has received your request" +
+        " and will be packaging your order for pickup. Your order will be ready on $pickDay at 10:00 am."
+            " Here is the list of items you ordered: <br> <br> $messageBody </div>";
 
   try {
     final sendReport = await send(message, smtpServer);
@@ -118,19 +124,18 @@ class Checkout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
+        title: Text('Cart + Select Pickup Date'),
       ),
       body: Container(
         child: Column(
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(32),
+                padding: const EdgeInsets.all(15),
                 child: _CartList(),
               ),
             ),
             Divider(height: 4, color: Colors.black),
-            //_CartTotal(),
             _PurchaseNow()
           ],
         ),
@@ -178,7 +183,6 @@ class _CartList extends StatelessWidget {
                   onPressed: () {
                     // itemPrice = "${cart.cartItems[index].price}";
                     cart.remove(cart.cartItems[index].uid);
-                    // print(itemPrice);
                   },
                 ),
                 Container(
@@ -201,7 +205,6 @@ class _CartList extends StatelessWidget {
               title: Text(
                 // itemPrice == "-1"
                 "${cart.cartItems[index].item}", // LATER: (\$${cart.cartItems[index].price})",
-                // : "${cart.cartItems[index].item} ($itemPrice)", //(${cart.cartItems[index].quantity})",
                 style: itemNameStyle,
               ),
             ),
@@ -218,68 +221,98 @@ class _CartList extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Pick up Date",
-                style: headingStyle,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    // TODO: Make them into buttons and use This.Date + 3 days
-                    // Need to talk with team to decide how long actually
-                    dateWidget("Wed", "24 March", true), // ThisDate + 3
-                    dateWidget("Thu", "25 March", false), // ThisDate + 4
-                    dateWidget("Fri", "26 March", false), // etc
-                    dateWidget("Sat", "27 March", false),
-                    dateWidget("Mon", "28 March", false),
-                    dateWidget("Tue", "29 March", false)
-                  ],
+              TableCalendar(
+                calendarStyle: CalendarStyle(
+                    canEventMarkersOverflow: true,
+                    todayColor: Colors.orange,
+                    selectedColor: Colors.blue[300],
+                    todayStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Colors.white)),
+                headerStyle: HeaderStyle(
+                  centerHeaderTitle: true,
+                  formatButtonDecoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  formatButtonTextStyle: TextStyle(color: Colors.white),
+                  formatButtonShowsNext: false,
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 1,
-                color: Colors.grey,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Pick up Time",
-                style: headingStyle,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    // DITTO THE ABOVE
-                    TextButton(
-                      onPressed: () {
-                        selected_time = true;
-                      },
-                      child: timeWidget("10:00 AM to 12:00 PM", selected_time),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: timeWidget("12:00 PM to 02:00 PM", true),
-                    ),
-                    timeWidget("02:00 PM to 04:00 PM", false),
-                    timeWidget("04:00 PM to 06:00 PM", false),
-                  ],
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                builders: CalendarBuilders(
+                  selectedDayBuilder: (context, date, events) {
+                    var isValidSelectedDay = true;
+                    DateTime now = new DateTime.now();
+
+                    var dayDiff = date.difference(now).inDays;
+                    if (dayDiff <= 0 ||
+                        dayDiff > 14 ||
+                        date.weekday == 6 ||
+                        date.weekday == 7) {
+                      print("chooose a valid date");
+                      isValidSelectedDay = false;
+                    }
+
+                    if (isValidSelectedDay) {
+                      pickDay = dayOfWeek(date.weekday) +
+                          ', ' +
+                          getMonth(date.month) +
+                          ' ' +
+                          date.day.toString() +
+                          'th, ' +
+                          date.year.toString();
+                      return new Container(
+                          margin: const EdgeInsets.all(4.0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.blue[300],
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: TextButton(
+                            onPressed: () {
+                              pickDay = date.day.toString();
+                              (context as Element).markNeedsBuild();
+                            },
+                            child: Text(
+                              date.day.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            //
+                          ));
+                    } else {
+                      pickDay = '';
+                      return new Container(
+                          margin: const EdgeInsets.all(4.0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: TextButton(
+                            onPressed: () {
+                              pickDay = date.day.toString();
+                              (context as Element).markNeedsBuild();
+                            },
+                            child: Text(
+                              date.day.toString(),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            //
+                          ));
+                    }
+                  },
+                  todayDayBuilder: (context, date, events) => Container(
+                      margin: const EdgeInsets.all(4.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: Text(
+                        date.day.toString(),
+                        style: TextStyle(color: Colors.white),
+                      )),
                 ),
-              ),
-              // SizedBox(
-              //   height: 20,
-              // ),
+                calendarController: CalendarController(),
+              )
             ],
           ),
         ),
@@ -288,36 +321,63 @@ class _CartList extends StatelessWidget {
   }
 }
 
-class _CartTotal extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // CartModel cart = context.watch<CartModel>();
-    var hugeStyle =
-        Theme.of(context).textTheme.headline1.copyWith(fontSize: 48);
-
-    return SizedBox(
-      height: 50,
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Consumer<CartModel>(
-                builder: (context, cart, child) => Text(
-                    '\$${cart.priceInCart.toStringAsFixed(2)}',
-                    style: hugeStyle)),
-            SizedBox(width: 24),
-          ],
-        ),
-      ),
-    );
+String getMonth(int month) {
+  switch (month) {
+    case 1:
+      return "January";
+    case 2:
+      return "February";
+    case 3:
+      return "March";
+    case 4:
+      return "April";
+    case 5:
+      return "May";
+    case 6:
+      return "June";
+    case 7:
+      return "July";
+    case 8:
+      return "August";
+    case 9:
+      return "September";
+    case 10:
+      return "October";
+    case 11:
+      return "November";
+    case 12:
+      return "December";
   }
+
+  return "";
+}
+
+String dayOfWeek(int day) {
+  switch (day) {
+    case 1:
+      return "Monday";
+    case 2:
+      return "Tuesday";
+    case 3:
+      return "Wednesday";
+    case 4:
+      return "Thursday";
+    case 5:
+      return "Friday";
+    case 6:
+      return "Saturday";
+    case 7:
+      return "Sunday";
+  }
+
+  return "";
 }
 
 class _PurchaseNow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartModel cart = Provider.of<CartModel>(context, listen: false);
-    var user = Provider.of<User>(context, listen: false);
+
     return SizedBox(
       height: 50,
       child: Center(
@@ -329,6 +389,12 @@ class _PurchaseNow extends StatelessWidget {
                 if (cart.cartItems.length == 0) {
                   Toast.show("Your Cart is Empty!", context,
                       duration: 2, gravity: Toast.CENTER);
+                } else if (pickDay.length == 0) {
+                  Toast.show(
+                      "Pickup date must be a weekday within next 2 weeks",
+                      context,
+                      duration: 2,
+                      gravity: Toast.BOTTOM);
                 } else {
                   print("processing order!");
                   showAlertDialog(context);
@@ -344,49 +410,4 @@ class _PurchaseNow extends StatelessWidget {
       ),
     );
   }
-}
-
-Container dateWidget(String day, String date, bool isActive) {
-  return Container(
-    margin: EdgeInsets.only(right: 10),
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-        color: (isActive) ? Colors.orange : Colors.grey.withOpacity(0.3),
-        borderRadius: BorderRadius.all(Radius.circular(20))),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          day,
-          style: contentStyle.copyWith(
-              color: (isActive) ? Colors.white : Colors.black, fontSize: 20),
-        ),
-        Text(
-          date,
-          style: contentStyle.copyWith(
-              color: (isActive) ? Colors.white : Colors.black, fontSize: 13),
-        )
-      ],
-    ),
-  );
-}
-
-Container timeWidget(String time, bool isActive) {
-  return Container(
-    margin: EdgeInsets.only(right: 10),
-    padding: EdgeInsets.all(12),
-    decoration: BoxDecoration(
-        color: (isActive) ? Colors.orange : Colors.grey.withOpacity(0.3),
-        borderRadius: BorderRadius.all(Radius.circular(20))),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          time,
-          style: contentStyle.copyWith(
-              color: (isActive) ? Colors.white : Colors.black, fontSize: 15),
-        ),
-      ],
-    ),
-  );
 }
