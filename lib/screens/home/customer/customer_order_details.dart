@@ -117,10 +117,10 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                   ),
                 ),
                 SizedBox(height: 57),
-                            Container(
-                                child: Text("Status: " + order.status,
-                                    style: TextStyle(fontSize: 20))),
-                            SizedBox(height: 20),
+                Container(
+                    child: Text("Status: " + order.status,
+                        style: TextStyle(fontSize: 20))),
+                SizedBox(height: 20),
                 InkWell(
                   onTap: () {
                     Navigator.push(

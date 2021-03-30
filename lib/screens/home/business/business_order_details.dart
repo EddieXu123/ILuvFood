@@ -132,6 +132,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                               child: Text("Status: " + streamedOrder.status,
                                   style: TextStyle(fontSize: 20)),
                             ),
+                            SizedBox(height: 20),
                             InkWell(
                               onTap: () {
                                 Navigator.push(
