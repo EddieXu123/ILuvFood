@@ -143,7 +143,7 @@ class DatabaseService {
         uid: snapshot.id,
         item: dat["item"] ?? "<no item>",
         price: dat["price"] ?? "<no price>",
-        quantity: dat["quantity"] ?? "<no qty>",
+        quantity: dat["quantity"] ?? "0",
       );
     } catch (e) {
       print("error parsing item: $e");

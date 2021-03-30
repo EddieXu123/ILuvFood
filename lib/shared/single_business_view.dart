@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iluvfood/models/business.dart';
 import 'package:iluvfood/models/customer.dart';
 import 'package:iluvfood/models/business_item.dart';
@@ -45,6 +46,7 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
                 child: DefaultTabController(
                   length: 2,
                   child: Scaffold(
+                    resizeToAvoidBottomInset: false,
                     appBar: AppBar(
                       bottom: TabBar(
                         tabs: [
@@ -97,6 +99,7 @@ class _InfoTabState extends State<InfoTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(children: [
           SizedBox(height: 20.0),
@@ -140,6 +143,7 @@ class _MenuTabState extends State<MenuTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(
           children: [
@@ -214,9 +218,11 @@ class _ItemScrollViewState extends State<ItemScrollView> {
   @override
   Widget build(BuildContext context) {
     final itemList = Provider.of<List<BusinessItem>>(context);
+
     return itemList == null
         ? Loading()
         : Scaffold(
+            resizeToAvoidBottomInset: false,
             body: CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(child: SizedBox(height: 12)),
@@ -239,8 +245,8 @@ class _MyListItem extends StatelessWidget {
   _MyListItem(this.businessId, this.index, {Key key}) : super(key: key);
 
   List<BusinessItem> itemList;
+  final myController = TextEditingController();
 
-  //TODO: add quantity checks
   Widget _decrementButton(BuildContext context, int index) {
     return Container(
         width: 30.0,
@@ -265,6 +271,10 @@ class _MyListItem extends StatelessWidget {
   }
 
   Widget _incrementButton(BuildContext context, int index) {
+    int totalQuantity = (itemList[index].quantity == null)
+        ? 0
+        : int.parse(itemList[index].quantity);
+
     return Container(
         width: 30.0,
         height: 30.0,
@@ -277,15 +287,57 @@ class _MyListItem extends StatelessWidget {
                   print("attempting to add to cart");
                   try {
                     var cart = context.read<CartModel>();
-                    cart.add(itemList[index].uid);
-                    final val = await _databaseService.readBusinessItem(
-                        businessId, itemList[index].uid);
-                    print("added? ${val.item}");
-                    print(cart.cartItems);
+                    if (totalQuantity <= int.parse(myController.text)) {
+                      //max quantity reached
+                      final snackBar = SnackBar(
+                          content: Text(
+                              'There are only ${totalQuantity} of that item available.'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } else {
+                      cart.add(itemList[index].uid);
+                      final val = await _databaseService.readBusinessItem(
+                          businessId, itemList[index].uid);
+                      print("added? ${val.item}");
+                    }
                   } catch (e) {
                     print("something went wrong: $e");
                   }
                 })));
+  }
+
+  void _setQuantity(
+      BuildContext context, int index, int currentQuantity) async {
+    print("attempting to set the quantity of an item in cart");
+
+    int totalQuantity = int.parse(itemList[index].quantity);
+    int newQuantity = int.parse(myController.text);
+    try {
+      var cart = context.read<CartModel>();
+      while (currentQuantity != newQuantity) {
+        if (currentQuantity > newQuantity) {
+          cart.remove(itemList[index].uid);
+          currentQuantity--;
+        } else {
+          if (totalQuantity == currentQuantity) {
+            print("max quantity reached");
+            myController.text = totalQuantity.toString();
+            final snackBar = SnackBar(
+                content: Text(
+                    'There are only ${totalQuantity} of that item available.'));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+            break;
+          }
+          cart.add(itemList[index].uid);
+          currentQuantity++;
+        }
+      }
+      final val = await _databaseService.readBusinessItem(
+          businessId, itemList[index].uid);
+      print("updated? ${val.item}");
+    } catch (e) {
+      print("something went wrong: $e");
+    }
   }
 
   Future<int> getQuantity(BuildContext context, int index) {
@@ -318,75 +370,39 @@ class _MyListItem extends StatelessWidget {
               ),
             ),
             _decrementButton(context, index),
-            FutureBuilder(
-              future: getQuantity(context, index),
-              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                if (snapshot.hasData) {
-                  return Text(
-                    '${snapshot.data}',
-                    style: TextStyle(fontSize: 18.0),
-                  );
-                } else {
-                  return Loading();
-                }
-              },
-            ),
+            SizedBox(
+                width: 50.0,
+                child: FutureBuilder(
+                    future: getQuantity(context, index),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<int> snapshot) {
+                      if (snapshot.hasData) {
+                        String _initialQuantity = snapshot.data.toString();
+                        myController.text = _initialQuantity;
+                        return TextFormField(
+                          controller: myController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelStyle: TextStyle(fontSize: 18.0)),
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          onEditingComplete: () {
+                            _setQuantity(context, index, snapshot.data);
+                            FocusScope.of(context).unfocus();
+                          },
+                        );
+                      } else {
+                        return TextFormField(
+                          initialValue: "E",
+                        );
+                      }
+                    })),
             _incrementButton(context, index),
           ],
         ),
       ),
     );
-
-    /*
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: LimitedBox(
-        maxHeight: 48,
-        child: Container(
-          child: RaisedButton(
-            color: Theme.of(context).accentColor,
-            onPressed: (() async {
-              print("attempting to add to cart");
-              try {
-                var cart = context.read<CartModel>();
-                cart.add(itemList[index].uid);
-                final val = await _databaseService.readBusinessItem(
-                    businessId, itemList[index].uid);
-                print("added? ${val.item}");
-              } catch (e) {
-                print("something went wrong: $e");
-              }
-            }),
-            child: Center(
-                child: Column(
-              children: [
-                Text(
-                  "Entree: ${itemList[index].item}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
-                ),
-                Text(
-                  "Price: \$${itemList[index].price}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
-                ),
-                /*
-                Text(
-                  "Qty: ${itemList[index].quantity}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
-                ),
-                */
-              ],
-            )
-                // child: Text(
-                //   businessItems[index].item,
-
-                // ),
-                ),
-          ),
-        ),
-      ),
-    ); */
   }
 }
