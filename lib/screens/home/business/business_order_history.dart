@@ -18,12 +18,10 @@ class BusinessOrderHistory extends StatefulWidget {
 
 class _BusinessOrderHistoryState extends State<BusinessOrderHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    const Key centerKey = ValueKey<String>('bottom-sliver-list');
     return StreamBuilder<Business>(
         stream: DatabaseService(uid: user.uid).businessData,
         builder: (context, snapshot) {
@@ -33,7 +31,7 @@ class _BusinessOrderHistoryState extends State<BusinessOrderHistory> {
                 resizeToAvoidBottomInset: false,
                 key: _scaffoldKey,
                 appBar: AppBar(
-                  title: Text("Order History"),
+                  title: Text("Orders"),
                   centerTitle: true,
                 ),
                 body: CustomScrollView(
@@ -118,7 +116,6 @@ class _BusinessOrderHistoryState extends State<BusinessOrderHistory> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              // TODO - could go to its own order details page with the reciept used for getting tax deduction
                                                               BusinessOrderDetails(
                                                                   order: order,
                                                                   customerName:

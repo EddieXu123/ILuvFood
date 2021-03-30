@@ -22,7 +22,6 @@ class _UpdateOrderStatusPageState extends State<UpdateOrderStatusPage> {
     bool isReady = (isDelivered || status == "READY");
     bool isPacking = (isReady || status == "PACKING");
     bool isConfirmed = (isPacking || status == "CONFIRMED");
-    print("HUHHH");
     print(status);
     return streamedOrder == null
         ? Loading()

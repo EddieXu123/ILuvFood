@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iluvfood/models/business.dart';
-import 'package:iluvfood/screens/home/business/business_orders.dart';
 import 'package:iluvfood/screens/home/business/business_menu.dart';
 import 'package:iluvfood/screens/home/business/business_profile.dart';
 import 'package:iluvfood/services/auth.dart';
 import 'package:iluvfood/services/database.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
+
+import 'business_order_history.dart';
 
 class BusinessHome extends StatefulWidget {
   @override
@@ -42,14 +43,21 @@ class _BusinessHomeState extends State<BusinessHome> {
               resizeToAvoidBottomInset: false,
               body: ListView(
                 children: <Widget>[
+                  Container(height: 25),
                   Container(
                     margin: const EdgeInsets.all(10.0),
-                    width: 48.0,
-                    height: 100.0,
                     child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 10,
                       child: ListTile(
-                        leading: Icon(Icons.list),
-                        title: Text('Listings'),
+                        leading: Icon(Icons.list, size: 40),
+                        title: Text('   Listings', style: TextStyle(
+                                                      color: Colors.grey[900],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0)),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -61,33 +69,47 @@ class _BusinessHomeState extends State<BusinessHome> {
                       ),
                     ),
                   ),
+                  Container(height: 25),
                   Container(
                     margin: const EdgeInsets.all(10.0),
-                    width: 48.0,
-                    height: 100.0,
                     child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 10,
                       child: ListTile(
-                        leading: Icon(Icons.history),
-                        title: Text('Orders'),
+                        leading: Icon(Icons.history, size: 40),
+                        title: Text('   Orders', style: TextStyle(
+                                                      color: Colors.grey[900],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0)),
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => BusinessOrders(),
+                              builder: (context) => BusinessOrderHistory(),
                             ),
                           );
                         },
                       ),
                     ),
                   ),
+                  Container(height: 25),
                   Container(
                     margin: const EdgeInsets.all(10.0),
-                    width: 48.0,
-                    height: 100.0,
                     child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 10,
                       child: ListTile(
-                          leading: Icon(Icons.account_circle),
-                          title: Text('Profile'),
+                          leading: Icon(Icons.account_circle, size: 40),
+                          title: Text('   Profile', style: TextStyle(
+                                                      color: Colors.grey[900],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0)),
                           onTap: () {
                             Navigator.push(
                               context,

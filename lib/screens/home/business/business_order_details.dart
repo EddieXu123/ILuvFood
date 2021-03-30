@@ -61,99 +61,100 @@ class _LayoutWidgetState extends State<LayoutWidget> {
         ? Loading()
         : StreamProvider<Order>.value(
             value: DatabaseService(uid: order.uid).orders,
-            child: Builder(builder: (BuildContext context) {
-              Order streamedOrder = Provider.of<Order>(context);
-              return (streamedOrder == null)
-                  ? Loading()
-                  : Scaffold(
-                      appBar: AppBar(
-                        title: Text("Order " + order.orderId),
-                        centerTitle: true,
-                      ),
-                      body: Column(
-                        children: <Widget>[
-                          SizedBox(height: 40),
-                          Container(
-                              child: Text("Customer Name: " + customerName,
-                                  style: TextStyle(fontSize: 20))),
-                          SizedBox(height: 20),
-                          Container(
-                              child: Text(
-                                  dateFormat.format(order.dateTime) +
-                                      " " +
-                                      timeFormat.format(order.dateTime),
-                                  style: TextStyle(fontSize: 20))),
-                          SizedBox(height: 20),
-                          Container(
-                            child: Text("Status: " + streamedOrder.status,
-                                style: TextStyle(fontSize: 20)),
-                          ),
-                          SizedBox(height: 40),
-                          Container(
-                            color: Colors.grey[100],
-                            height: 30,
-                            width: 450,
-                            child: SizedBox(
-                              child: Text(
-                                "Items Ordered",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline),
+            child: Builder(
+              builder: (BuildContext context) {
+                Order streamedOrder = Provider.of<Order>(context);
+                return (streamedOrder == null)
+                    ? Loading()
+                    : Scaffold(
+                        appBar: AppBar(
+                          title: Text("Order " + order.orderId),
+                          centerTitle: true,
+                        ),
+                        body: Column(
+                          children: <Widget>[
+                            SizedBox(height: 40),
+                            Container(
+                                child: Text("Customer Name: " + customerName,
+                                    style: TextStyle(fontSize: 20))),
+                            SizedBox(height: 20),
+                            Container(
+                                child: Text(
+                                    dateFormat.format(order.dateTime) +
+                                        " " +
+                                        timeFormat.format(order.dateTime),
+                                    style: TextStyle(fontSize: 20))),
+                            SizedBox(height: 20),
+                            Container(
+                              child: Text("Status: " + streamedOrder.status,
+                                  style: TextStyle(fontSize: 20)),
+                            ),
+                            SizedBox(height: 40),
+                            Container(
+                              color: Colors.grey[100],
+                              height: 30,
+                              width: 450,
+                              child: SizedBox(
+                                child: Text(
+                                  "Items Ordered",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline),
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 394,
-                            child: CustomScrollView(
-                              slivers: [
-                                SliverList(
-                                  delegate: SliverChildListDelegate(
-                                    [
-                                      for (CartItem item in cartItemList)
-                                        ListTile(
-                                          title: Text(item.item),
-                                          subtitle: Text(
-                                            "Quantity: " +
-                                                item.quantity.toString(), //+
-                                            //"          Price: \$" +
-                                            //item.price.toString(),
+                            SizedBox(
+                              height: 394,
+                              child: CustomScrollView(
+                                slivers: [
+                                  SliverList(
+                                    delegate: SliverChildListDelegate(
+                                      [
+                                        for (CartItem item in cartItemList)
+                                          ListTile(
+                                            title: Text(item.item),
+                                            subtitle: Text(
+                                              "Quantity: " +
+                                                  item.quantity.toString(),
+                                            ),
+                                            tileColor: Colors.grey[100],
                                           ),
-                                          tileColor: Colors.grey[100],
-                                        ),
-                                    ],
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            UpdateOrderStatusPage(
+                                                streamedOrder)));
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                decoration:
+                                    BoxDecoration(gradient: gradientStyle),
+                                child: Center(
+                                  child: Text(
+                                    "UPDATE ORDER STATUS",
+                                    style: contentStyle.copyWith(
+                                        color: Colors.white, fontSize: 22),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          UpdateOrderStatusPage(
-                                              streamedOrder)));
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: EdgeInsets.symmetric(vertical: 20),
-                              decoration:
-                                  BoxDecoration(gradient: gradientStyle),
-                              child: Center(
-                                child: Text(
-                                  "UPDATE ORDER STATUS",
-                                  style: contentStyle.copyWith(
-                                      color: Colors.white, fontSize: 22),
-                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-            }));
+                            )
+                          ],
+                        ),
+                      );
+              },
+            ),
+          );
   }
 }
