@@ -70,15 +70,16 @@ class DatabaseService {
     print("order id linked to business");
   }
 
-  Future<void> enterBusinessData(String name) {
+  Future<void> enterBusinessData(
+      String name, String addressLine, String lat, String lng, String phone) {
     return businessItems.doc(uid).set({
-      "address": "12200 Mayfield Rd \nCleveland, OH 44106",
+      "address": addressLine,
       "image":
           "https://lh5.googleusercontent.com/p/AF1QipNCFpUBaUdjDYYBgtrT-HGY4sXRPSjYaIFCVwzW=w426-h240-k-no",
-      "lat": "41.50869",
-      "lng": "-81.59784",
+      "lat": lat,
+      "lng": lng,
       "name": name,
-      "phone": "+1 216-795-2355",
+      "phone": phone,
       "isOpen": false,
     });
     // .then((value) => print("yay user added"))
