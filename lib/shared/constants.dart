@@ -14,6 +14,12 @@ const linkedPageTextStyle = TextStyle(
     fontWeight: FontWeight.bold,
     decoration: TextDecoration.underline);
 
+const thirdTextStyle = TextStyle(
+    color: Colors.blue,
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.underline);
+
 class MyColors {
   static const myGreen = Color(0xFFadf0b5);
 

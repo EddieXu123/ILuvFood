@@ -85,7 +85,7 @@ class Welcome extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 25.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -98,7 +98,7 @@ class Welcome extends StatelessWidget {
                           },
                           child: Text(
                             'How It Works',
-                            style: linkedPageTextStyle,
+                            style: thirdTextStyle,
                           ),
                         ),
                       ],

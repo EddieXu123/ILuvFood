@@ -52,10 +52,10 @@ class _onboardingState extends State<onboarding> {
                   controller: _pageController,
                   children: [
                     onBoardPage("onBoard1", "Help Us Rescue Food", first),
-                    onBoardPage("onBoard2", "Feeding Communities", second),
-                    onBoardPage("onBoard3", "Easy Pick-ups", third),
-                    onBoardPage("onBoard2", "Saving Suppliers Money", fourth),
-                    onBoardPage("onBoard4", "Sign Up Now", fifth),
+                    onBoardPage("onBoard3", "Feeding Communities", second),
+                    onBoardPage("onBoard2", "Easy Pick-ups", third),
+                    onBoardPage("onBoard4", "Saving Suppliers Money", fourth),
+                    onBoardPage("onBoard5", "Sign Up Now", fifth),
                   ],
                   onPageChanged: (value) => {setCurrentPage(value)},
                 ),
@@ -135,7 +135,7 @@ class _onboardingState extends State<onboarding> {
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
           child: Text(
             body,
-            style: TextStyle(fontSize: 16, color: Colors.grey),
+            style: TextStyle(fontSize: 16, color: Colors.grey[800]),
             textAlign: TextAlign.center,
           ),
         )
