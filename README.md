@@ -3,6 +3,7 @@
 An Android app written in Flutter using Firestore and Firebase Authentication. State managed Provider.
 
 ## Firestore Database Setup Diagram
+<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/db_food.jpeg">
 
 ## Description
 
@@ -44,7 +45,7 @@ Rescuer Past Orders               |  Supplier Home               | Supplier List
 
 Supplier Profile               |  SupplierOrders       
 :-------------------------:|:-------------------------:
-<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_profile.jpg" width = "200">|<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_orders.jpg" width = "200">|
+<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_profile.png" width = "250">|<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_orders.png" width = "250">|
 
 
 
