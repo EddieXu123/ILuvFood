@@ -19,40 +19,40 @@ Run a `flutter pub get` to download the necessary Flutter dependencies. Then cli
 
 ## Email Confirmation
 Note that ordering an item will send an email confirmation to the email used to register the rescuer account. 
-<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/email_confirm.jpg" width = "200">
+<img src = "https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/email_confirm.jpg" width = "200">
 
 
 ## Firestore Database Setup Diagram
 <details>
 <summary> Click to expand </summary>
-<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/db_food.jpeg">
+<img src = "https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/db_food.jpeg">
 </details>
 
 ## Screenshots
 
 Welcome Page               |  Supplier Sign Up               | Rescuer Sign Up              
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/welcome_page.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_signup.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/rescuer_signup.png)|
+![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/welcome_page.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/supplier_signup.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/rescuer_signup.png)|
 
 Map of Suppliers               |  Favorites               | Rescuer Profile              
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/map.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/favorites.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/rescuer_profile.png)|
+![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/map.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/favorites.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/rescuer_profile.png)|
 
 Supplier Info View               |  Supplier Offerings               | Checkout              
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_view.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_offerings.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/checkout.png)|
+![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/supplier_view.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/supplier_offerings.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/checkout.png)|
 
 Checkout Confirmation               |  Order Status               | Rescuer Order History              
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/confirmation.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/order_status.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/rescuer_order_history.png)|
+![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/confirmation.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/order_status.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/rescuer_order_history.png)|
 
 Rescuer Past Orders               |  Supplier Home               | Supplier Listings View              
 :-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/rescuer_past_order.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_home.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_listings.png)|
+![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/rescuer_past_order.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/supplier_home.png)|![](https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/supplier_listings.png)|
 
 Supplier Profile               |  SupplierOrders       
 :-------------------------:|:-------------------------:
-<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_profile.png" width = "250">|<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_orders.png" width = "250">|
+<img src = "https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/supplier_profile.png" width = "250">|<img src = "https://github.com/EddieXu123/ILuvFood/blob/main/screenshots/supplier_orders.png" width = "250">|
 
 
 
