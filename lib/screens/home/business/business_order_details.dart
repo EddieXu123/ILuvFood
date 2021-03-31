@@ -80,7 +80,8 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                             SizedBox(height: 20),
                             Container(
                                 child: Text(
-                                    dateFormat.format(order.dateTime) +
+                                    "Order Date: " +
+                                        dateFormat.format(order.dateTime) +
                                         " " +
                                         timeFormat.format(order.dateTime),
                                     style: TextStyle(fontSize: 20))),
