@@ -3,8 +3,10 @@
 An Android app written in Flutter using Firestore and Firebase Authentication. State managed Provider.
 
 ## Firestore Database Setup Diagram
+<details>
+<summary> Click to expand </summary>
 <img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/db_food.jpeg">
-
+</details>
 ## Description
 
 ## Setup
