@@ -105,7 +105,6 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                 onChanged: (val) {
                                   phone = val;
                                 }),
-
                             SizedBox(height: 10.0),
                             TextFormField(
                                 decoration: textInputDecoration.copyWith(
@@ -126,33 +125,6 @@ class _BusinessRegisterState extends State<BusinessRegister> {
                                 onChanged: (val) {
                                   zipCode = val;
                                 }),
-                            // Row(children: <Widget>[
-                            //   Flexible(
-                            //     flex: 1,
-                            //     child: TextFormField(
-                            //         decoration: textInputDecoration.copyWith(
-                            //             labelText: "Street Address",
-                            //             hintText:
-                            //                 "eg: 1600 Amphiteatre Parkway "),
-                            //         validator: (val) => validateMobile(val),
-                            //         onChanged: (val) {
-                            //           phone = val;
-                            //         }),
-                            //   ),
-                            //   SizedBox(
-                            //     width: 10,
-                            //   ),
-                            //   Flexible(
-                            //     flex: 1,
-                            //     child: TextFormField(
-                            //         decoration: textInputDecoration.copyWith(
-                            //             labelText: "Zip Code"),
-                            //         validator: (val) => validateMobile(val),
-                            //         onChanged: (val) {
-                            //           phone = val;
-                            //         }),
-                            //   ),
-                            // ]),
                             SizedBox(height: 10.0),
                             Container(
                                 height: 40.0,

@@ -24,7 +24,6 @@ class Wrapper extends StatelessWidget {
         } else {
           if (user == null) {
             return Welcome();
-            // return Authenticate();
           } else {
             // return different home depending on customer or business
             return HomeWrapper();
