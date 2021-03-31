@@ -2,12 +2,6 @@
 
 An Android app written in Flutter using Firestore and Firebase Authentication. State managed Provider.
 
-## Firestore Database Setup Diagram
-<details>
-<summary> Click to expand </summary>
-<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/db_food.jpeg">
-</details>
-
 ## Description
 Food waste and food insecurity, heightened by the pandemic, are major problems facing our communities today. Our app, FoodRescue, aims to reduce food waste and insecurity by creating a missing community tie between supplier and rescuer organizations.
 
@@ -27,6 +21,12 @@ Run a `flutter pub get` to download the necessary Flutter dependencies. Then cli
 Note that ordering an item will send an email confirmation to the email used to register the rescuer account. 
 <img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/email_confirm.jpg" width = "200">
 
+
+## Firestore Database Setup Diagram
+<details>
+<summary> Click to expand </summary>
+<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/db_food.jpeg">
+</details>
 
 ## Screenshots
 
