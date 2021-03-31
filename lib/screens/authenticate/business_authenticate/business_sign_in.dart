@@ -81,17 +81,17 @@ class _BusinessSignInState extends State<BusinessSignIn> {
                             onChanged: (val) {
                               password = val;
                             }),
-                        SizedBox(height: 5.0),
-                        Container(
-                          alignment: Alignment(1.0, 0.0),
-                          padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                          child: InkWell(
-                            child: Text(
-                              'Forgot Password',
-                              style: linkedPageTextStyle,
-                            ),
-                          ),
-                        ),
+                        SizedBox(height: 20.0),
+                        // Container(
+                        //   alignment: Alignment(1.0, 0.0),
+                        //   padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                        //   child: InkWell(
+                        //     child: Text(
+                        //       'Forgot Password',
+                        //       style: linkedPageTextStyle,
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(height: 20.0),
                         Container(
                           height: 40.0,
@@ -133,7 +133,7 @@ class _BusinessSignInState extends State<BusinessSignIn> {
                         ),
                       ],
                     ))),
-            SizedBox(height: 15.0),
+            //SizedBox(height: 15.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

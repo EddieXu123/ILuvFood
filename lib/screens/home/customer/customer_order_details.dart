@@ -63,18 +63,21 @@ class _LayoutWidgetState extends State<LayoutWidget> {
               children: <Widget>[
                 SizedBox(height: 40),
                 Container(
-                    child: Text(order.businessName,
+                    child: Text("Supplier: ${order.businessName}",
                         style: TextStyle(fontSize: 20))),
                 SizedBox(height: 20),
                 Container(
                     child: Text(
-                        dateFormat.format(order.dateTime) +
+                        "Order Date: " +
+                            dateFormat.format(order.dateTime) +
                             " " +
                             timeFormat.format(order.dateTime),
-                        style: TextStyle(fontSize: 20))),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ))),
                 SizedBox(height: 20),
                 Container(
-                  child: Text("Status: " + order.status,
+                  child: Text("Pickup Date: " + order.orderDate,
                       style: TextStyle(fontSize: 20)),
                 ),
                 SizedBox(height: 40),
@@ -94,7 +97,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                   ),
                 ),
                 SizedBox(
-                  height: 394,
+                  height: 294,
                   child: CustomScrollView(
                     slivers: [
                       SliverList(
@@ -116,6 +119,11 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                     ],
                   ),
                 ),
+                SizedBox(height: 57),
+                Container(
+                    child: Text("Status: " + order.status,
+                        style: TextStyle(fontSize: 20))),
+                SizedBox(height: 20),
                 InkWell(
                   onTap: () {
                     Navigator.push(
