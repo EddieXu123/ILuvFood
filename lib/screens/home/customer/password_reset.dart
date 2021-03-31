@@ -78,6 +78,7 @@ class _PasswordResetState extends State<PasswordReset> {
                             .reauthenticateWithCredential(credential);
                         await user.updatePassword(_password);
                         _clearControllers();
+                        FocusScope.of(context).unfocus();
                         _scaffoldKey.currentState.showSnackBar(SnackBar(
                           backgroundColor: Colors.pink,
                           duration: Duration(seconds: 2),
