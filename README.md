@@ -7,8 +7,13 @@ An Android app written in Flutter using Firestore and Firebase Authentication. S
 <summary> Click to expand </summary>
 <img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/db_food.jpeg">
 </details>
-## Description
 
+## Description
+Food waste and food insecurity, heightened by the pandemic, are major problems facing our communities today. Our app, FoodRescue, aims to reduce food waste and insecurity by creating a missing community tie between supplier and rescuer organizations.
+
+**Suppliers** are organizations that have excess food such as urban and community farms and regional wholesalers.
+
+**Rescuers** are organizations that distribute to people in need such as food banks, churches, schools, and nonprofits.
 ## Setup
 We recommend a shallow clone: `git clone --depth 1 https://github.com/EddieXu123/ILuvFood`
 
