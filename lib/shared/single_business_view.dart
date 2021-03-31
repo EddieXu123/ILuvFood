@@ -136,10 +136,30 @@ class _InfoTabState extends State<InfoTab>
             ),
           ),
           SizedBox(height: 20.0),
-          Text(widget.business.address),
+          Row(
+            children: [
+              Icon(
+                Icons.map_outlined,
+                color: Colors.white,
+                size: 30,
+              ),
+              SizedBox(width: 5.0),
+              Text(widget.business.address),
+            ],
+          ),
           SizedBox(height: 10.0),
-          Text(widget.business.phone),
-          SizedBox(height: 150.0),
+          Row(
+            children: [
+              Icon(
+                Icons.phone,
+                color: Colors.white,
+                size: 30,
+              ),
+              SizedBox(width: 5.0),
+              Text(widget.business.phone),
+            ],
+          ),
+          SizedBox(height: 120.0),
           Text(
             '$favoriteText',
             textAlign: TextAlign.center,
