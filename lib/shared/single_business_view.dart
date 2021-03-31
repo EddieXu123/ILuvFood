@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:toast/toast.dart';
 
-///
 /// Displays a specific business's information and all items they have currently listed
 class SingleBusinessView extends StatefulWidget {
   final Business business;
@@ -82,6 +81,8 @@ class _SingleBusinessViewState extends State<SingleBusinessView> {
   }
 }
 
+String favoriteText = "";
+
 class InfoTab extends StatefulWidget {
   // todo: refactor so business is in a streamprovider
   final Business business;
@@ -99,7 +100,28 @@ class _InfoTabState extends State<InfoTab>
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+    favoriteText =
+        "${widget.customer.favorites.contains(widget.business.uid) ? "Remove from favorites" : "Add to favorites"}";
+  }
+
+  void _updateFavorite(bool _isFavorite) async {
+    print('Is Favorite : $_isFavorite');
+    _databaseService.customerUpdateFavorites(
+        widget.customer.uid, widget.business.uid, _isFavorite);
+    setState(() {
+      favoriteText =
+          "${_isFavorite ? "Remove from favorites" : "Add to favorites"}";
+    });
+
+    print(favoriteText);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    bool _initiallyIsFavorite =
+        widget.customer.favorites.contains(widget.business.uid);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -118,12 +140,16 @@ class _InfoTabState extends State<InfoTab>
           SizedBox(height: 10.0),
           Text(widget.business.phone),
           SizedBox(height: 150.0),
+          Text(
+            '$favoriteText',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
+          ),
           FavoriteButton(
-            isFavorite: widget.customer.favorites.contains(widget.business.uid),
+            isFavorite: _initiallyIsFavorite,
             valueChanged: (_isFavorite) {
-              print('Is Favorite : $_isFavorite');
-              _databaseService.customerUpdateFavorites(
-                  widget.customer.uid, widget.business.uid, _isFavorite);
+              _updateFavorite(_isFavorite);
             },
           ),
         ]),
@@ -341,7 +367,6 @@ class _MyListItem extends StatelessWidget {
             SizedBox(
               width: 150.0,
               child: Text(
-                //"Entree: ${itemList[index].item} \nPrice: \$${itemList[index].price}",
                 "${itemList[index].item}",
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),

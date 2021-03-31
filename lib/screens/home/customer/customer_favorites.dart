@@ -31,7 +31,7 @@ class CustomerFavorites extends StatelessWidget {
                       slivers: [
                         SliverAppBar(
                           title: Text(
-                            'Favorite Restaurants',
+                            'Favorite Suppliers',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Montserrat'),
@@ -91,7 +91,7 @@ class _NoFavorites extends StatelessWidget {
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
-                  "You don't have any favorite restaurants yet.",
+                  "You don't have any favorite suppliers yet.",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',

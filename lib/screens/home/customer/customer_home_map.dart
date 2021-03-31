@@ -29,7 +29,7 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
 
   GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(41.4993, -81.6944);
+  final LatLng _center = const LatLng(41.503037, -81.672829);
   List<Business> businesses = [];
   final Map<String, Marker> _markers = {};
   BitmapDescriptor mapMarkerOpen;
@@ -77,7 +77,7 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
         icon: business.isOpen ? mapMarkerOpen : mapMarkerClosed,
         infoWindow: InfoWindow(
           title: business.businessName,
-          snippet: business.address,
+          snippet: "Tap to see listings",
           onTap: () {
             Navigator.push(
                 context,
@@ -128,7 +128,7 @@ class _CustomerHomeMapState extends State<CustomerHomeMap> {
           myLocationEnabled: true,
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 11,
+            zoom: 12.5,
           ),
           markers: getRestaurants().values.toSet(),
         ),
