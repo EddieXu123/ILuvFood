@@ -1,6 +1,6 @@
 ## FoodRescue - Connecting Food Suppliers to Rescuers to Mitigate Food Waste 
 
-An Android app written in Flutter using Firestore and Firebase Authentication. State managed Provider.
+An Android app written in Flutter using Firestore and Firebase Authentication. State managed by Provider.
 
 ## Description
 Food waste and food insecurity, heightened by the pandemic, are major problems facing our communities today. Our app, FoodRescue, aims to reduce food waste and insecurity by creating a missing community tie between supplier and rescuer organizations.
