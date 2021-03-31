@@ -91,7 +91,6 @@ class _LayoutWidgetState extends State<LayoutWidget> {
                                 BorderRadius.all(Radius.circular(10))),
                         child: Text(
                           order == null ? "<orderId>" : order.orderId,
-                          //style: headingStyle.copyWith(color: Colors.white),
                         ),
                       )
                     ],

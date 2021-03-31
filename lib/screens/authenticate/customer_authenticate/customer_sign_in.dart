@@ -79,16 +79,6 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                               password = val;
                             }),
                         SizedBox(height: 5.0),
-                        // Container(
-                        //   alignment: Alignment(1.0, 0.0),
-                        //   padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                        //   child: InkWell(
-                        //     child: Text(
-                        //       'Forgot Password',
-                        //       style: linkedPageTextStyle,
-                        //     ),
-                        //   ),
-                        // ),
                         SizedBox(height: 30.0),
                         Container(
                           height: 30.0,
@@ -126,56 +116,6 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                             style: TextStyle(color: Colors.red, fontSize: 12.0),
                           ),
                         ),
-                        // Container(
-                        //   height: 30.0,
-                        //   child: FlatButton(
-                        //     color: Theme.of(context).accentColor,
-                        //     onPressed: () async {
-                        //       try {
-                        //         await _auth.signInWithGoogle();
-                        //         Navigator.pop(context);
-                        //       } catch (e) {
-                        //         print(e.code);
-                        //         if (mounted) {
-                        //           setState(() => {error = e.message});
-                        //         }
-                        //       }
-                        //     },
-                        //     child: Center(
-                        //       child: Text(
-                        //         'Sign in with Google',
-                        //         style: TextStyle(
-                        //             fontWeight: FontWeight.bold,
-                        //             fontFamily: 'Montserrat'),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        // Container(
-                        //   height: 40.0,
-                        //   color: Colors.transparent,
-                        //   child: Container(
-                        //     decoration: BoxDecoration(
-                        //         border: Border.all(
-                        //             color: Colors.black,
-                        //             style: BorderStyle.solid,
-                        //             width: 1.0),
-                        //         color: Colors.transparent,
-                        //         borderRadius: BorderRadius.circular(20.0)),
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       children: <Widget>[
-                        //         SizedBox(width: 10.0),
-                        //         Center(
-                        //           child: Text('coming soon :(',
-                        //               style: TextStyle(
-                        //                   fontWeight: FontWeight.bold,
-                        //                   fontFamily: 'Montserrat')),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // )
                       ],
                     ))),
             //SizedBox(height: 0.0),

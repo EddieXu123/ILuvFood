@@ -14,18 +14,6 @@ class AuthService {
     return _auth.authStateChanges();
   }
 
-  // // sign in anon
-  // Future signInAnon() async {
-  //   try {
-  //     AuthResult result = await _auth.signInAnonymously();
-  //     FirebaseUser user = result.user;
-  //     return _userFromFirebaseUser(user);
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
-
   // sign in with email & password
   Future signInWithEmailandPassword(String email, String password) async {
     UserCredential userCredential = await FirebaseAuth.instance

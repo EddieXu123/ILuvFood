@@ -53,8 +53,6 @@ class _CustomerFavoritesListState extends State<CustomerFavoritesList> {
 
   @override
   Widget build(BuildContext context) {
-    //final businesses = Provider.of<List<Business>>(context) ?? [];
-
     return Scaffold(
       drawer: TestDrawer(auth: widget.auth),
       body: CustomScrollView(
@@ -109,12 +107,6 @@ class _MyListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var item = context.select<CatalogModel, Item>(
-    //   // Here, we are only interested in the item at [index]. We don't care
-    //   // about any other change.
-    //   (catalog) => catalog.getByPosition(index),
-    // );
-
     return Padding(
       // TODO: perhaps check for if businesses list is empty and display
       // an alternate UI in that case
@@ -123,7 +115,6 @@ class _MyListItem extends StatelessWidget {
         maxHeight: 48,
         child: Container(
           child: TextButton(
-              // color: Theme.of(context).accentColor,
               onPressed: (() {
                 Navigator.push(
                     context,

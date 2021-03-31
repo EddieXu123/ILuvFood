@@ -46,7 +46,6 @@ showAlertDialog(BuildContext context) {
               status: "CONFIRMED"));
           Order order = await DatabaseService().getMostRecentOrder(user.uid);
           String message = content(cart);
-          // String dateMessage = dayOfWeek(pick)
           await sendMail(user.email, user.displayName, order, message);
           Navigator.of(context).popUntil((route) => route.isFirst);
 
@@ -216,7 +215,6 @@ class _CartList extends StatelessWidget {
                 ),
               ]),
               title: Text(
-                // itemPrice == "-1"
                 "${cart.cartItems[index].item}", // LATER: (\$${cart.cartItems[index].price})",
                 style: itemNameStyle,
               ),
