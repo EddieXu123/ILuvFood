@@ -1,6 +1,8 @@
 ## FoodRescue - Connecting Food Suppliers to Rescuers to Mitigate Food Waste 
 
-An Android app written in Flutter using Firestore and Firebase Authentication. State managed through Flutter dependency, Provider.
+An Android app written in Flutter using Firestore and Firebase Authentication. State managed Provider.
+
+## Firestore Database Setup Diagram
 
 ## Description
 
@@ -9,6 +11,7 @@ An Android app written in Flutter using Firestore and Firebase Authentication. S
 
 Welcome Page               |  Supplier Sign Up               | Rescuer Sign Up              
 :-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/welcome_page.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/welcome_page.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/welcome_page.png)|
 
 
 
