@@ -91,8 +91,12 @@ class InfoTab extends StatefulWidget {
   _InfoTabState createState() => _InfoTabState();
 }
 
-class _InfoTabState extends State<InfoTab> {
+class _InfoTabState extends State<InfoTab>
+    with AutomaticKeepAliveClientMixin<InfoTab> {
   final _databaseService = DatabaseService();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
@@ -151,24 +155,7 @@ class _MenuTabState extends State<MenuTab> {
               width: 300.0,
               height: 500.0,
               child: ItemScrollView(businessId: widget.business.uid),
-              // child: snapshot.hasData
-              //     ? ItemScrollView(
-              //         businessItems: snapshot.data,
-              //         businessId: widget.business.uid)
-              //     : Loading(),
             ),
-            // FutureBuilder<int>(
-            //     future: cart.priceInCart,
-            //     builder: (BuildContext context,
-            //         AsyncSnapshot<int> snapshot) {
-            //       return snapshot.hasData
-            //           ? Text("Cart Price: \$${snapshot.data}")
-            //           : Loading();
-            //     }),
-            // SizedBox(
-            //   child: Text(
-            //       "Cart Price: \$${widget.cart.priceInCart.toStringAsFixed(2)}"),
-            // ),
             SizedBox(height: 10.0),
             InkWell(
               onTap: () {
@@ -179,13 +166,6 @@ class _MenuTabState extends State<MenuTab> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Checkout()));
                 }
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(builder: (BuildContext context) {
-                //     var test = context.watch<CartModel>();
-                //     return ChangeNotifierProvider(
-                //         create: (context) => test, child: Checkout());
-                //   }),
-                // );
               },
               child: Text(
                 'Checkout',
