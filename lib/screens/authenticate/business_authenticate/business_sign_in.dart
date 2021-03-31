@@ -43,15 +43,16 @@ class _BusinessSignInState extends State<BusinessSignIn> {
                             fontSize: 80.0, fontWeight: FontWeight.bold)),
                   ),
                   Container(
-                        padding: EdgeInsets.fromLTRB(330.0, 190.0, 0.0, 0.0),
-                        child: Text(
-                          '.',
-                          style: TextStyle(
-                              fontSize: 80.0,
-                              fontWeight: FontWeight.bold,
-                              // Change color if needed
-                              color: Colors.pink),
-                        ),),
+                    padding: EdgeInsets.fromLTRB(330.0, 190.0, 0.0, 0.0),
+                    child: Text(
+                      '.',
+                      style: TextStyle(
+                          fontSize: 80.0,
+                          fontWeight: FontWeight.bold,
+                          // Change color if needed
+                          color: Colors.pink),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -62,6 +63,7 @@ class _BusinessSignInState extends State<BusinessSignIn> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                            keyboardType: TextInputType.emailAddress,
                             decoration: textInputDecoration.copyWith(
                                 labelText: "Email"),
                             validator: (val) =>

@@ -91,7 +91,7 @@ class _NoFavorites extends StatelessWidget {
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
-                  "Favorites List is empty",
+                  "You don't have any favorite restaurants yet.",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',
@@ -149,7 +149,8 @@ class _MyListItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("${businesses[index].businessName}", style: TextStyle(color: Colors.black, fontSize: 17)),
+                      Text("${businesses[index].businessName}",
+                          style: TextStyle(color: Colors.black, fontSize: 17)),
                       Flexible(
                         child: Text(
                           "${businesses[index].address}",

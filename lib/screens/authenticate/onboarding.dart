@@ -51,8 +51,9 @@ class _onboardingState extends State<onboarding> {
                 child: PageView(
                   controller: _pageController,
                   children: [
-                    onBoardPage("onBoard1", "Help Us Rescue Food", first),
-                    onBoardPage("onBoard3", "Feeding Communities", second),
+                    onBoardPage("community-food", "Help Us Rescue Food", first),
+                    onBoardPage(
+                        "spoon-plate-fork", "Feeding Communities", second),
                     onBoardPage("onBoard2", "Easy Pick-ups", third),
                     onBoardPage("onBoard4", "Saving Suppliers Money", fourth),
                     onBoardPage("onBoard5", "Sign Up Now", fifth),

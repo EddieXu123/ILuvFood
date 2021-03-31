@@ -6,8 +6,6 @@ import 'package:iluvfood/models/business_item.dart';
 import 'package:iluvfood/models/cart.dart';
 import 'package:iluvfood/screens/home/customer/checkout.dart';
 import 'package:iluvfood/services/database.dart';
-import 'package:iluvfood/shared/constants.dart';
-import 'package:iluvfood/models/cart_item.dart';
 import 'package:iluvfood/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:favorite_button/favorite_button.dart';
@@ -291,7 +289,7 @@ class _MyListItem extends StatelessWidget {
                       //max quantity reached
                       final snackBar = SnackBar(
                           content: Text(
-                              'There are only ${totalQuantity} of that item available.'));
+                              'There are only $totalQuantity of that item available.'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
                       cart.add(itemList[index].uid);
@@ -323,7 +321,7 @@ class _MyListItem extends StatelessWidget {
             myController.text = totalQuantity.toString();
             final snackBar = SnackBar(
                 content: Text(
-                    'There are only ${totalQuantity} of that item available.'));
+                    'There are only $totalQuantity of that item available.'));
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
             break;

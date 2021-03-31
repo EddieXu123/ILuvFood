@@ -20,13 +20,13 @@ showAlertDialog(BuildContext context) {
   var user = Provider.of<User>(context, listen: false);
   var uuid = Uuid();
   // set up the buttons
-  Widget cancelButton = FlatButton(
+  Widget cancelButton = TextButton(
     child: Text("Cancel"),
     onPressed: () {
       Navigator.pop(context);
     },
   );
-  Widget continueButton = FlatButton(
+  Widget continueButton = TextButton(
     child: Text("Confirm"),
     onPressed: () async {
       print("processing order!");

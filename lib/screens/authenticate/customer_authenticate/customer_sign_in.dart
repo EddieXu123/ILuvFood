@@ -60,6 +60,7 @@ class _CustomerSignInState extends State<CustomerSignIn> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                            keyboardType: TextInputType.emailAddress,
                             decoration: textInputDecoration.copyWith(
                                 labelText: "Email"),
                             validator: (val) =>

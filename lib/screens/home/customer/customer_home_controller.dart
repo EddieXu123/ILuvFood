@@ -10,12 +10,10 @@ class CustomerHomeController extends StatefulWidget {
     CustomerHome(),
 
     //favorites page
-    // TODO: figure out bug with favorites.
     CustomerFavorites(),
 
     // account page
     CustomerProfile(),
-    // CustomerHome(2)
 
     // ErrorPage(),
   ];
@@ -47,31 +45,6 @@ class _CustomerHomeControllerState extends State<CustomerHomeController> {
                 icon: new Icon(Icons.account_circle), label: "Account")
           ]),
     );
-    // return Scaffold(
-    //   body: Center(
-    //     child: _widgetOptions.elementAt(_currentIndex),
-    //   ),
-    //   bottomNavigationBar: BottomNavigationBar(
-    //     backgroundColor: MyColors.myPurple,
-    //     items: const <BottomNavigationBarItem>[
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.home),
-    //         label: 'Home',
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.account_circle),
-    //         label: 'Account',
-    //       ),
-    //       BottomNavigationBarItem(
-    //         icon: Icon(Icons.favorite),
-    //         label: 'Favorites',
-    //       ),
-    //     ],
-    //     currentIndex: _currentIndex,
-    //     selectedItemColor: MyColors.myPink,
-    //     onTap: _onItemTapped,
-    //   ),
-    // );
   }
 
   void onTabTapped(int index) {
