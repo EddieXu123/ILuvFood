@@ -17,7 +17,7 @@ Run a `flutter pub get` to download the necessary Flutter dependencies. Then cli
 
 ## Email Confirmation
 Note that ordering an item will send an email confirmation to the email used to register the rescuer account. 
-![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/welcome_page.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/email_confirm.jpg)
+<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/email_confirm.jpg" width = "200">
 
 
 ## Screenshots
@@ -44,6 +44,7 @@ Rescuer Past Orders               |  Supplier Home               | Supplier List
 
 Supplier Profile               |  SupplierOrders       
 :-------------------------:|:-------------------------:
-![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_profile.png)|![](https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_orders.png)|
+<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_profile.jpg" width = "200">|<img src = "https://github.com/EddieXu123/ILuvFood/blob/readme/screenshots/supplier_orders.jpg" width = "200">|
+
 
 
