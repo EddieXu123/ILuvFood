@@ -9,8 +9,6 @@ Food waste and food insecurity, heightened by the pandemic, are major problems f
 
 **Rescuers** are organizations that distribute to people in need such as food banks, churches, schools, and nonprofits.
 ## Setup
-We recommend a shallow clone: `git clone --depth 1 https://github.com/EddieXu123/ILuvFood`
-
 If you would like to use our preexisting Firebase setup, you should be all set to use our `android/app/google-services.json` file. 
 
 We developed in the Visual Studio Code IDE, with the Dart and Flutter extensions. We highly recommend using the Pixel_3a emulator running API_30. The emulator can be set up within Android Studio. Note: iOS emulation is not currently supported due to hardware constraints. 
