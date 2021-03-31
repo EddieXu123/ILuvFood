@@ -83,8 +83,6 @@ class DatabaseService {
       "phone": phone,
       "isOpen": false,
     });
-    // .then((value) => print("yay user added"))
-    // .catchError((error) => print("Failed to add user: $error"));
   }
 
   Future<void> updateBusinessData(Business business) {
@@ -307,7 +305,9 @@ class DatabaseService {
   void businessRemoveMenuItem(String businessUid, String menuItemUid) async {
     businessItems
         .doc(businessUid)
-        .collection('items').doc(menuItemUid).delete();
+        .collection('items')
+        .doc(menuItemUid)
+        .delete();
   }
 
   // get business profile data from snapshot
@@ -366,11 +366,6 @@ class DatabaseService {
       );
     }).toList();
   }
-
-  // // check if uid exists in customer db
-  // bool isCustomer() {
-  //   return customerAccountCollection.document(uid).get() == null ? false : true;
-  // }
 
   Stream<Customer> get customerData {
     return userDetails.doc(uid).snapshots().map(_customerDataFromSnapshot);

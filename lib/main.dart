@@ -77,15 +77,10 @@ class MyApp extends StatelessWidget {
 }
 
 ThemeData getThemeData(Color accentColor, bool darkTheme) {
-  //print('dark theme is $darkTheme');
   return ThemeData(
-      // brightness: Brightness.light,
-      // primarySwatch: Colors.pink,
       primaryColor: MyColors.myGreen,
       scaffoldBackgroundColor: MyColors.myPurple,
-      // primaryColorBrightness: Brightness.light,
       accentColor: MyColors.myGreen,
-      // accentColorBrightness: Brightness.light);
       textTheme: TextTheme(
         bodyText1: TextStyle(fontSize: 18.0),
         bodyText2: TextStyle(fontSize: 16.0),
